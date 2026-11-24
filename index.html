@@ -639,6 +639,10 @@ body:has(#intro:not([hidden]):not(.out)) #floorCard,body:has(#intro:not([hidden]
 /* tour: no repeated floor info while the floor card is up */
 body.touring:has(#floorCard:not([hidden]):not(.out)) #cap,body.touring:has(#floorCard:not([hidden]):not(.out)) #chap{opacity:0!important;pointer-events:none}
 #cap,#chap{transition:opacity .5s}
+/* tour caption sits clear of the control bar */
+@media (max-width:640px){body.touring #cap{bottom:calc(var(--bot) + 74px)!important;inset-inline-start:var(--gl)!important}
+ body.touring #cap.quiet{border-radius:18px!important;padding:10px 16px 11px!important;max-width:calc(100vw - var(--gl) - var(--gr))}}
+@media (max-width:640px){body.touring #factsPop{bottom:calc(var(--bot) + 74px + var(--caph,60px) + 10px)!important;z-index:20!important}}
 
 </style>
 
@@ -727,7 +731,7 @@ const SHARE_BASE="";
 /* WhatsApp number of the Anara sales team, international format without + (e.g. 9665XXXXXXXX). Empty = WhatsApp asks who to send to. */
 const SALES_WHATSAPP="";
 /* Background music: path to a licensed track placed next to index.html, e.g. "music_anara-ambient.mp3". Empty = no music button. */
-const AV="?v=15";/* bump when a sound file changes, so browsers fetch the new one */
+const AV="?v=16";/* bump when a sound file changes, so browsers fetch the new one */
 const MUSIC_SRC="music_anara-ambient-3.mp3"+AV;
 /* Guided-tour narrator: one audio file per language plus [start,length] in seconds for every tour caption, in ROUTE order. No entry for a language = captions only. */
 const VOICE={"en":{"src":"voice_anara-guide-en.mp3","seg":[[1.0,12.14],[14.64,7.36],[23.5,6.72],[31.72,3.48],[36.7,7.36],[45.56,6.66],[53.72,3.84],[59.06,4.08],[64.64,6.86],[73.0,6.24],[80.74,6.36],[88.6,5.32],[95.42,6.26],[103.18,6.98],[111.66,7.76],[120.92,7.26],[129.68,6.1],[137.28,4.92],[143.7,3.62],[148.82,4.22],[154.54,7.9],[163.94,5.9],[171.34,5.1],[177.94,5.63],[185.07,7.4],[193.97,5.1],[200.57,5.14]]},"ar":{"src":"voice_anara-guide-ar.mp3","seg":[[1.0,11.8],[14.3,7.3],[23.1,6.82],[31.42,2.86],[35.78,9.6],[46.88,6.46],[54.84,3.22],[59.56,3.62],[64.68,7.76],[73.94,7.66],[83.1,6.32],[90.92,4.62],[97.04,5.68],[104.22,6.98],[112.7,7.66],[121.86,7.75],[131.11,7.44],[140.05,4.98],[146.53,3.82],[151.85,4.62],[157.97,7.41],[166.88,6.8],[175.18,5.04],[181.72,6.13],[189.35,8.2],[199.05,4.5],[205.05,5.9]]}};
