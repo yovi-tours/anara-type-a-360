@@ -511,7 +511,51 @@ body.touring #tags{display:none}
   body.touring #regPop{top:calc(var(--top) + 10px)}
 }
 #mini.mid{width:min(400px,30vw,calc((100vh - 330px) * .47))}#mini:not(.mid){width:min(180px,calc((100vh - 330px) * .47))}
-#bigMap .plbl small,#bigMap .plbl.minor{display:none}#bigMap.zin .plbl.minor,#bigMap .pin:hover+.plbl.minor,#bigMap.zin .plbl small,#bigMap .pin:hover+.plbl small{display:block}#bigMap .pin:hover+.plbl{z-index:5}
+#bigMap .plbl.minor{display:none}#bigMap.zin .plbl.minor,#bigMap .pin:hover+.plbl.minor,#bigMap.zin .plbl small,#bigMap .pin:hover+.plbl small{display:block}#bigMap .pin:hover+.plbl{z-index:5}
+/* ===== dark glass theme (matches the Anara platform tour) ===== */
+:root{--tint:#15190bb8;--tint-strong:#13160adb;--rim:#ffffff26}
+.glass{color:var(--ink-light);--ink:#f3f1e7;--ink-muted:#f3f1e7a8;--olive-700:#cfd0c1;--olive-900:#f0eee2;--olive-950:#ffffff;--olive-50:#ffffff1f;--olive-500:#b9b594;box-shadow:0 14px 36px -12px #000a,0 2px 6px #0004}
+.glass::before{backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+.glass::after{box-shadow:inset 1px 1px 0 #ffffff2b,inset -1px -1px 0 #ffffff14}
+.glass .chip:hover{background:#ffffff1f;box-shadow:none}
+.glass .chip[aria-pressed="true"],.glass .chip[aria-current="true"],.glass .chip[aria-selected="true"],.chip[aria-pressed="true"],.chip[aria-current="true"]{background:#f0eee2;color:#1d2110;box-shadow:0 6px 16px -8px #000}
+.ibtn:hover{background:#ffffff1f}.ibtn[aria-pressed="true"]{background:#ffffff2e;color:#fff;box-shadow:inset 0 0 0 1px #ffffff33}
+#big .ibtn:hover,#mini .ibtn:hover{background:#ffffff24}
+.ibtn[data-tip]::after{background:#f0eee2;color:#1d2110}
+.gsep{background:#ffffff2e!important}
+#mini .sz{background:#ffffff14;box-shadow:inset 0 0 0 1px #ffffff1f}
+#mini .sz button{color:#f3f1e7}#mini .sz button:hover{background:#ffffff24}
+#mini .sz button[aria-pressed="true"]{background:#f0eee2;color:#1d2110}
+.pin{background:#2c3319!important}.pin:hover{background:#80856e!important}
+.plbl{background:#14170be6;color:#f3f1e7}.plbl small{color:#d3ccb3}
+.kfx{background:#ffffff1a;color:#f3f1e7}.kfx:hover{background:#ffffff33}
+/* key facts: open layout, numbers first, hairline sections */
+#factsPop{gap:16px;padding:22px 26px 18px}
+#factsPop h3{font-size:22px;font-weight:600}
+.kfhero{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:none;box-shadow:none;border-radius:0;color:#f5f4ee;padding:4px 0 18px;border-bottom:1px solid #ffffff1f}
+.kfhero div{padding:0}.kfhero div+div::before{display:none}
+.kfhero b,.kfhero div:first-child b{font-size:32px;font-weight:400;color:#f5f4ee;letter-spacing:-.01em}
+.kfhero span{color:#f3f1e7a8;font-size:12.5px;margin-top:6px}
+.kfcols{gap:30px}
+.kfbox{background:none;box-shadow:none;border-radius:0;padding:0}
+#kfBody{display:flex;flex-direction:column;gap:18px}
+#kfBody>.kfbox{border-top:1px solid #ffffff1f;padding-top:16px}
+.kfbox h4{font-size:14px;font-weight:600;color:#f5f4ee;margin-bottom:12px}.kfbox h4 em{color:#f3f1e7a8}
+.kffl h4{color:#f5f4ee;font-size:13px}
+.bar2 .tr{height:6px;background:#ffffff1f}.bars.big .bar2 .tr{height:6px}
+.bar2 .tr i,[dir="rtl"] .bar2 .tr i{background:#e4dfd0}
+.bar2 .v{color:#f5f4ee;font-weight:600}
+.split{height:8px}.split i:nth-child(1),.legend .c0{background:#f0eee2}.split i:nth-child(2),.legend .c1{background:#b0a57a}.split i:nth-child(3),.legend .c2{background:#6f745a}
+.legend b{color:#f5f4ee}
+.kfchips span{background:#ffffff14;color:#f3f1e7;box-shadow:inset 0 0 0 1px #ffffff24}.kfchips span::before{background:#d3ccb3}
+#kfNote{color:#f3f1e7a8}
+@media (max-width:700px){.kfhero{grid-template-columns:1fr 1fr;gap:14px 8px}.kfhero b,.kfhero div:first-child b{font-size:26px}.kfcols{gap:18px}}
+.pop .link{background:#ffffff14;color:#f3f1e7;box-shadow:inset 0 0 0 1px #ffffff1f}
+#shCopy{background:#f0eee2!important;color:#1d2110!important}#shWa{background:#ffffff1f!important;color:#f3f1e7}
+.seg{background:#ffffff14}
+.pop input{background:#ffffff14!important;color:#f3f1e7!important;box-shadow:inset 0 0 0 1px #ffffff2e!important;border:0}.pop input::placeholder{color:#f3f1e780}
+#bigMap:not(.zin) .plbl.noar small{display:none}
+
 </style>
 
 <div id="stage"></div>
@@ -599,10 +643,10 @@ const SHARE_BASE="";
 /* WhatsApp number of the Anara sales team, international format without + (e.g. 9665XXXXXXXX). Empty = WhatsApp asks who to send to. */
 const SALES_WHATSAPP="";
 /* Background music: path to a licensed track placed next to index.html, e.g. "music_anara-ambient.mp3". Empty = no music button. */
-const AV="?v=3";/* bump when a sound file changes, so browsers fetch the new one */
+const AV="?v=6";/* bump when a sound file changes, so browsers fetch the new one */
 const MUSIC_SRC="music_anara-ambient-3.mp3"+AV;
 /* Guided-tour narrator: one audio file per language plus [start,length] in seconds for every tour caption, in ROUTE order. No entry for a language = captions only. */
-const VOICE={"en":{"src":"voice_anara-guide-en.mp3","seg":[[1.0,12.66],[15.16,7.18],[23.84,7.38],[32.72,5.64],[39.86,3.34],[44.7,3.44],[49.64,5.26],[56.4,4.56],[62.46,4.58],[68.54,4.8],[74.84,4.42],[80.76,5.7],[87.96,7.28],[96.74,6.6],[104.84,4.32],[110.66,4.22],[116.38,3.0],[120.88,3.34],[125.72,5.3],[132.52,4.34],[138.36,3.22],[143.08,4.48],[149.06,8.22],[158.78,4.34],[164.62,5.26]]},"ar":{"src":"voice_anara-guide-ar.mp3","seg":[[1.0,11.98],[14.48,7.68],[23.66,9.52],[34.68,6.82],[43.0,2.84],[47.34,3.94],[52.78,5.88],[60.16,5.86],[67.52,6.56],[75.58,5.18],[82.26,5.98],[89.74,6.82],[98.06,8.82],[108.38,7.68],[117.56,5.34],[124.4,4.76],[130.66,3.64],[135.8,4.24],[141.54,6.06],[149.1,6.18],[156.78,3.3],[161.58,4.48],[167.56,7.66],[176.72,4.06],[182.28,5.56]]}};
+const VOICE={"en":{"src":"voice_anara-guide-en.mp3","seg":[[1.0,12.14],[14.64,7.36],[23.5,7.36],[32.36,6.66],[40.52,3.84],[45.86,4.08],[51.44,6.86],[59.8,6.24],[67.54,6.36],[75.4,5.32],[82.22,6.26],[89.98,6.98],[98.46,7.76],[107.72,7.26],[116.48,6.1],[124.08,4.92],[130.5,3.62],[135.62,4.22],[141.34,7.9],[150.74,5.9],[158.14,5.1],[164.74,5.63],[171.87,7.4],[180.77,5.1],[187.37,5.14]]},"ar":{"src":"voice_anara-guide-ar.mp3","seg":[[1.0,11.8],[14.3,7.3],[23.1,9.6],[34.2,6.46],[42.16,3.22],[46.88,3.62],[52.0,7.76],[61.26,7.66],[70.42,6.32],[78.24,4.62],[84.36,5.68],[91.54,6.98],[100.02,7.66],[109.18,7.75],[118.43,7.44],[127.37,4.98],[133.85,3.82],[139.17,4.62],[145.29,7.41],[154.2,6.8],[162.5,5.04],[169.04,6.13],[176.67,8.2],[186.37,4.5],[192.37,5.9]]}};
 /* line spoken when a visitor walks into a room by themselves (index into seg) */
 const ROOM_VO={};
 /* Feature tags: [u, v] = position in the panorama image (0–1), {en:[title,text], ar:[title,text]} */
@@ -620,45 +664,45 @@ const ROUTE=[
   B(0.6,4,100,-0.11,"Welcome to Villa Type A","Welcome, and thank you for coming. This is Villa Type A. Three floors, about three hundred and eighty-nine square metres, with parking for two cars. Come in, let me show you around.","حيّاك الله في فيلا A","حيّاك الله، نوّرت فيلا A. ثلاثة أدوار، ومساحتها تقريباً ثلاثمية وتسعة وثمانين متر، وموقف لسيارتين. تفضّل معي، خلّني أورّيك البيت.","facts"),
   B(0.47,18,104,0.06,"Everything a family needs","Five bedrooms, a men's majlis, a home office, two separate entrances, and rooms for the driver and the maid.","كل اللي تحتاجه العائلة","خمس غرف نوم، مجلس رجال، مكتب، مدخلين مستقلين، وغرفة للسائق وغرفة للخادمة.")]},
  {id:"gf-majlis-entrance",ch:1,b:[
-  B(0.4,13,104,0.26,"Ground floor · 189.8 m²","We start at the main entrance. Look up. Two floors high and open to the sky, so daylight fills it all day.","الدور الأرضي · ١٨٩٫٨ م²","نبدأ من المدخل الرئيسي. شوف فوق. ارتفاع دورين ومفتوح على السماء، والنور الطبيعي يملأ المكان طول اليوم.","floor")]},
+  B(0.24,13,104,0.22,"Ground floor · 189.8 m²","We start at the main entrance. If you look up, it's two floors high and open to the sky, so daylight fills it all day.","الدور الأرضي · ١٨٩٫٨ م²","نبدأ من المدخل الرئيسي. إذا طالعت فوق، ارتفاع دورين ومفتوح على السماء، والنور الطبيعي يملأ المكان طول اليوم.","floor")]},
  {id:"gf-majlis",b:[
-  B(0.36,-3,102,0.2,"Men's majlis","Straight from the entrance, the men's majlis. Your guests come in here, and never cross the family side.","مجلس الرجال","ومن المدخل على طول، مجلس الرجال. ضيوفك يدخلون هنا، وما يمرّون على جهة العائلة."),
-  B(0.31,1,88,0.05,"A garden outlook","And it looks onto its own garden. Lovely, isn't it?","إطلالة على الحديقة","وجلستكم، تطل على حديقة خاصة.")]},
+  B(0.36,-3,102,0.2,"Men's majlis · 3.7 × 5.3 m","On your left as you come in, the men's majlis. Your guests come in here, and never cross the family side.","مجلس الرجال · ٣٫٧ × ٥٫٣ م","على يسارك وأنت داخل، مجلس الرجال. ضيوفك يدخلون هنا، وما يمرّون على جهة العائلة."),
+  B(0.31,1,88,0.05,"A garden outlook","And if you look outside, its own garden. Lovely, isn't it?","إطلالة على الحديقة","وإذا طالعت برّا، حديقة خاصة قدّام الجلسة.")]},
  {id:"gf-wash",b:[
-  B(0.4,-4,102,0.2,"Guest wash area & toilet","Right beside it, guests have their own wash area and toilet.","مغاسل ودورة مياه للضيوف","وجنبه على طول، مغاسل ودورة مياه خاصة للضيوف.")]},
+  B(0.4,-4,102,0.2,"Guest wash area & toilet","Right next to the majlis, guests have their own wash area and toilet.","مغاسل ودورة مياه للضيوف","وجنب المجلس على طول، مغاسل ودورة مياه خاصة للضيوف.")]},
  {id:"gf-office",b:[
-  B(0.32,-3,102,0.24,"Home office","By the entrance, a home office. Work, or receive a visitor, without opening up the house.","مكتب منزلي","وعند المدخل، مكتب. تشتغل فيه، أو تستقبل زائر، والبيت على راحته.")]},
+  B(0.32,-3,102,0.24,"Home office · 3.7 × 3.5 m","Back at the entrance, if you look right, a home office. Work, or receive a visitor, without opening up the house.","مكتب منزلي · ٣٫٧ × ٣٫٥ م","ونرجع للمدخل. إذا طالعت يمين، مكتب. تشتغل فيه، أو تستقبل زائر، والبيت على راحته.")]},
  {id:"gf-dining",b:[
-  B(0.34,-3,102,0.2,"Dining room","The dining room sits between the majlis and the family living. So serving is easy.","غرفة الطعام","غرفة الطعام بين المجلس وصالة العائلة. يعني الضيافة تصير أسهل.")]},
+  B(0.34,-3,102,0.2,"Dining room · 4.5 × 3.5 m","Straight ahead, the dining room. It sits between the majlis and the family living, so serving is easy.","غرفة الطعام · ٤٫٥ × ٣٫٥ م","وقدّامك على طول، غرفة الطعام. بين المجلس وصالة العائلة، يعني الضيافة تصير أسهل.")]},
  {id:"gf-living-2",b:[
-  B(0.4,2,100,0.12,"The family's own entrance","The family has its own entrance, behind this screen. They come and go in privacy.","مدخل خاص للعائلة","وللعائلة مدخلها الخاص، ورا هذا الساتر. يدخلون ويطلعون بخصوصية تامة.")]},
+  B(0.28,2,100,0.18,"The family's own entrance","Come with me. On your right, the family's own entrance, behind this screen. They come and go in privacy.","مدخل خاص للعائلة","تعال معي. على يمينك، مدخل العائلة الخاص، ورا هذا الساتر. يدخلون ويطلعون بخصوصية تامة.")]},
  {id:"gf-living",b:[
-  B(0.42,-3,102,0.2,"Family living","And this is the family living room. Open, bright, and the heart of the home.","صالة المعيشة","وهذي صالة المعيشة. مفتوحة ومنوّرة، وهي قلب البيت."),
-  B(0.86,0,98,0.09,"A planted courtyard","The stair wraps around a planted courtyard, and pulls daylight right into the centre.","فناء مزروع","والدرج، يلتف حول فناء مزروع، والنور الطبيعي يوصل لوسط البيت.")]},
+  B(0.42,-3,102,0.2,"Family living · 3.9 × 3.6 m","And ahead of you, the family living room. Open, bright, and the heart of the home.","صالة المعيشة · ٣٫٩ × ٣٫٦ م","وقدّامك صالة المعيشة. مفتوحة ومنوّرة، وهي قلب البيت."),
+  B(0.86,0,98,0.09,"A planted courtyard","On the other side, the stair. It wraps around a planted courtyard, and pulls daylight right into the centre.","فناء مزروع","وعلى الجهة الثانية، الدرج. يلتف حول فناء مزروع، والنور الطبيعي يوصل لوسط البيت.")]},
  {id:"gf-kitchen",b:[
-  B(0.3,-2,104,0.36,"Closed kitchen","The kitchen is closed, with worktops all round, built-in ovens, and a window over the sink.","مطبخ مغلق","المطبخ مغلق. أسطح عمل على كل الجهات، أفران مدمجة، وشباك فوق المغسلة.")]},
+  B(0.3,-2,104,0.36,"Closed kitchen · 4.0 × 3.5 m","Next, the kitchen. It's closed, with worktops all round, built-in ovens, and a window over the sink.","مطبخ مغلق · ٤٫٠ × ٣٫٥ م","بعدها المطبخ. مغلق، أسطح عمل على كل الجهات، أفران مدمجة، وشباك فوق المغسلة.")]},
  {id:"gf-maid-room",b:[
   B(0.88,-10,102,0.36,"Maid's room · driver's room by the gate","Behind the kitchen, the maid's room, with its bathroom and the laundry. The driver's room is separate, by the gate, with a bathroom of its own.","غرفة الخادمة · غرفة السائق عند البوابة","وورا المطبخ غرفة الخادمة، بدورة مياهها وغرفة الغسيل. وغرفة السائق مستقلة عند البوابة، ولها دورة مياهها.")]},
  {id:"ff-living-2",ch:2,b:[
-  B(0.1,-3,102,0.2,"First floor · 151.8 m²","Now, upstairs. This floor is just for the family. Four master bedrooms, each with its own bathroom.","الدور الأول · ١٥١٫٨ م²","نطلع للدور الأول. هذا للعائلة وبس. أربع غرف نوم رئيسية، وكل غرفة بدورة مياهها.","floor"),
-  B(0.5,-2,100,0.28,"Family lounge & coffee corner","In the middle, a family lounge with a coffee corner, and a terrace for fresh air.","صالة عائلية وركن قهوة","وفي الوسط صالة للعائلة، وركن قهوة، وتراس للهواء الطلق.")]},
+  B(0.1,-3,102,0.2,"First floor · 151.8 m²","Now, let's go upstairs. This floor is just for the family. Four master bedrooms, each with its own bathroom.","الدور الأول · ١٥١٫٨ م²","خلّنا نطلع للدور الأول. هذا للعائلة وبس. أربع غرف نوم رئيسية، وكل غرفة بدورة مياهها.","floor"),
+  B(0.2,-2,100,0.56,"Family lounge & coffee corner · 3.2 × 3.6 m","As you come up, the family lounge. To its right, a coffee corner, and then a terrace for fresh air.","صالة عائلية وركن قهوة · ٣٫٢ × ٣٫٦ م","أول ما تطلع، صالة العائلة. وعلى يمينها ركن القهوة، وبعده تراس للهواء الطلق.")]},
  {id:"ff-bed-4",b:[
-  B(0.36,-4,102,0.22,"Main suite","This is the main suite. Calm and generous, with a tall window.","الغرفة الرئيسية","وهذي الغرفة الرئيسية. هادية ووسيعة، وشباكها طويل.")]},
+  B(0.36,-4,102,0.22,"Main suite · 4.0 × 3.5 m","We start with the main suite. Calm and generous, with a tall window.","الغرفة الرئيسية · ٤٫٠ × ٣٫٥ م","نبدأ بالغرفة الرئيسية. هادية ووسيعة، وشباكها طويل.")]},
  {id:"ff-wardrobe-4",b:[
-  B(0.7,-3,102,-0.34,"Dressing room & bathroom","It has its own dressing room, and a private bathroom.","غرفة ملابس ودورة مياه","ومعها غرفة ملابس، ودورة مياه خاصة.")]},
+  B(0.7,-3,102,-0.34,"Dressing room & bathroom","Through here, its dressing room, and on the left, a private bathroom.","غرفة ملابس ودورة مياه","ومن هنا غرفة الملابس، وعلى يسارها دورة مياه خاصة.")]},
  {id:"ff-bed-3",b:[
-  B(0.38,-4,102,0.26,"Second bedroom","A second bedroom, with built-in wardrobes and its own bathroom.","غرفة النوم الثانية","وهذي غرفة نوم ثانية، بدواليبها ودورة مياهها.")]},
+  B(0.38,-4,102,0.26,"Second bedroom · 3.5 × 3.7 m","Next door, a second bedroom, with built-in wardrobes and its own bathroom.","غرفة النوم الثانية · ٣٫٥ × ٣٫٧ م","وجنبها غرفة نوم ثانية، بدواليبها ودورة مياهها.")]},
  {id:"ff-corridor",b:[
-  B(0.5,-7,100,0.03,"Light from above","Look down. This glass opening sits above the entrance, and shares its daylight with the bedroom wing.","نور من فوق","شوف تحت. هذي الفتحة الزجاجية فوق المدخل، وتوصّل النور لجناح غرف النوم.")]},
+  B(0.5,-7,100,0.03,"Light from above","Follow me along this corridor. If you look down, you see the entrance through this glass opening. It shares its daylight with the bedroom wing.","نور من فوق","تعال من هالممر. إذا طالعت تحت، تشوف المدخل من الفتحة الزجاجية، وهي توصّل النور لجناح غرف النوم.")]},
  {id:"ff-bed-1",b:[
-  B(0.3,-3,102,0.26,"Third bedroom","A third bedroom. The screened window gives light, and keeps your privacy.","غرفة النوم الثالثة","وهنا غرفة نوم ثالثة. شباكها بساتر، يدخّل النور ويحفظ الخصوصية.")]},
+  B(0.3,-3,102,0.26,"Third bedroom · 3.7 × 3.9 m","If you look right, a third bedroom. The screened window gives light, and keeps your privacy.","غرفة النوم الثالثة · ٣٫٧ × ٣٫٩ م","وإذا طالعت يمين، غرفة نوم ثالثة. شباكها بساتر، يدخّل النور ويحفظ الخصوصية.")]},
  {id:"ff-bed-2",b:[
-  B(0.3,-4,102,0.34,"Fourth bedroom","And a fourth, with a glass wardrobe and a wide window.","غرفة النوم الرابعة","والرابعة، بدولاب زجاجي وشباك واسع.")]},
+  B(0.3,-4,102,0.34,"Fourth bedroom · 3.7 × 3.8 m","And if you look left, the fourth, with a glass wardrobe and a wide window.","غرفة النوم الرابعة · ٣٫٧ × ٣٫٨ م","وإذا طالعت يسار، الرابعة، بدولاب زجاجي وشباك واسع.")]},
  {id:"sf-stairs",ch:3,b:[
-  B(0.3,-8,102,0.24,"Second floor · 47.3 m²","And finally, the top floor. A private suite, away from everything.","الدور الثاني · ٤٧٫٣ م²","وآخر شي، الدور الثاني. جناح مستقل، بعيد عن كل شي.","floor")]},
+  B(0.3,-8,102,0.24,"Second floor · 47.3 m²","And finally, one more flight up. A private suite, away from everything.","الدور الثاني · ٤٧٫٣ م²","وآخر شي، نطلع للدور الثاني. جناح مستقل، بعيد عن كل شي.","floor")]},
  {id:"sf-guest-room",b:[
-  B(0.45,-4,102,0.24,"Guest suite","A full bedroom, with a bathroom and a pantry beside it. For guests, or one of your grown children. It's up to you.","جناح الضيوف","غرفة نوم كاملة، وجنبها دورة مياه ومطبخ تحضيري. للضيوف، أو لواحد من الأبناء، مثل ما تحب."),
-  B(0.33,0,94,0.04,"Step out to the roof","And it opens onto the roof terrace. Imagine your evenings out here.","خطوة للسطح","وتفتح على تراس السطح. تخيّل سهرات العائلة هنا.")]},
+  B(0.45,-4,102,0.24,"Guest suite · 3.7 × 4.0 m","A full bedroom, with a bathroom and a pantry beside it. For guests, or one of your grown children. It's up to you.","جناح الضيوف · ٣٫٧ × ٤٫٠ م","غرفة نوم كاملة، وجنبها دورة مياه ومطبخ تحضيري. للضيوف، أو لواحد من الأبناء، مثل ما تحب."),
+  B(0.33,0,94,0.04,"Step out to the roof","And if you look outside, the roof terrace. Imagine your evenings out here.","خطوة للسطح","وإذا طالعت برّا، تراس السطح. تخيّل سهرات العائلة هنا.")]},
  {id:"gf-porch",ch:4,b:[
   B(0.48,16,104,0.04,"Make Villa Type A yours","If you like what you've seen, register your interest, and we'll arrange your private visit. Thank you.","خلّها بيتك","إذا عجبك اللي شفته، سجّل اهتمامك، ونرتّب لك زيارة خاصة. وحيّاك الله.","reg")]}
 ];
@@ -668,11 +712,11 @@ const T={
  en:{proj:"Villa Type A",floors:["Ground Floor","First Floor","Second Floor"],plan:"Floor plan",enlarge:"Enlarge",mapS:"Small map",mapM:"Medium map",mapL:"Full plan",szS:"S",szM:"M",szL:"L",tapPin:"Tap a space to go there · Scroll or pinch to zoom · Drag to move",
   nextStop:"Next stop",measure:"Measure",info:"Room info",doll:"3D view",rotate:"Auto-rotate",sound:"Music",share:"Share this view",full:"Full screen",zin:"Zoom in",zout:"Zoom out",close:"Close",
   mStart:"Click a point on the floor",mNext:"Click a second point · on the floor, or straight up for a height",mDoneT:"Distance",mHeight:"Height",mFloorOnly:"Start from a point on the floor",clear:"Clear",done:"Done",
-  size:"Clear size",area:"Area",open:"Open-plan circulation",dimsNote:"Approximate sizes, scaled from the floor plans",
+  size:"Clear size",area:"Area",open:"Open-plan circulation",dimsNote:"Clear sizes from the architectural room schedule",
   hint:"Drag to look around · Click the floor to walk",noView:"No 360° view that way yet · use the floor plan",soon:"360° view coming soon",soonName:{mb01:"Master Bedroom 01"},enter:"Enter the home",tour:"Guided tour",watch:"Watch the guided tour",iEyebrow:"Anara · Riyadh",byFloor:"Explore by floor",fcShort:["Majlis · office · living · kitchen","4 master bedrooms · lounge","Guest suite · roof terrace"],iSub:"A family home on three floors, with a majlis and office at the entrance and the family's own side behind.",
   up:"Up to",down:"Down to",m:"m",m2:"m²",stop:"Stop tour",guide:"Your guide · Anara",facts:"Key facts",reg:"Register interest",boot:"Preparing your tour",
   iFacts:[["5","Bedrooms"],["9","Bathrooms & WCs"],["3","Floors"],["2","Entrances"]],
-  kfEy:"Villa · Type A",kfTitle:"Key facts",kfNote:"Areas per villa from the Anara master plan calculations (Type A). Room sizes are approximate, scaled from the floor plans.",
+  kfEy:"Villa · Type A",kfTitle:"Key facts",kfNote:"Areas per villa from the Anara master plan calculations (Type A). Room sizes from the architectural room schedule.",
   kf:{hero:[["389 m²","Net saleable area"],["5","Bedrooms"],["9","Bathrooms & WCs"],["3","Floors"]],
    byFloor:"Built-up area by floor",splitNote:"Almost half the home is on the ground floor, where guests are hosted and the family spends the day.",largest:"Largest spaces",approx:"approx.",flTitle:"Floor by floor",hlTitle:"Designed for family living",
    fl:[["Main entrance court, open to the sky","Men's majlis with garden","Home office","Dining room","Family living & planted courtyard","Closed kitchen & laundry","Maid's room with bathroom","Driver's room with bathroom","Guest and family wash areas & WCs"],["4 master bedrooms","4 bathrooms","Walk-in wardrobe","Family lounge & coffee corner","Pantry","Terrace"],["Guest suite","Bathroom","Pantry","Roof terrace"]],
@@ -687,11 +731,11 @@ const T={
  ar:{proj:"فيلا النموذج A",floors:["الدور الأرضي","الدور الأول","الدور الثاني"],plan:"المخطط",enlarge:"تكبير",mapS:"خريطة صغيرة",mapM:"خريطة متوسطة",mapL:"المخطط كاملًا",szS:"ص",szM:"م",szL:"ك",tapPin:"اضغط على مساحة للانتقال · مرر أو قرّب بإصبعين للتكبير · اسحب للتحريك",
   nextStop:"المحطة التالية",measure:"القياس",info:"معلومات الغرفة",doll:"عرض ثلاثي الأبعاد",rotate:"دوران تلقائي",sound:"موسيقى",share:"مشاركة هذا المشهد",full:"ملء الشاشة",zin:"تكبير",zout:"تصغير",close:"إغلاق",
   mStart:"اضغط على نقطة في الأرضية",mNext:"اضغط على نقطة ثانية · على الأرضية، أو للأعلى مباشرة لقياس الارتفاع",mDoneT:"المسافة",mHeight:"الارتفاع",mFloorOnly:"ابدأ من نقطة على الأرضية",clear:"مسح",done:"تم",
-  size:"المقاس الصافي",area:"المساحة",open:"ممر مفتوح",dimsNote:"مقاسات تقريبية مأخوذة من المخططات",
+  size:"المقاس الصافي",area:"المساحة",open:"ممر مفتوح",dimsNote:"المقاسات من جدول أبعاد الفراغات المعماري",
   hint:"اسحب للتجول · اضغط على الأرضية للتنقل",noView:"لا يوجد مشهد ٣٦٠° في هذا الاتجاه بعد · استخدم المخطط",soon:"مشهد ٣٦٠° قريبًا",soonName:{mb01:"غرفة النوم الرئيسية ٠١"},enter:"ادخل المنزل",tour:"جولة موجّهة",watch:"شاهد الجولة الموجّهة",iEyebrow:"أنارا · الرياض",byFloor:"تصفّح حسب الدور",fcShort:["المجلس · المكتب · المعيشة · المطبخ","٤ غرف نوم رئيسية · صالة","جناح الضيوف · تراس السطح"],iSub:"بيت عائلي على ثلاثة أدوار، المجلس والمكتب عند المدخل، وللعائلة جهتها الخاصة.",
   up:"صعود إلى",down:"نزول إلى",m:"م",m2:"م²",stop:"إنهاء الجولة",guide:"مرشدك · أنارا",facts:"أبرز المواصفات",reg:"سجّل اهتمامك",boot:"جارٍ تجهيز جولتك",
   iFacts:[["٥","غرف نوم"],["٩","دورات مياه"],["٣","أدوار"],["٢","مدخلان"]],
-  kfEy:"فيلا · النموذج A",kfTitle:"أبرز المواصفات",kfNote:"المساحات لكل فيلا من حسابات المخطط العام لأنارا (النموذج A). مقاسات الغرف تقريبية ومأخوذة من المخططات.",
+  kfEy:"فيلا · النموذج A",kfTitle:"أبرز المواصفات",kfNote:"المساحات لكل فيلا من حسابات المخطط العام لأنارا (النموذج A). مقاسات الغرف من جدول أبعاد الفراغات المعماري.",
   kf:{hero:[["٣٨٩ م²","المساحة البيعية الصافية"],["٥","غرف نوم"],["٩","دورات مياه"],["٣","أدوار"]],
    byFloor:"مسطحات البناء لكل دور",splitNote:"قرابة نصف مساحة البيت في الدور الأرضي، حيث استقبال الضيوف ويوم العائلة.",largest:"أرحب المساحات",approx:"تقريبي",flTitle:"تفاصيل الأدوار",hlTitle:"مصممة لحياة العائلة",
    fl:[["بهو مدخل رئيسي مفتوح على السماء","مجلس رجال بحديقة","مكتب","غرفة طعام","صالة معيشة وفناء مزروع","مطبخ مغلق وغرفة غسيل","غرفة خادمة بدورة مياه","غرفة سائق بدورة مياه","مغاسل ودورات مياه للضيوف والعائلة"],["٤ غرف نوم رئيسية","٤ دورات مياه","غرفة ملابس","صالة عائلية وركن قهوة","مطبخ تحضيري","تراس"],["جناح ضيوف","دورة مياه","مطبخ تحضيري","تراس السطح"]],
@@ -708,42 +752,42 @@ const FLOORS=[{"plan":"plan_ground.webp","w":1180,"h":2350},{"plan":"plan_first.
 /* Type A built-up area per villa by floor, m² — Anara master plan calculations */
 const FLOOR_AREA=[189.77,151.79,47.32];
 const PTS=[
- ["gf-porch","Arrival Court","ساحة الوصول",0,42.8,86.8,270,"GF-00",null],
- ["gf-majlis-entrance","Main Entrance","المدخل الرئيسي",0,41.5,68.1,169,"GF-01",[1.9,4.5]],
- ["gf-lobby","Entrance Lobby","بهو المدخل",0,42.8,61.7,90,"GF-02",null],
- ["gf-majlis","Men Majlis","مجلس الرجال",0,21.2,71.1,10,"GF-03",[3.7,5.4]],
- ["gf-wash","Guest Wash Area","مغاسل الضيوف",0,14.4,54.9,0,"GF-06",[1.6,2.0]],
- ["gf-wc","Guest Toilet","دورة مياه الضيوف",0,9.7,48.3,252,"GF-07",[1.0,1.2]],
- ["gf-office","Office","المكتب",0,61.9,64.3,90,"GF-04",[3.6,3.2]],
- ["gf-dining","Dining Room","غرفة الطعام",0,34.7,51.5,97,"GF-05",[4.3,3.4]],
- ["gf-living-2","Family Hall","صالة العائلة · الممر",0,55.1,40.9,180,"GF-08",[5.7,5.4]],
- ["gf-entrance","Family Entrance","مدخل العائلة",0,69.5,43.4,252,"GF-09",null],
- ["gf-living","Family Living","صالة المعيشة",0,38.1,28.5,180,"GF-08",[5.7,5.4]],
- ["gf-women-wash","Family Wash Area","مغسلة العائلة",0,19.9,28.5,270,"GF-10",[1.2,1.4]],
- ["gf-women-wc","Family Toilet","دورة مياه العائلة",0,10.2,28.1,338,"GF-11",[1.1,1.4]],
- ["gf-kitchen","Closed Kitchen","المطبخ المغلق",0,38.1,16.6,180,"GF-12",[3.7,3.5]],
- ["gf-maid-room","Maid Room","غرفة الخادمة",0,16.9,13.2,198,"GF-14",[2.2,2.2]],
- ["gf-maid-bath","Maid Bathroom","دورة مياه الخادمة",0,15.3,20.4,90,"GF-15",[2.3,1.4]],
- ["gf-laundry","Laundry","غرفة الغسيل",0,16.1,5.7,277,"GF-13",[2.3,1.3]],
- ["gf-guard-room","Driver Room","غرفة السائق",0,24.6,94.0,281,"GF-16",[2.4,2.3]],
- ["gf-guard-bath","Driver Bathroom","دورة مياه السائق",0,10.2,92.3,335,"GF-17",[1.1,2.3]],
- ["ff-living-2","Family Lounge · Hall","صالة العائلة العلوية · الممر",1,42.6,50.0,268,"FF-01",[3.8,3.6]],
- ["ff-living","Family Lounge","صالة العائلة العلوية",1,18.3,53.0,90,"FF-01",[3.8,3.6]],
- ["ff-pantry","Pantry","المطبخ التحضيري",1,15.7,28.0,270,"FF-02",[2.6,1.3]],
- ["ff-bed-4","Master Bedroom 04","غرفة النوم الرئيسية ٤",1,39.1,16.4,90,"FF-10",[4.1,3.3]],
- ["ff-wardrobe-4","Walk-in Wardrobe","غرفة الملابس",1,14.8,13.8,0,"FF-11",[2.5,1.6]],
- ["ff-bath-4","Bathroom 04","دورة المياه ٤",1,13.9,20.3,180,"FF-12",[2.5,1.7]],
- ["ff-bed-3","Master Bedroom 03","غرفة النوم الرئيسية ٣",1,65.2,31.9,90,"FF-08",[3.5,3.5]],
- ["ff-bath-3","Bathroom 03","دورة المياه ٣",1,44.8,34.1,343,"FF-09",[1.7,2.5]],
- ["ff-corridor","Bedroom Corridor","ممر غرف النوم",1,41.3,62.9,90,"FF-03",null],
- ["ff-bed-1","Master Bedroom 01","غرفة النوم الرئيسية ١",1,18.3,75.4,0,"FF-04",[3.8,3.2]],
- ["ff-bath-1","Bathroom 01","دورة المياه ١",1,15.7,64.2,55,"FF-05",[2.6,1.3]],
- ["ff-bed-2","Master Bedroom 02","غرفة النوم الرئيسية ٢",1,63.5,75.0,180,"FF-06",[3.8,2.8]],
- ["ff-bath-2","Bathroom 02","دورة المياه ٢",1,69.6,62.5,96,"FF-07",[2.6,1.7]],
- ["sf-stairs","Roof Lobby","بهو السطح",2,33.5,38.9,0,"SF-01",null],
- ["sf-pantry","Pantry","المطبخ التحضيري",2,25.0,51.0,0,"SF-02",[1.2,2.5]],
- ["sf-bath","Bathroom","دورة المياه",2,12.7,51.0,0,"SF-03",[1.7,2.5]],
- ["sf-guest-room","Guest Suite","جناح الضيوف",2,22.9,64.4,0,"SF-04",[3.9,3.9]]
+ ["gf-porch","Arrival Court","ساحة الوصول",0,42.8,86.8,270,"GF-P",null],
+ ["gf-majlis-entrance","Main Entrance","المدخل الرئيسي",0,41.5,68.1,169,"GF-01",[1.8,4.5]],
+ ["gf-lobby","Entrance Lobby","بهو المدخل",0,42.8,61.7,90,"GF-L",null],
+ ["gf-majlis","Men Majlis","مجلس الرجال",0,21.2,71.1,10,"GF-02",[3.7,5.3]],
+ ["gf-wash","Guest Wash Area","مغاسل الضيوف",0,14.4,54.9,0,"GF-03",[1.7,2.1]],
+ ["gf-wc","Guest Toilet","دورة مياه الضيوف",0,9.7,48.3,252,"GF-04",[1.7,1.4]],
+ ["gf-office","Office","المكتب",0,61.9,64.3,90,"GF-05",[3.7,3.5]],
+ ["gf-dining","Dining Room","غرفة الطعام",0,34.7,51.5,97,"GF-06",[4.5,3.5]],
+ ["gf-living-2","Family Hall","صالة العائلة · الممر",0,55.1,40.9,180,"GF-08",null],
+ ["gf-entrance","Family Entrance","مدخل العائلة",0,69.5,43.4,252,"GF-07",[3.0,1.5]],
+ ["gf-living","Family Living","صالة المعيشة",0,38.1,28.5,180,"GF-08",[3.9,3.6]],
+ ["gf-women-wash","Family Wash Area","مغسلة العائلة",0,19.9,28.5,270,"GF-09",[1.1,1.6]],
+ ["gf-women-wc","Family Toilet","دورة مياه العائلة",0,10.2,28.1,338,"GF-10",[1.2,1.6]],
+ ["gf-kitchen","Closed Kitchen","المطبخ المغلق",0,38.1,16.6,180,"GF-11",[4.0,3.5]],
+ ["gf-maid-room","Maid Room","غرفة الخادمة",0,16.9,13.2,198,"GF-12",[2.4,2.2]],
+ ["gf-maid-bath","Maid Bathroom","دورة مياه الخادمة",0,15.3,20.4,90,"GF-13",[2.4,1.6]],
+ ["gf-laundry","Laundry","غرفة الغسيل",0,16.1,5.7,277,"GF-13L",[2.4,1.5]],
+ ["gf-guard-room","Driver Room","غرفة السائق",0,24.6,94.0,281,"GF-16",[2.2,2.2]],
+ ["gf-guard-bath","Driver Bathroom","دورة مياه السائق",0,10.2,92.3,335,"GF-17",[1.2,1.8]],
+ ["ff-living-2","Family Lounge · Hall","صالة العائلة العلوية · الممر",1,42.6,50.0,268,"FF-01",null],
+ ["ff-living","Family Lounge","صالة العائلة العلوية",1,18.3,53.0,90,"FF-01",[3.2,3.6]],
+ ["ff-pantry","Pantry","المطبخ التحضيري",1,15.7,28.0,270,"FF-12",[2.4,1.5]],
+ ["ff-bed-4","Master Bedroom 04","غرفة النوم الرئيسية ٤",1,39.1,16.4,90,"FF-09",[4.0,3.5]],
+ ["ff-wardrobe-4","Walk-in Wardrobe","غرفة الملابس",1,14.8,13.8,0,"FF-10",[2.4,1.7]],
+ ["ff-bath-4","Bathroom 04","دورة المياه ٤",1,13.9,20.3,180,"FF-11",[2.4,1.7]],
+ ["ff-bed-3","Master Bedroom 03","غرفة النوم الرئيسية ٣",1,65.2,31.9,90,"FF-07",[3.5,3.7]],
+ ["ff-bath-3","Bathroom 03","دورة المياه ٣",1,44.8,34.1,343,"FF-08",[2.2,2.6]],
+ ["ff-corridor","Bedroom Corridor","ممر غرف النوم",1,41.3,62.9,90,"FF-C",null],
+ ["ff-bed-1","Master Bedroom 01","غرفة النوم الرئيسية ١",1,18.3,75.4,0,"FF-04",[3.7,3.9]],
+ ["ff-bath-1","Bathroom 01","دورة المياه ١",1,15.7,64.2,55,"FF-05",[2.5,1.4]],
+ ["ff-bed-2","Master Bedroom 02","غرفة النوم الرئيسية ٢",1,63.5,75.0,180,"FF-02",[3.7,3.8]],
+ ["ff-bath-2","Bathroom 02","دورة المياه ٢",1,69.6,62.5,96,"FF-03",[2.4,1.6]],
+ ["sf-stairs","Roof Lobby","بهو السطح",2,33.5,38.9,0,"RF-01",[1.2,3.7]],
+ ["sf-pantry","Pantry","المطبخ التحضيري",2,25.0,51.0,0,"RF-03",[1.1,2.5]],
+ ["sf-bath","Bathroom","دورة المياه",2,12.7,51.0,0,"RF-04",[1.8,2.5]],
+ ["sf-guest-room","Guest Suite","جناح الضيوف",2,22.9,64.4,0,"RF-02",[3.7,4.0]]
 ];
 const GROUP_START=new Set(["gf-majlis","gf-office","gf-living-2","gf-kitchen","gf-guard-room","ff-pantry","ff-bed-4","ff-bed-3","ff-corridor","sf-pantry","sf-guest-room"]);
 const SPOTS={
@@ -959,7 +1003,7 @@ function makeMap(root,labels,onPick){const img=root.querySelector("img"),pins=ro
   function render(f){fi=f;img.src=FLOORS[f].plan;img.width=FLOORS[f].w;img.height=FLOORS[f].h;pins.innerHTML="";
     P.filter(p=>p.floor===f).forEach(p=>{const b=document.createElement("button");b.className="pin";b.dataset.id=p.id;b.style.left=p.x+"%";b.style.top=p.y+"%";b.title=nm(p);b.setAttribute("aria-label",nm(p));
       b.onclick=e=>{e.stopPropagation();if(root.dataset.dragged==="1")return;onPick&&onPick();stopTour();go(p.id)};pins.appendChild(b);
-      if(labels){const l=document.createElement("span");l.className="plbl"+(/bath|wc|wash|laundry|wardrobe|corridor|lobby|entrance|living-2|pantry|stairs/.test(p.id)?" minor":"");l.style.left=p.x+"%";l.style.top=p.y+"%";l.innerHTML=nm(p)+(p.dims?"<small>≈ "+fmt(p.dims[0]*p.dims[1],1)+" "+t("m2")+"</small>":"");pins.appendChild(l)}});
+      if(labels){const l=document.createElement("span");l.className="plbl"+(/bath|wc|wash|laundry|wardrobe|corridor|lobby|entrance|living-2|pantry|stairs/.test(p.id)?" minor":/maid-room|guard-room/.test(p.id)?" noar":"");l.style.left=p.x+"%";l.style.top=p.y+"%";l.innerHTML=nm(p)+(p.dims?"<small>≈ "+fmt(p.dims[0]*p.dims[1],1)+" "+t("m2")+"</small>":"");pins.appendChild(l)}});
     cn=document.createElementNS("http://www.w3.org/2000/svg","svg");cn.setAttribute("viewBox","-55 -55 110 110");cn.classList.add("cone");
     cn.innerHTML='<defs><radialGradient id="g'+root.id+'" cx="0" cy="0" r="56" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2c3319" stop-opacity="1"/><stop offset=".7" stop-color="#3f4727" stop-opacity=".8"/><stop offset="1" stop-color="#3f4727" stop-opacity=".25"/></radialGradient></defs><path class="cw" fill="url(#g'+root.id+')"/><path class="ce"/>';cn.querySelector(".cw").style.fill="url(#g"+root.id+")";lastA=-1;
     pins.appendChild(cn);mark()}
@@ -1079,7 +1123,7 @@ function renderFacts(){const F=t("kf"),A=FLOOR_AREA,tot=A.reduce((x,y)=>x+y,0),m
   const seen={},rooms=P.filter(p=>p.dims&&!/lobby/.test(p.id)&&!seen[p.code]&&(seen[p.code]=1)).map(p=>[p[lang],p.dims[0]*p.dims[1]]).sort((x,y)=>y[1]-x[1]).slice(0,7);
   $("kfBody").innerHTML='<div class="kfhero">'+F.hero.map(([v,l])=>'<div><b>'+v+'</b><span>'+l+'</span></div>').join("")+'</div>'
    +'<div class="kfcols"><div class="kfbox"><h4>'+F.byFloor+'<em>'+fmt(tot,1)+' '+t("m2")+'</em></h4><div class="bars big">'+A.map((v,i)=>bar(t("floors")[i],v,mx)).join("")+'</div><div class="split">'+A.map((v,i)=>'<i style="flex:'+v+'"></i>').join("")+'</div><div class="legend">'+A.map((v,i)=>'<span><i class="c'+i+'"></i>'+t("floors")[i]+' <b>'+fmt(v/tot*100,0)+'%</b></span>').join("")+'</div><p class="kfp">'+F.splitNote+'</p></div>'
-   +'<div class="kfbox"><h4>'+F.largest+'<em>'+F.approx+'</em></h4><div class="bars">'+rooms.map(r=>bar(r[0],r[1],rooms[0][1])).join("")+'</div></div></div>'
+   +'<div class="kfbox"><h4>'+F.largest+'</h4><div class="bars">'+rooms.map(r=>bar(r[0],r[1],rooms[0][1])).join("")+'</div></div></div>'
    +'<div class="kfbox"><h4>'+F.flTitle+'</h4><div class="kffl">'+F.fl.map((l,i)=>'<div><h4>'+t("floors")[i]+'</h4><ul>'+l.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div></div>'
    +'<div class="kfbox"><h4>'+F.hlTitle+'</h4><div class="kfchips">'+F.hl.map(x=>'<span>'+x+'</span>').join("")+'</div></div>'}
 $("kfClose").onclick=closePops;$("factsPop").addEventListener("click",e=>e.stopPropagation());
