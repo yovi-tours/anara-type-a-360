@@ -566,6 +566,18 @@ body:not(.touring):has(#factsPop:not([hidden])) .dock,body:not(.touring):has(#fa
 #fcProg{background:#ffffff1a}#fcProg i,[dir="rtl"] #fcProg i{background:#e4dfd0}
 .stairbtn .arr::after{background:#14170be6}
 .room .fin li{background:#ffffff14;box-shadow:inset 0 0 0 1px #ffffff24}
+/* lighter glass: see the room through the interface */
+:root{--tint:#15190b6b;--tint-strong:#13160a80}
+.glass::before{backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3)}
+.glass{box-shadow:0 10px 28px -14px #0008}
+#factsPop.glass::after,#regPop.glass::after,#sharePop.glass::after,#big.glass::after{background:#12150ae6}
+.glass,.glass b,.glass h2,.glass h3{text-shadow:0 1px 2px #0006}
+@media (min-width:861px){
+ #room{padding:14px 18px 12px!important;width:auto!important;min-width:220px;max-width:300px}
+ #room h2{font-size:22px!important;line-height:1.2}
+ #room .meta{margin-top:8px!important;gap:16px!important}#room .meta b{font-size:15px!important}
+ #room .note{display:none}
+}
 
 </style>
 
@@ -654,7 +666,7 @@ const SHARE_BASE="";
 /* WhatsApp number of the Anara sales team, international format without + (e.g. 9665XXXXXXXX). Empty = WhatsApp asks who to send to. */
 const SALES_WHATSAPP="";
 /* Background music: path to a licensed track placed next to index.html, e.g. "music_anara-ambient.mp3". Empty = no music button. */
-const AV="?v=9";/* bump when a sound file changes, so browsers fetch the new one */
+const AV="?v=10";/* bump when a sound file changes, so browsers fetch the new one */
 const MUSIC_SRC="music_anara-ambient-3.mp3"+AV;
 /* Guided-tour narrator: one audio file per language plus [start,length] in seconds for every tour caption, in ROUTE order. No entry for a language = captions only. */
 const VOICE={"en":{"src":"voice_anara-guide-en.mp3","seg":[[1.0,12.14],[14.64,7.36],[23.5,7.36],[32.36,6.66],[40.52,3.84],[45.86,4.08],[51.44,6.86],[59.8,6.24],[67.54,6.36],[75.4,5.32],[82.22,6.26],[89.98,6.98],[98.46,7.76],[107.72,7.26],[116.48,6.1],[124.08,4.92],[130.5,3.62],[135.62,4.22],[141.34,7.9],[150.74,5.9],[158.14,5.1],[164.74,5.63],[171.87,7.4],[180.77,5.1],[187.37,5.14]]},"ar":{"src":"voice_anara-guide-ar.mp3","seg":[[1.0,11.8],[14.3,7.3],[23.1,9.6],[34.2,6.46],[42.16,3.22],[46.88,3.62],[52.0,7.76],[61.26,7.66],[70.42,6.32],[78.24,4.62],[84.36,5.68],[91.54,6.98],[100.02,7.66],[109.18,7.75],[118.43,7.44],[127.37,4.98],[133.85,3.82],[139.17,4.62],[145.29,7.41],[154.2,6.8],[162.5,5.04],[169.04,6.13],[176.67,8.2],[186.37,4.5],[192.37,5.9]]}};
@@ -764,25 +776,25 @@ const FLOORS=[{"plan":"plan_ground.webp","w":1180,"h":2350},{"plan":"plan_first.
 const FLOOR_AREA=[189.77,151.79,47.32];
 const PTS=[
  ["gf-porch","Arrival Court","ساحة الوصول",0,42.8,86.8,270,"GF-P",null],
- ["gf-majlis-entrance","Main Entrance","المدخل الرئيسي",0,41.5,68.1,169,"GF-01",[1.8,4.5]],
+ ["gf-majlis-entrance","Main Entrance","المدخل الرئيسي",0,41.5,68.1,175,"GF-01",[1.8,4.5]],
  ["gf-lobby","Entrance Lobby","بهو المدخل",0,42.8,61.7,90,"GF-L",null],
- ["gf-majlis","Men Majlis","مجلس الرجال",0,21.2,71.1,10,"GF-02",[3.7,5.3]],
+ ["gf-majlis","Men Majlis","مجلس الرجال",0,24.6,71.9,3,"GF-02",[3.7,5.3]],
  ["gf-wash","Guest Wash Area","مغاسل الضيوف",0,14.4,54.9,0,"GF-03",[1.7,2.1]],
- ["gf-wc","Guest Toilet","دورة مياه الضيوف",0,9.7,48.3,252,"GF-04",[1.7,1.4]],
+ ["gf-wc","Guest Toilet","دورة مياه الضيوف",0,9.7,48.3,260,"GF-04",[1.7,1.4]],
  ["gf-office","Office","المكتب",0,61.9,64.3,90,"GF-05",[3.7,3.5]],
  ["gf-dining","Dining Room","غرفة الطعام",0,34.7,51.5,97,"GF-06",[4.5,3.5]],
  ["gf-living-2","Family Hall","صالة العائلة · الممر",0,55.1,40.9,180,"GF-08",[3.9,3.6]],
- ["gf-entrance","Family Entrance","مدخل العائلة",0,69.5,43.4,252,"GF-07",[3.0,1.5]],
+ ["gf-entrance","Family Entrance","مدخل العائلة",0,69.5,43.4,257,"GF-07",[3.0,1.5]],
  ["gf-living","Family Living","صالة المعيشة",0,38.1,28.5,180,"GF-08",[3.9,3.6]],
  ["gf-women-wash","Family Wash Area","مغسلة العائلة",0,19.9,28.5,270,"GF-09",[1.1,1.6]],
- ["gf-women-wc","Family Toilet","دورة مياه العائلة",0,10.2,28.1,338,"GF-10",[1.2,1.6]],
+ ["gf-women-wc","Family Toilet","دورة مياه العائلة",0,10.2,28.1,345,"GF-10",[1.2,1.6]],
  ["gf-kitchen","Closed Kitchen","المطبخ المغلق",0,38.1,16.6,180,"GF-11",[4.0,3.5]],
  ["gf-maid-room","Maid Room","غرفة الخادمة",0,16.9,13.2,198,"GF-12",[2.4,2.2]],
  ["gf-maid-bath","Maid Bathroom","دورة مياه الخادمة",0,15.3,20.4,90,"GF-13",[2.4,1.6]],
  ["gf-laundry","Laundry","غرفة الغسيل",0,16.1,5.7,277,"GF-13L",[2.4,1.5]],
  ["gf-guard-room","Driver Room","غرفة السائق",0,24.6,94.0,281,"GF-16",[2.2,2.2]],
  ["gf-guard-bath","Driver Bathroom","دورة مياه السائق",0,10.2,92.3,335,"GF-17",[1.2,1.8]],
- ["ff-living-2","Family Lounge · Hall","صالة العائلة العلوية · الممر",1,42.6,50.0,268,"FF-01",[3.2,3.6]],
+ ["ff-living-2","Family Lounge · Hall","صالة العائلة العلوية · الممر",1,42.6,50.0,275,"FF-01",[3.2,3.6]],
  ["ff-living","Family Lounge","صالة العائلة العلوية",1,18.3,53.0,90,"FF-01",[3.2,3.6]],
  ["ff-pantry","Pantry","المطبخ التحضيري",1,15.7,28.0,270,"FF-12",[2.4,1.5]],
  ["ff-bed-4","Master Bedroom 04","غرفة النوم الرئيسية ٤",1,39.1,16.4,90,"FF-09",[4.0,3.5]],
@@ -792,36 +804,36 @@ const PTS=[
  ["ff-bath-3","Bathroom 03","دورة المياه ٣",1,44.8,34.1,343,"FF-08",[2.2,2.6]],
  ["ff-corridor","Bedroom Corridor","ممر غرف النوم",1,41.3,62.9,90,"FF-C",null],
  ["ff-bed-1","Master Bedroom 01","غرفة النوم الرئيسية ١",1,18.3,75.4,0,"FF-04",[3.7,3.9]],
- ["ff-bath-1","Bathroom 01","دورة المياه ١",1,15.7,64.2,55,"FF-05",[2.5,1.4]],
+ ["ff-bath-1","Bathroom 01","دورة المياه ١",1,15.7,64.2,65,"FF-05",[2.5,1.4]],
  ["ff-bed-2","Master Bedroom 02","غرفة النوم الرئيسية ٢",1,63.5,75.0,180,"FF-02",[3.7,3.8]],
- ["ff-bath-2","Bathroom 02","دورة المياه ٢",1,69.6,62.5,96,"FF-03",[2.4,1.6]],
- ["sf-stairs","Roof Lobby","بهو السطح",2,33.5,38.9,0,"RF-01",[1.2,3.7]],
+ ["ff-bath-2","Bathroom 02","دورة المياه ٢",1,69.6,62.5,104,"FF-03",[2.4,1.6]],
+ ["sf-stairs","Roof Lobby","بهو السطح",2,33.5,38.9,355,"RF-01",[1.2,3.7]],
  ["sf-pantry","Pantry","المطبخ التحضيري",2,25.0,51.0,0,"RF-03",[1.1,2.5]],
  ["sf-bath","Bathroom","دورة المياه",2,12.7,51.0,0,"RF-04",[1.8,2.5]],
- ["sf-guest-room","Guest Suite","جناح الضيوف",2,22.9,64.4,0,"RF-02",[3.7,4.0]]
+ ["sf-guest-room","Guest Suite","جناح الضيوف",2,22.9,64.4,10,"RF-02",[3.7,4.0]]
 ];
 const GROUP_START=new Set(["gf-majlis","gf-office","gf-living-2","gf-kitchen","gf-guard-room","ff-pantry","ff-bed-4","ff-bed-3","ff-corridor","sf-pantry","sf-guest-room"]);
 const SPOTS={
  "gf-porch":[[0.496,0.693,"gf-majlis-entrance"],[0.106,0.633,"gf-guard-room"]],
- "gf-majlis-entrance":[[0.71,0.725,"gf-porch"],[0.27,0.66,"gf-lobby"],[0.95,0.66,"gf-majlis"]],
+ "gf-majlis-entrance":[[0.727,0.725,"gf-porch"],[0.27,0.66,"gf-lobby"],[0.95,0.66,"gf-majlis"]],
  "gf-lobby":[[0.516,0.835,"gf-majlis-entrance"],[0.27,0.66,"gf-office"],[0.94,0.754,"gf-dining"]],
- "gf-majlis":[[0.004,0.728,"gf-majlis-entrance"],[0.67,0.6,"gf-wash"]],
+ "gf-majlis":[[0.953,0.764,"gf-majlis-entrance"],[0.67,0.6,"gf-wash"]],
  "gf-wash":[[0.22,0.66,"gf-majlis"],[0.76,0.66,"gf-wc"],[0.0,0.66,"gf-dining"]],
  "gf-wc":[[0.95,0.68,"gf-wash"]],
  "gf-office":[[0.771,0.786,"gf-lobby"]],
  "gf-dining":[[0.459,0.754,"gf-lobby"],[0.645,0.6,"gf-wash"],[0.102,0.733,"gf-living-2"]],
  "gf-living-2":[[0.86,0.62,"gf-dining"],[0.5,0.62,"gf-entrance"],[0.154,0.705,"gf-living"]],
- "gf-entrance":[[0.254,0.809,"gf-living-2"]],
+ "gf-entrance":[[0.268,0.809,"gf-living-2"]],
  "gf-living":[[0.654,0.705,"gf-living-2"],[0.02,0.6,"gf-women-wash"],[0.12,0.6,"gf-kitchen"],[0.935,0.6,"ff-living-2"]],
  "gf-women-wash":[[0.77,0.64,"gf-living"],[0.276,0.837,"gf-women-wc"]],
- "gf-women-wc":[[0.939,0.837,"gf-women-wash"]],
+ "gf-women-wc":[[0.958,0.837,"gf-women-wash"]],
  "gf-kitchen":[[0.9,0.62,"gf-living"],[0.051,0.737,"gf-maid-room"]],
  "gf-maid-room":[[0.545,0.64,"gf-kitchen"],[0.285,0.8,"gf-laundry"],[0.685,0.64,"gf-maid-bath"]],
  "gf-maid-bath":[[0.11,0.68,"gf-maid-room"]],
  "gf-laundry":[[0.019,0.837,"gf-maid-room"]],
  "gf-guard-room":[[0.96,0.66,"gf-porch"],[0.27,0.66,"gf-guard-bath"]],
  "gf-guard-bath":[[0.95,0.68,"gf-guard-room"]],
- "ff-living-2":[[0.205,0.734,"ff-living"],[0.002,0.727,"ff-corridor"],[0.405,0.575,"ff-pantry"],[0.458,0.575,"ff-bed-3"],[0.432,0.56,"ff-bed-4"],[0.385,0.64,"gf-living"],[0.36,0.5,"sf-stairs"]],
+ "ff-living-2":[[0.225,0.734,"ff-living"],[0.022,0.727,"ff-corridor"],[0.405,0.575,"ff-pantry"],[0.458,0.575,"ff-bed-3"],[0.432,0.56,"ff-bed-4"],[0.385,0.64,"gf-living"],[0.36,0.5,"sf-stairs"]],
  "ff-living":[[0.211,0.734,"ff-living-2"]],
  "ff-pantry":[[0.765,0.798,"ff-living-2"]],
  "ff-bed-4":[[0.619,0.717,"ff-living-2"],[0.72,0.6,"ff-wardrobe-4"]],
@@ -834,7 +846,7 @@ const SPOTS={
  "ff-bath-1":[[0.25,0.64,"ff-bed-1"]],
  "ff-bed-2":[[0.205,0.575,"ff-corridor"],[0.24,0.62,"ff-bath-2"]],
  "ff-bath-2":[[0.72,0.64,"ff-bed-2"]],
- "sf-stairs":[[0.254,0.71,"sf-pantry"],[0.5,0.7,"ff-living-2"]],
+ "sf-stairs":[[0.24,0.71,"sf-pantry"],[0.5,0.7,"ff-living-2"]],
  "sf-pantry":[[0.94,0.64,"sf-stairs"],[0.5,0.837,"sf-bath"],[0.06,0.64,"sf-guest-room"]],
  "sf-bath":[[0.0,0.837,"sf-pantry"]],
  "sf-guest-room":[[0.775,0.6,"sf-pantry"]]
