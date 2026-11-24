@@ -580,7 +580,7 @@ body:not(.touring):has(#factsPop:not([hidden])) .dock,body:not(.touring):has(#fa
 }
 /* interface dims when the view starts to rotate on its own; any movement brings it back */
 .glass,.brand,.stairbtn{transition:opacity .5s}
-body.idle .glass:not(.pop):not(#big):not(#summary):not(#chap),body.idle .brand{opacity:.22;transition:opacity 1.6s}
+body.idle .glass:not(.pop):not(#big):not(#summary):not(#chap):not(#floorCard),body.idle .brand{opacity:.3;transition:opacity 2.2s}
 body.idle .glass:hover{opacity:1!important;transition:opacity .25s}
 /* tour title card hugs its text when the narrator is speaking */
 #cap.quiet{width:fit-content!important;min-width:0;max-width:min(560px,calc(100vw - 24px))!important;padding:12px 20px 12px!important}
@@ -596,6 +596,49 @@ body.idle .glass:hover{opacity:1!important;transition:opacity .25s}
 .stairbtn .lbl::after{background:#14170bb3!important}
 .stairbtn:hover .lbl,.stairbtn:focus-visible .lbl{opacity:1}
 @media (hover:none){.stairbtn .lbl{opacity:1}}
+
+@media (max-width:640px){#floorCard{width:calc(100vw - 20px)!important;border-radius:20px}}
+/* ===== phone pass ===== */
+@media (max-width:640px){
+ #floorCard{left:10px!important;right:10px!important;width:auto!important;transform:none!important;top:calc(var(--top) + 104px)!important;padding:12px 14px 0!important;border-radius:20px!important;gap:2px!important}
+ #floorCard.out{transform:translateY(-8px)!important}
+ #floorCard>span{font-size:10.5px!important}#floorCard>b{font-size:20px!important}#floorCard>p{font-size:12.5px!important;line-height:1.4!important}
+ #fcStats{margin-top:8px!important;border-radius:14px!important}#fcStats div{padding:7px 6px!important}#fcStats b{font-size:16px!important}#fcStats small{font-size:10.5px!important}
+ #fcRooms{display:none!important}#fcProg{margin:10px -14px 0!important}
+ #factsPop{left:8px!important;right:8px!important;inset-inline:8px!important;transform:none!important;width:auto!important;top:calc(var(--top) + 6px)!important;bottom:calc(var(--bot) + 6px)!important;max-height:none!important;border-radius:22px!important;padding:14px 16px 8px!important;gap:10px!important;z-index:40!important}
+ #factsPop h3{font-size:18px!important}.kfh .ey{font-size:10.5px!important}
+ .kfhero{grid-template-columns:1.5fr 1fr 1fr 1fr!important;gap:6px!important;padding:0 0 12px!important}
+ .kfhero b,.kfhero div:first-child b{font-size:21px!important}.kfhero span{font-size:10.5px!important;margin-top:3px!important;line-height:1.25!important}
+ #kfBody{gap:14px!important}#kfBody>.kfbox{padding-top:12px!important}.kfcols{gap:14px!important}
+ .kfbox h4{font-size:13px!important;margin-bottom:9px!important}.bar2{font-size:12px!important;gap:8px!important}.bars{gap:7px!important}
+ .kfp{font-size:11.5px!important}.legend{font-size:11px!important}.kffl{gap:10px!important}
+ body:has(#factsPop:not([hidden])) .actions,body:has(#factsPop:not([hidden])) .floors,body:has(#factsPop:not([hidden])) .tools,body:has(#factsPop:not([hidden])) .brand{opacity:0!important;pointer-events:none!important}
+ #room{padding:9px 13px 9px!important;border-radius:16px!important;max-width:62vw}
+ #room .eyebrow{font-size:10.5px!important}#room h1{font-size:17px!important;margin-top:2px!important}
+ #room .meta{margin-top:6px!important;padding-top:6px!important;gap:12px!important}#room .meta b{font-size:13px!important}#room .meta span{font-size:10px!important}#room .note{display:none!important}
+ .stairbtn .lbl{font-size:10.5px!important}
+ #regPop{left:8px!important;right:8px!important;inset-inline:8px!important;width:auto!important}
+}
+/* cover page */
+body:has(#intro:not([hidden]):not(.out)) #floorCard,body:has(#intro:not([hidden]):not(.out)) .stairbtn{display:none!important}
+@media (max-width:640px){
+ #intro .shade,[dir="rtl"] #intro .shade{background:linear-gradient(0deg,#12150af5 0%,#12150ae0 34%,#12150a73 58%,#12150a1a 80%),linear-gradient(180deg,#12150a99 0%,#12150a00 20%)!important}
+ #intro .bar{inset-inline:16px!important;top:calc(var(--top) + 4px)!important}#intro .bar .logo,#intro .logo{width:92px!important}
+ #intro .in{inset-inline:18px!important;width:auto!important;bottom:calc(var(--bot) + 18px)!important}
+ #intro .eyebrow{margin-bottom:10px!important;font-size:11.5px!important}
+ #intro h2{font-size:44px!important;line-height:1.05!important}
+ #intro .sub{margin-top:10px!important;font-size:14.5px!important;line-height:1.55!important;max-width:none!important}
+ #intro .facts{display:grid!important;grid-template-columns:repeat(4,1fr);margin:18px 0 20px!important;padding:12px 0!important;border-block:1px solid #f5f4ee2e}
+ #intro .facts li{padding:0 8px!important;margin:0!important;align-items:center;text-align:center;border-inline-end:1px solid #f5f4ee2e}
+ #intro .facts li:last-child{border:0!important}
+ #intro .facts b{font-size:24px!important}#intro .facts span{font-size:10.5px!important;white-space:normal!important;line-height:1.25}
+ #intro .row{flex-direction:column;align-items:stretch!important;gap:6px!important}
+ #intro .cta{justify-content:center;height:52px!important}
+ #intro .watch{justify-content:center;height:46px!important;font-size:14px!important}#intro .watch .pl{width:34px!important;height:34px!important}
+}
+/* tour: no repeated floor info while the floor card is up */
+body.touring:has(#floorCard:not([hidden]):not(.out)) #cap,body.touring:has(#floorCard:not([hidden]):not(.out)) #chap{opacity:0!important;pointer-events:none}
+#cap,#chap{transition:opacity .5s}
 
 </style>
 
@@ -684,7 +727,7 @@ const SHARE_BASE="";
 /* WhatsApp number of the Anara sales team, international format without + (e.g. 9665XXXXXXXX). Empty = WhatsApp asks who to send to. */
 const SALES_WHATSAPP="";
 /* Background music: path to a licensed track placed next to index.html, e.g. "music_anara-ambient.mp3". Empty = no music button. */
-const AV="?v=13";/* bump when a sound file changes, so browsers fetch the new one */
+const AV="?v=14";/* bump when a sound file changes, so browsers fetch the new one */
 const MUSIC_SRC="music_anara-ambient-3.mp3"+AV;
 /* Guided-tour narrator: one audio file per language plus [start,length] in seconds for every tour caption, in ROUTE order. No entry for a language = captions only. */
 const VOICE={"en":{"src":"voice_anara-guide-en.mp3","seg":[[1.0,12.14],[14.64,7.36],[23.5,7.36],[32.36,6.66],[40.52,3.84],[45.86,4.08],[51.44,6.86],[59.8,6.24],[67.54,6.36],[75.4,5.32],[82.22,6.26],[89.98,6.98],[98.46,7.76],[107.72,7.26],[116.48,6.1],[124.08,4.92],[130.5,3.62],[135.62,4.22],[141.34,7.9],[150.74,5.9],[158.14,5.1],[164.74,5.63],[171.87,7.4],[180.77,5.1],[187.37,5.14]]},"ar":{"src":"voice_anara-guide-ar.mp3","seg":[[1.0,11.8],[14.3,7.3],[23.1,9.6],[34.2,6.46],[42.16,3.22],[46.88,3.62],[52.0,7.76],[61.26,7.66],[70.42,6.32],[78.24,4.62],[84.36,5.68],[91.54,6.98],[100.02,7.66],[109.18,7.75],[118.43,7.44],[127.37,4.98],[133.85,3.82],[139.17,4.62],[145.29,7.41],[154.2,6.8],[162.5,5.04],[169.04,6.13],[176.67,8.2],[186.37,4.5],[192.37,5.9]]}};
@@ -705,7 +748,7 @@ const ROUTE=[
   B(0.6,4,100,-0.11,"Welcome to Villa Type A","Welcome, and thank you for coming. This is Villa Type A. Three floors, about three hundred and eighty-nine square metres, with parking for two cars. Come in, let me show you around.","حيّاك الله في فيلا A","حيّاك الله، نوّرت فيلا A. ثلاثة أدوار، ومساحتها تقريباً ثلاثمية وتسعة وثمانين متر، وموقف لسيارتين. تفضّل معي، خلّني أورّيك البيت.","facts"),
   B(0.47,18,104,0.06,"Everything a family needs","Five bedrooms, a men's majlis, a home office, two separate entrances, and rooms for the driver and the maid.","كل اللي تحتاجه العائلة","خمس غرف نوم، مجلس رجال، مكتب، مدخلين مستقلين، وغرفة للسائق وغرفة للخادمة.")]},
  {id:"gf-majlis-entrance",ch:1,b:[
-  B(0.24,13,104,0.22,"Ground floor · 189.8 m²","We start at the main entrance. If you look up, it's two floors high and open to the sky, so daylight fills it all day.","الدور الأرضي · ١٨٩٫٨ م²","نبدأ من المدخل الرئيسي. إذا طالعت فوق، ارتفاع دورين ومفتوح على السماء، والنور الطبيعي يملأ المكان طول اليوم.","floor")]},
+  B(0.24,13,104,0.22,"Main entrance · double height","We start at the main entrance. If you look up, it's two floors high and open to the sky, so daylight fills it all day.","المدخل الرئيسي · ارتفاع دورين","نبدأ من المدخل الرئيسي. إذا طالعت فوق، ارتفاع دورين ومفتوح على السماء، والنور الطبيعي يملأ المكان طول اليوم.","floor")]},
  {id:"gf-majlis",b:[
   B(0.36,-3,102,0.2,"Men's majlis · 3.7 × 5.3 m","On your left as you come in, the men's majlis. Your guests come in here, and never cross the family side.","مجلس الرجال · ٣٫٧ × ٥٫٣ م","على يسارك وأنت داخل، مجلس الرجال. ضيوفك يدخلون هنا، وما يمرّون على جهة العائلة."),
   B(0.31,1,88,0.05,"A garden outlook","And if you look outside, its own garden. Lovely, isn't it?","إطلالة على الحديقة","وإذا طالعت برّا، حديقة خاصة قدّام الجلسة.")]},
@@ -725,7 +768,7 @@ const ROUTE=[
  {id:"gf-maid-room",b:[
   B(0.88,-10,102,0.36,"Maid's room · driver's room by the gate","Behind the kitchen, the maid's room, with its bathroom and the laundry. The driver's room is separate, by the gate, with a bathroom of its own.","غرفة الخادمة · غرفة السائق عند البوابة","وورا المطبخ غرفة الخادمة، بدورة مياهها وغرفة الغسيل. وغرفة السائق مستقلة عند البوابة، ولها دورة مياهها.")]},
  {id:"ff-living-2",ch:2,b:[
-  B(0.1,-3,102,0.2,"First floor · 151.8 m²","Now, let's go upstairs. This floor is just for the family. Four master bedrooms, each with its own bathroom.","الدور الأول · ١٥١٫٨ م²","خلّنا نطلع للدور الأول. هذا للعائلة وبس. أربع غرف نوم رئيسية، وكل غرفة بدورة مياهها.","floor"),
+  B(0.1,-3,102,0.2,"Family only · 4 master bedrooms","Now, let's go upstairs. This floor is just for the family. Four master bedrooms, each with its own bathroom.","للعائلة فقط · ٤ غرف نوم رئيسية","خلّنا نطلع للدور الأول. هذا للعائلة وبس. أربع غرف نوم رئيسية، وكل غرفة بدورة مياهها.","floor"),
   B(0.2,-2,100,0.56,"Family lounge & coffee corner · 3.2 × 3.6 m","As you come up, the family lounge. To its right, a coffee corner, and then a terrace for fresh air.","صالة عائلية وركن قهوة · ٣٫٢ × ٣٫٦ م","أول ما تطلع، صالة العائلة. وعلى يمينها ركن القهوة، وبعده تراس للهواء الطلق.")]},
  {id:"ff-bed-4",b:[
   B(0.36,-4,102,0.22,"Main suite · 4.0 × 3.5 m","We start with the main suite. Calm and generous, with a tall window.","الغرفة الرئيسية · ٤٫٠ × ٣٫٥ م","نبدأ بالغرفة الرئيسية. هادية ووسيعة، وشباكها طويل.")]},
@@ -740,7 +783,7 @@ const ROUTE=[
  {id:"ff-bed-2",b:[
   B(0.3,-4,102,0.34,"Fourth bedroom · 3.7 × 3.8 m","And if you look left, the fourth, with a glass wardrobe and a wide window.","غرفة النوم الرابعة · ٣٫٧ × ٣٫٨ م","وإذا طالعت يسار، الرابعة، بدولاب زجاجي وشباك واسع.")]},
  {id:"sf-stairs",ch:3,b:[
-  B(0.3,-8,102,0.24,"Second floor · 47.3 m²","And finally, one more flight up. A private suite, away from everything.","الدور الثاني · ٤٧٫٣ م²","وآخر شي، نطلع للدور الثاني. جناح مستقل، بعيد عن كل شي.","floor")]},
+  B(0.3,-8,102,0.24,"Private guest suite","And finally, one more flight up. A private suite, away from everything.","جناح ضيوف مستقل","وآخر شي، نطلع للدور الثاني. جناح مستقل، بعيد عن كل شي.","floor")]},
  {id:"sf-guest-room",b:[
   B(0.45,-4,102,0.24,"Guest suite · 3.7 × 4.0 m","A full bedroom, with a bathroom and a pantry beside it. For guests, or one of your grown children. It's up to you.","جناح الضيوف · ٣٫٧ × ٤٫٠ م","غرفة نوم كاملة، وجنبها دورة مياه ومطبخ تحضيري. للضيوف، أو لواحد من الأبناء، مثل ما تحب."),
   B(0.33,0,94,0.04,"Step out to the roof","And if you look outside, the roof terrace. Imagine your evenings out here.","خطوة للسطح","وإذا طالعت برّا، تراس السطح. تخيّل سهرات العائلة هنا.")]},
@@ -1007,12 +1050,12 @@ function measureClick(cx,cy){if(mPts.length>=2)mPts=[];let p=null;
 /* ======================= LOOP ======================= */
 const $intro=document.getElementById("intro");
 let tourPan=0,tourLat=-6;
-function frame(ts){requestAnimationFrame(frame);{const rot=autoRotate&&!busy&&!measuring&&!tourOn&&ts-lastInteract>2200&&ts-(window._lm||0)>2200&&!document.querySelector('.pop:not([hidden])')&&$('big').hidden!==false&&$('intro').hidden!==false;if(rot!==frame.idle){frame.idle=rot;document.body.classList.toggle('idle',rot)}}const dtF=Math.min(80,ts-(frame.lt||ts));frame.lt=ts;if(!autoRotate||busy||ts-lastInteract<=2200)frame.rs=0;
+function frame(ts){requestAnimationFrame(frame);{const rot=autoRotate&&!busy&&!measuring&&!tourOn&&ts-lastInteract>5000&&ts-(window._lm||0)>5000&&!document.querySelector('.pop:not([hidden])')&&$('big').hidden!==false&&$('intro').hidden!==false;if(rot!==frame.idle){frame.idle=rot;document.body.classList.toggle('idle',rot)}}const dtF=Math.min(80,ts-(frame.lt||ts));frame.lt=ts;if(!autoRotate||busy||ts-lastInteract<=5000)frame.rs=0;
   if(anim){const k=Math.min(1,(ts-anim.t0)/anim.ms);anim.fn(k);if(k>=1){const r=anim.r;anim=null;r()}}
   if(dollOn){dollFrame(ts);return}
   if(!$intro.hidden&&!$intro.classList.contains('out')&&!busy){lon+=.018;lat+=(-3-lat)*.01;targetFov=68}
   else if(tourOn&&!tourPaused&&!busy){lon+=tourPan*dtF;lat+=(tourLat-lat)*.02}
-  else if(autoRotate&&!busy&&!measuring&&ts-lastInteract>2200){frame.rs=Math.min(1,(frame.rs||0)+dtF/3200);const r=frame.rs*frame.rs*(3-2*frame.rs);lon+=dtF*.0024*r;lat+=(EYE_LAT-lat)*.015}
+  else if(autoRotate&&!busy&&!measuring&&ts-lastInteract>5000){frame.rs=Math.min(1,(frame.rs||0)+dtF/3200);const r=frame.rs*frame.rs*(3-2*frame.rs);lon+=dtF*.0024*r;lat+=(EYE_LAT-lat)*.015}
   lat=Math.max(-85,Math.min(85,lat));if(!busy)camera.fov+=(targetFov-camera.fov)*.085;
   camera.updateProjectionMatrix();camera.lookAt(dirVec(lon,lat).multiplyScalar(100));renderer.render(scene,camera);
   placeSpots();placeTags();if(mPts.length)drawMeasure();cone()}
