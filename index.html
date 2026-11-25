@@ -679,6 +679,21 @@ body.asking #cap{display:none!important}
 }
 body:has(#regPop:not([hidden])) #room,body:has(#sharePop:not([hidden])) #room,body:has(#factsPop:not([hidden])) #room{opacity:0;pointer-events:none}
 body:has(#big:not([hidden])) #room,body:has(#big:not([hidden])) #mini{opacity:0!important;pointer-events:none!important}
+/* liquid metal: champagne for selected states, liquid glass rims on every panel */
+:root{--metal:linear-gradient(172deg,#fffdf7 0%,#f1ebd9 30%,#d9cda9 50%,#c7b88d 54%,#e6dcc0 74%,#fbf7ec 100%);
+ --metal-sh:inset 0 1px 0 #ffffff,inset 0 -1.5px 1px #8a774233,inset 0 0 0 .6px #fff8,0 1px 1px #0005,0 8px 20px -8px #000d,0 0 16px -6px #f0e2b866;
+ --metal-ink:#1c1f10}
+.glass .chip[aria-pressed="true"],.glass .chip[aria-current="true"],.glass .chip[aria-selected="true"],.chip[aria-pressed="true"],.chip[aria-current="true"],.chip[aria-selected="true"],
+#enter,#askMic,.aq,.askAct{background:var(--metal)!important;background-size:100% 100%!important;color:var(--metal-ink)!important;box-shadow:var(--metal-sh)!important;position:relative;overflow:hidden;flex-shrink:0;text-shadow:0 1px 0 #ffffff80}
+.glass .chip[aria-pressed="true"]::after,.glass .chip[aria-current="true"]::after,.chip[aria-pressed="true"]::after,.chip[aria-current="true"]::after,#enter::after,#askMic::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+ background:linear-gradient(105deg,#fff0 30%,#ffffffb3 46%,#fff0 60%);background-size:260% 100%;background-position:130% 0;mix-blend-mode:soft-light;animation:sheen 5.5s var(--ease-soft,ease) infinite}
+@keyframes sheen{0%,62%{background-position:130% 0}100%{background-position:-130% 0}}
+#askMic[aria-pressed="true"]{background:linear-gradient(172deg,#ef7a45,#c2410c 55%,#9a3209)!important;color:#fff!important;text-shadow:none;overflow:visible}
+.primary:not(#enter):not(.dback){background:linear-gradient(172deg,#5b6537 0%,#3f4727 50%,#2e3419 100%);color:#f5f1e1;box-shadow:inset 0 1px 0 #ffffff40,inset 0 -1px 1px #0006,inset 0 0 0 .6px #ffffff22,0 8px 20px -8px #000d}
+.glass::after{background-image:linear-gradient(180deg,#ffffff1f 0%,#ffffff08 22%,#fff0 50%,#0000001f 100%)!important;
+ box-shadow:inset 0 1px 0 #ffffff47,inset 0 -1px 0 #00000059,inset 1px 0 0 #ffffff17,inset -1px 0 0 #ffffff0f,inset 0 0 22px -10px #ffffff26!important}
+.ibtn[aria-pressed="true"]{background:radial-gradient(120% 120% at 30% 20%,#ffffff40,#ffffff14 60%)!important;box-shadow:inset 0 1px 0 #ffffff59,inset 0 0 0 1px #ffffff26,0 0 12px -4px #f0e2b855!important}
+@media (prefers-reduced-motion:reduce){.chip::after,#enter::after,#askMic::after{animation:none!important}}
 </style>
 
 <div id="stage"></div>
@@ -1190,7 +1205,7 @@ function placeMini(){const m=$("mini"),tl=document.querySelector(".tools");if(!m
 addEventListener("resize",()=>{clearTimeout(placeMini.t);placeMini.t=setTimeout(placeMini,120)});
 function miniSize(m){$("mini").classList.toggle("mid",m);placeMini();setTimeout(placeMini,500);$("miniS").setAttribute("aria-pressed",!m);$("miniM").setAttribute("aria-pressed",m);try{localStorage.setItem("anaraMini",m?"m":"s")}catch(e){}}
 $("miniS").onclick=e=>{e.stopPropagation();miniSize(false)};$("miniM").onclick=e=>{e.stopPropagation();miniSize(true)};
-try{if(localStorage.getItem("anaraMini")==="m")miniSize(true)}catch(e){}
+
 setTimeout(placeMini,400);$("bigClose").onclick=closeBig;
 $("big").addEventListener("click",e=>{if(e.target.id==="big")closeBig()});$("bzIn").onclick=()=>setZoom(1);$("bzOut").onclick=()=>setZoom(-1);
 addEventListener("resize",()=>{if(!$("big").hidden)fitPlan(false)});
@@ -1433,7 +1448,7 @@ async function startTour(from){closePops();closeSummary();if(measuring)setMeasur
     tourIdx++}}
 function pauseTour(p){if(!tourOn)return;tourPaused=p;voPause(p);if(p&&anim&&!busy&&!dollOn){const r=anim.r;anim=null;r()}tourUI()}
 /* a glimpse of the floor plan: the corner map grows for a few seconds at the start of each floor, then settles back; it stays on screen through the tour with the camera direction on it */
-let glT=null;function planGlimpse(){const m=$("mini");if(!m||getComputedStyle(m).display==="none")return;const keep=$("miniM").getAttribute("aria-pressed")==="true";m.classList.add("mid","glimpse");placeMini();setTimeout(placeMini,500);clearTimeout(glT);glT=setTimeout(()=>{m.classList.remove("glimpse");if(!keep)m.classList.remove("mid");placeMini();setTimeout(placeMini,500)},6500)}
+let glT=null;function planGlimpse(){return;const m=$("mini");if(!m||getComputedStyle(m).display==="none")return;const keep=$("miniM").getAttribute("aria-pressed")==="true";m.classList.add("mid","glimpse");placeMini();setTimeout(placeMini,500);clearTimeout(glT);glT=setTimeout(()=>{m.classList.remove("glimpse");if(!keep)m.classList.remove("mid");placeMini();setTimeout(placeMini,500)},6500)}
 function stopTour(){if(!tourOn)return;tourPan=0;clearTimeout(glT);{const m=$("mini");if(m){m.classList.remove("glimpse");if($("miniM").getAttribute("aria-pressed")!=="true")m.classList.remove("mid")}}voStop();duck(false);tourOn=false;tourPaused=false;tourTok++;targetFov=FOV0;autoRotate=true;$("bRotate").setAttribute("aria-pressed",true);$("chap").hidden=true;
   if(dCine){dCine=false;dollOn=false;anim=null;busy=false;$("doll").classList.remove("on","cine");document.body.classList.remove("doll")}tourUI()}
 /* end of tour: the key selling points; replays by itself after a while (for screens in the sales centre) */
@@ -1542,9 +1557,16 @@ const SR=window.SpeechRecognition||window.webkitSpeechRecognition,TTS=window.spe
 const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in English or Arabic.",ph:"Ask anything about the villa…",listen:"Listening…",
    noSR:"Voice isn't available in this browser. Type your question instead.",
    help:"Ask me anything a buyer would: room sizes, bedrooms, floors, parking, privacy, outdoor spaces, location, price or handover. Or just say “take me to the majlis”.",
-   hi:"Hello, and welcome to Villa Type A. I'm your guide. Ask me about any room, or say where you'd like to go.",
+   hi:"Welcome to Villa Type A. I'm your guide. Ask me about any room, or tell me where you'd like to go.",
    thanks:"You're welcome. Anything else you'd like to see?",
-   unknown:"I don't have that detail in the tour. The Anara sales team can answer it for you. Shall I open the form so they call you?",
+   hey:"Hello!",salam:"Wa alaikum assalam, welcome!",morning:"Good morning!",evening:"Good evening!",
+   howru:"I'm very well, thank you for asking. And you, how are you doing?",
+   fine:"Glad to hear it. Shall I show you around? I can start the guided tour, or take you straight to any room.",
+   okay:"Great. Where would you like to go next? The majlis, the kitchen, or the master bedrooms upstairs?",
+   who:"I'm your guide to Villa Type A at Anara. I know every room in this home, so ask me anything, in English or Arabic.",
+   wow:"It really is a beautiful home. Would you like to see the family living area or the master bedrooms next?",
+   bye:"Thank you for visiting, it was a pleasure showing you around. If you'd like to see it in person, I can book a private visit for you.",
+   unknown:"Good question. That detail isn't in the tour yet, but the Anara sales team will know. Shall I have them call you? Meanwhile, ask me about the rooms, sizes, parking or the location.",
    here:(r,f,d)=>"You're in the "+r+", on the "+f+"."+(d?" It's about "+d+".":""),
    go:(r,f)=>"Taking you to the "+r+(f?", on the "+f:"")+".",
    size:(r,w,l,a)=>"The "+r+" is about "+w+" by "+l+" metres, roughly "+a+" square metres.",
@@ -1590,9 +1612,16 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
  ar:{btn:"اسأل",title:"اسأل عن الفيلا",sub:"تحدّث أو اكتب، بالعربية أو الإنجليزية.",ph:"اسأل أي شيء عن الفيلا…",listen:"أستمع إليك…",
    noSR:"الصوت غير متاح في هذا المتصفح. اكتب سؤالك بدلاً من ذلك.",
    help:"اسألني أي شيء يهمّك كمشترٍ: مساحات الغرف، وغرف النوم، والأدوار، والمواقف، والخصوصية، والمساحات الخارجية، والموقع، والسعر والتسليم. أو قل «خذني إلى المجلس».",
-   hi:"أهلاً وسهلاً، حيّاك الله في فيلا النموذج (أ). أنا مرشدك، اسألني عن أي غرفة أو قل لي وين تبي تروح.",
-   thanks:"العفو، يسعدني ذلك. هل تحب أن أريك شيئاً آخر؟",
-   unknown:"هذه المعلومة غير متوفرة في الجولة، ويستطيع فريق مبيعات أنارا الإجابة عليها. هل أفتح لك النموذج ليتواصلوا معك؟",
+   hi:"حيّاك الله في فيلا النموذج (أ). أنا مرشدك، اسألني عن أي غرفة أو قل لي وين تبي تروح.",
+   thanks:"العفو، حيّاك الله. تبي أوريك شي ثاني؟",
+   hey:"هلا والله!",salam:"وعليكم السلام ورحمة الله، حيّاك الله!",morning:"صباح النور!",evening:"مساء النور!",
+   howru:"الحمدلله بخير، الله يسلمك. وأنت كيف حالك؟",
+   fine:"الحمدلله، دوم يا رب. تبي أبدأ لك الجولة المرشدة، أو آخذك لأي غرفة تختارها؟",
+   okay:"ممتاز. وين تحب نروح الحين؟ المجلس، المطبخ، أو غرف النوم الرئيسية فوق؟",
+   who:"أنا مرشدك في فيلا النموذج (أ) في أنارا. أعرف كل زاوية في البيت، فاسألني اللي تبي بالعربي أو الإنجليزي.",
+   wow:"صح، بيت جميل ما شاء الله. تبي نشوف صالة المعيشة أو غرف النوم الرئيسية؟",
+   bye:"شكراً على زيارتك، تشرّفت فيك. وإذا تحب تشوفها على الطبيعة، أقدر أحجز لك زيارة خاصة.",
+   unknown:"سؤال في محله. هالتفصيل ما هو عندي في الجولة، بس فريق مبيعات أنارا يقدر يجاوبك. تبي أخليهم يتصلون عليك؟ وبالوقت نفسه اسألني عن الغرف والمساحات والمواقف والموقع.",
    here:(r,f,d)=>"أنت الآن في "+r+" في "+f+"."+(d?" مساحتها تقريباً "+d+".":""),
    go:(r,f)=>"حسناً، سأنقلك إلى "+r+(f?" في "+f:"")+".",
    size:(r,w,l,a)=>r+": أبعادها تقريباً "+w+" في "+l+" متر، أي حوالي "+a+" متر مربع.",
@@ -1636,7 +1665,7 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    sugR:["حدّثني عن هذه الغرفة","كم مساحة هذه الغرفة؟","ماذا يوجد في هذا الدور؟","احجز زيارة"],
    floorN:["الدور الأرضي","الدور الأول","الدور الثاني"]}};
 const N=v=>new Intl.NumberFormat(askL==="ar"?"ar-SA":"en",{maximumFractionDigits:1}).format(v);
-let askL=lang,listening=false,rec=null,voiceOK=false,lastOffer=null;
+let askL=lang,listening=false,rec=null,voiceOK=false,lastOffer=null,askMood=0,askVO=null,askVT=null;
 const norm=x=>(x||"").toLowerCase().replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي")
   .replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[?؟.,!،"'“”]/g," ").replace(/\s+/g," ").trim();
 const isAr=x=>/[؀-ۿ]/.test(x);
@@ -1680,11 +1709,22 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   const A=(say,o={})=>Object.assign({say},o),REG={label:R.reg,act:()=>{closeAsk();$("bReg").click()}},OPEN={label:R.open,href:ANARA_URL};
   const sz=p=>p.dims?N(area(p))+(askL==="ar"?" م²":" m²"):"";
   const sizeOf=p=>{if(!p.dims)return R.nosize(rn(p));const[w,l]=p.dims;return R.size(rn(p),N(w),N(l),N(w*l))};
-  const tell=p=>{const s=(STORY[p.id]&&STORY[p.id][askL])||[];return s.length?s.join(" ")+(p.dims?" "+sizeOf(p):""):R.about(rn(p),fl(p),sz(p))};
+  const tell=p=>{askVO=VOSEG[p.id]||null;const s=(STORY[p.id]&&STORY[p.id][askL])||[];return s.length?s.join(" ")+(p.dims?" "+sizeOf(p):""):R.about(rn(p),fl(p),sz(p))};
   const rooms=findRooms(q),room=rooms[0],fq=floorIn(q);
   if(has(q,/^(stop|quiet|shush|enough|اسكت|توقف|كفايه|خلاص)$/))return A("");
   if(lastOffer&&has(q,/^(yes|yeah|sure|ok|okay|please|نعم|ايوه|اي|اكيد|تمام|طيب|ابشر|يب)( please)?$/)){const o=lastOffer;lastOffer=null;return A("",{act:o.act})}
-  if(has(q,/^(hi|hello|hey|salam|السلام عليكم|سلام|مرحبا|هلا|اهلا)( there)?$/))return A(R.hi);
+  {const G=/^(hi|hello|hey|hiya|hey there|hello there|salam|salaam|as?salamu? ?alaikum|السلام عليكم|سلام عليكم|سلام|مرحبا|مرحبتين|هلا والله|يا هلا|هلا|اهلا|اهلين|good (morning|evening|afternoon)|صباح الخير|مساء الخير)(?=[\s,!.?؟]|$)[\s,!.?؟]*/;
+   const HRU=/how are you( doing| today)?|how r u|how'?s it going|how are things|how do you do|كيف الحال|كيف حالك|كيفك|شلونك|وش اخبارك|ايش اخبارك|كيف اخبارك|عساك طيب|عساك بخير/;
+   const g=q.match(G);let rest=g?q.slice(g[0].length):q;const hru=HRU.test(rest);if(hru)rest=rest.replace(new RegExp(HRU.source,"g"),"");rest=rest.replace(/^[\s,.!?؟و]+|[\s,.!?؟]+$/g,"").trim();
+   if(g||hru){const w=g?g[1]:"",pre=/salam|سلام/.test(w)?R.salam:/morning|صباح/.test(w)?R.morning:/evening|afternoon|مساء/.test(w)?R.evening:R.hey;
+     if(!rest){if(hru){askMood=1;return A((g?pre+" ":"")+R.howru)}return A(pre+" "+R.hi)}
+     const a=answer(rest);let sy=a.say||"";if(hru&&sy.indexOf(R.howru)<0){sy=sy.replace(R.hi,"").trim()+" "+R.howru;askMood=1}a.say=(G.test(rest)?sy:pre+" "+sy).trim();return a}}
+  if(askMood&&has(q,/^(i'?m )?(fine|good|great|ok|okay|not bad|all good|well|very well|alright|excellent)( thanks?| thank you| and you| you)*$|^(الحمدلله|الحمد لله|بخير|تمام|زين|طيب|كويس|ماشي الحال|بخير الحمدلله|الحمدلله بخير|تمام الحمدلله)( و ?انت| الله يسلمك| وانت كيفك)*$/)){askMood=0;return A(R.fine,{offer:{act:()=>{closeAsk();startTour(0)}}})}
+  askMood=0;
+  if(has(q,/who are you|what'?s your name|what is your name|are you (a )?(robot|bot|ai|real|human|person)|مين انت|من انت|وش اسمك|ما اسمك|انت روبوت|انت انسان|انت حقيقي/))return A(R.who);
+  if(has(q,/^(bye|goodbye|good bye|see you|that'?s all|thats all|مع السلامه|في امان الله|باي|الله يحفظك|خلاص شكرا|يعطيك العافيه وباي)/))return A(R.bye,{btn:REG,offer:REG});
+  if(has(q,/^(ok|okay|cool|alright|nice|great|تمام|طيب|اوكي|زين|حلو)$/))return A(R.okay);
+  if(has(q,/beautiful|lovely|amazing|gorgeous|stunning|love it|i like (it|this)|wow|so nice|very nice|جميل|حلو[هة]?|رهيب|روعه|يجنن|فخم|فخمه|ما ?شاء الله|عجبني|عجبتني|واو/)&&!has(q,/\?|؟|how|what|where|كم|وين|هل|ايش|وش/))return A(R.wow);
   if(has(q,/thank|شكرا|يعطيك العافيه|مشكور/))return A(R.thanks);
   if(has(q,/help|what can (you|i)|how does this work|ساعدني|ماذا تستطيع|وش تقدر|كيف استخدم/))return A(R.help);
   if(has(q,/\b(price|prices|priced|cost|costs|payment|payments|instal\w*|mortgage|financ\w*|down ?payment|vat|tax|discounts?|offers?)\b|how much|سعر|السعر|بكم|كم سعر|تقسيط|دفعه|الدفع|تمويل|ضريبه|خصم|عرض/)&&!has(q,/how much (space|area|room)/))return A(R.price,{btn:REG,offer:REG});
@@ -1729,20 +1769,24 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/tell me about|describe|what is (this|it) like|about this|حدثني عن|احكيلي|صف لي|عن هذه/)){const p=(THIS.test(q)||!room)?cur:room;return A(tell(p),{act:p!==cur?()=>go(p.id):null})}
   if(has(q,/is there|are there|do (you|i|it|they) have|does it have|هل يوجد|هل فيه|فيه|يوجد|هل في/)&&room)return A(R.yes(rn(room),fl(room)),{act:()=>go(room.id)});
   if(has(q,/where is|where's|where are|اين|وين/)&&room)return A(R.where(rn(room),fl(room)),{act:()=>go(room.id)});
-  if(room){if(room===cur)return A(tell(room));return A(R.go(rn(room),room.floor!==cur.floor?fl(room):""),{act:()=>{stopTour();go(room.id)}})}
+  if(room){if(room===cur)return A(tell(room));return A(R.go(rn(room),room.floor!==cur.floor?fl(room):""),{act:()=>{stopTour();voHello=true;go(room.id);if(VOSEG[room.id]&&STORY[room.id]){clearTimeout(askVT);askVT=setTimeout(()=>{if($("askPop").hidden)return;bubble("aa",STORY[room.id][askL].join(" "));askSay("",VOSEG[room.id])},1800)}}})}
   if(fq>=0)return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
   return A(R.unknown,{btn:REG,offer:REG})}
 const has=(q,re)=>re.test(q);
 /* speech out */
+/* the tour guide's own recorded lines, when the answer is one of them */
+const VOSEG={};{let n=0;ROUTE.forEach(r=>{r.b.forEach((b,i)=>{const x=b[3]&&b[3].en&&b[3].en[1];if(x&&!/come with me|thank you/i.test(x)&&!(r.id in VOSEG&&VOSEG[r.id]._done)){(VOSEG[r.id]=VOSEG[r.id]||[]).push(n+i)}});if(VOSEG[r.id])VOSEG[r.id]._done=1;n+=r.b.length})}
+function playGuide(list){if(!list||!list.length||askL!==lang||!VOICE[lang])return false;voiceOn=true;try{TTS&&TTS.cancel()}catch(e){}let k=0;const nx=()=>{if(k>=list.length)return;const ms=voSay(list[k++]);if(!ms&&k===1)return;clearTimeout(askVT);askVT=setTimeout(nx,ms+300)};nx();return true}
+function askSay(txt,vo){clearTimeout(askVT);try{voStop()}catch(e){}if(vo&&playGuide(vo))return;speak(txt)}
 function speak(txt){if(!TTS||!txt)return;try{TTS.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang=askL==="ar"?"ar-SA":"en-US";
   const vs=TTS.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith(askL));const pick=vs.find(v=>/natural|premium|enhanced|siri|google/i.test(v.name))||vs.find(v=>/sa|ae/i.test(v.lang))||vs[0];if(pick)u.voice=pick;
   u.rate=askL==="ar"?.95:1;u.onstart=()=>{try{duck(true)}catch(e){}};u.onend=u.onerror=()=>{try{duck(false)}catch(e){}};TTS.speak(u)}catch(e){}}
 /* log */
 function bubble(cls,txt){const d=document.createElement("div");d.className=cls;d.dir=isAr(txt)?"rtl":"ltr";d.textContent=txt;const g=$("askLog");g.appendChild(d);while(g.children.length>8)g.firstChild.remove();g.scrollTop=g.scrollHeight;return d}
 function ask(raw){raw=(raw||"").trim();if(!raw)return;askL=isAr(raw)?"ar":(/[a-z]/i.test(raw)?"en":askL);bubble("aq",raw);
-  const a=answer(raw);lastOffer=a.offer||null;
+  askVO=null;clearTimeout(askVT);const a=answer(raw);lastOffer=a.offer||null;
   if(a.say){const d=bubble("aa",a.say);if(a.btn){const x=document.createElement(a.btn.href?"a":"button");x.className="chip askAct";x.textContent=a.btn.label;
-      if(a.btn.href){x.href=a.btn.href;x.target="_blank";x.rel="noopener"}else{x.type="button";x.onclick=a.btn.act}d.appendChild(x)}speak(a.say)}else try{TTS&&TTS.cancel()}catch(e){}
+      if(a.btn.href){x.href=a.btn.href;x.target="_blank";x.rel="noopener"}else{x.type="button";x.onclick=a.btn.act}d.appendChild(x)}askSay(a.say,askVO)}else try{TTS&&TTS.cancel()}catch(e){}
   if(a.act)setTimeout(a.act,a.say?700:0);sugs();try{uiSnd("tap")}catch(e){}}
 function sugs(){const R=L[askL],list=$("askLog").children.length?R.sugR:R.sug0;$("askSug").innerHTML="";list.forEach(s=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=s;b.onclick=()=>ask(s);$("askSug").appendChild(b)})}
 /* speech in */
@@ -1758,7 +1802,7 @@ function micStart(){if(!SR){toast(L[askL].noSR);return}
 /* panel */
 function paint(){const R=L[askL];$("bAskTxt").textContent=L[lang].btn;$("askTitle").textContent=R.title;$("askSub").textContent=R.sub;$("askIn").placeholder=R.ph;$("askPop").dir=askL==="ar"?"rtl":"ltr";sugs()}
 function openAsk(){closePops();askL=lang;paint();$("askPop").hidden=false;document.body.classList.add("asking");setTimeout(()=>{if(!matchMedia("(hover:none)").matches)$("askIn").focus()},60)}
-function closeAsk(){micStop();$("askPop").hidden=true;document.body.classList.remove("asking");try{TTS&&TTS.cancel();duck(false)}catch(e){}}
+function closeAsk(){micStop();clearTimeout(askVT);try{voStop()}catch(e){}$("askPop").hidden=true;document.body.classList.remove("asking");try{TTS&&TTS.cancel();duck(false)}catch(e){}}
 window.closeAsk=closeAsk;
 $("bAsk").onclick=e=>{e.stopPropagation();$("askPop").hidden?openAsk():closeAsk()};
 $("askX").onclick=closeAsk;
