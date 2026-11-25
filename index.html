@@ -1502,11 +1502,11 @@ async function startTour(from){closePops();closeSummary();if(measuring)setMeasur
     if(cur.id!==id){
       const link=spots.find(s=>s.to===id);
       if(st.ch!=null){setCap("");chapterShow(st.ch);if(!await hold(900,ok))return;chapterHide()}
-      setCap(link?"":t("next")+" "+nm(byId[id]));await go(id,link?{brg:link.lo}:{});
+      setCap("");await go(id,link?{brg:link.lo}:{});
       if(!ok())return}
     else if(st.ch!=null){setCap("");chapterShow(st.ch);if(!await hold(900,ok))return;chapterHide()}
     tourUI();
-    for(const [bi,[u,la,fov,c,act,sw]] of st.b.entries()){tourPan=0;const [head,txt]=c[lang];if(act==="facts"){if($("factsPop").hidden){renderFacts();$("factsPop").hidden=false;clearTimeout(window._ft);window._ft=setTimeout(()=>{if(tourOn)$("factsPop").hidden=true},7000)}}else if(!$("factsPop").hidden)$("factsPop").hidden=true;if(act==="floor"){floorIntro(cur.floor);planGlimpse()}const dl0=norm(panoToPlan(cur,u)-lon),mv=Math.max(900,Math.min(1600,600+Math.abs(dl0)*6)),vd=voSay(VOI[tourIdx]+bi),rd=Math.max(readMs(head+" "+txt)+300,vd?vd+500-(reduceMotion()?0:mv):0);setCap(txt,head,(bi+1)+" / "+st.b.length,(reduceMotion()?0:mv)+rd);
+    for(const [bi,[u,la,fov,c,act,sw]] of st.b.entries()){tourPan=0;const [head,txt]=c[lang];if(act==="facts"){if($("factsPop").hidden){renderFacts();$("factsPop").hidden=false;clearTimeout(window._ft);window._ft=setTimeout(()=>{if(tourOn)$("factsPop").hidden=true},7000)}}else if(!$("factsPop").hidden)$("factsPop").hidden=true;if(act==="floor"){floorIntro(cur.floor);planGlimpse()}const dl0=norm(panoToPlan(cur,u)-lon),mv=Math.max(900,Math.min(1600,600+Math.abs(dl0)*6)),vd=voSay(VOI[tourIdx]+bi),rd=vd?Math.max(600,vd+250-(reduceMotion()?0:mv)):readMs(head+" "+txt)+300;setCap(txt,head,(bi+1)+" / "+st.b.length,(reduceMotion()?0:mv)+rd);
       if(!reduceMotion()){const dl=norm(panoToPlan(cur,u)-lon);if(!await beat(Math.max(900,Math.min(1600,600+Math.abs(dl)*6)),dl,la,fov,ok))return}
       tourLat=la;tourPan=reduceMotion()?0:(sw||0)*360/rd;let held=await hold(rd,ok);tourPan=0;if(held&&vd){let w=0;while(voBusy&&w<30000&&ok()){await wait(120);if(!tourPaused)w+=120}held=ok()&&await hold(120,ok)}if(!held)return}
     if(!ok())return;
