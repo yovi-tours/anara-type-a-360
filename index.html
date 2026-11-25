@@ -1427,7 +1427,7 @@ function voPrep(){const v=VOICE[lang];if(!v)return null;
   return vo}
 function voStop(){clearTimeout(voT);voEnd=0;voPend=null;voBusy=false;if(!tourOn&&ducked)duck(false);if(vo)try{vo.pause()}catch(e){}}
 function voSay(i){voStop();voBlocked=null;const v=VOICE[lang];if(!voiceOn||!v||!v.seg[i])return 0;const a=voPrep();if(!a)return 0;const [o,d]=v.seg[i];voBusy=true;if(!a._ok){voPend=i;return d*1000}duck(true);voEnd=o+d;
-  const run=()=>{if(voEnd!==o+d)return;try{a.currentTime=o;const p=a.play();if(p&&p.catch)p.catch(()=>{voBlocked=i;voBusy=false})}catch(e){voBusy=false}clearTimeout(voT);voT=setTimeout(voStop,d*1000+6000)};
+  const run=()=>{if(voEnd!==o+d)return;try{a.currentTime=o;a.playbackRate=1.06;a.defaultPlaybackRate=1.06;a.preservesPitch=true;const p=a.play();if(p&&p.catch)p.catch(()=>{voBlocked=i;voBusy=false})}catch(e){voBusy=false}clearTimeout(voT);voT=setTimeout(voStop,d*1000+6000)};
   if(a.readyState<1)a.addEventListener("loadedmetadata",run,{once:true});else run();return d*1000}
 /* walking around by yourself: a welcome first, then one short line the first time you enter each room */
 function roomVoice(){clearTimeout(voRT);if(!soundOn||tourOn||!cur||!VOICE[lang])return;voRT=setTimeout(()=>{if(!soundOn||tourOn||!cur)return;
@@ -1498,16 +1498,16 @@ async function startTour(from){closePops();closeSummary();if(measuring)setMeasur
   while(ok()){const st=ROUTE[tourIdx],id=st.id;tourUI();
     if(cur.id!==id){
       const link=spots.find(s=>s.to===id);
-      if(st.ch!=null){setCap("");chapterShow(st.ch);if(!await hold(1500,ok))return;chapterHide()}
+      if(st.ch!=null){setCap("");chapterShow(st.ch);if(!await hold(900,ok))return;chapterHide()}
       setCap(link?"":t("next")+" "+nm(byId[id]));await go(id,link?{brg:link.lo}:{});
       if(!ok())return}
-    else if(st.ch!=null){setCap("");chapterShow(st.ch);if(!await hold(1500,ok))return;chapterHide()}
+    else if(st.ch!=null){setCap("");chapterShow(st.ch);if(!await hold(900,ok))return;chapterHide()}
     tourUI();
-    for(const [bi,[u,la,fov,c,act,sw]] of st.b.entries()){tourPan=0;const [head,txt]=c[lang];if(act==="facts"){if($("factsPop").hidden){renderFacts();$("factsPop").hidden=false;clearTimeout(window._ft);window._ft=setTimeout(()=>{if(tourOn)$("factsPop").hidden=true},7000)}}else if(!$("factsPop").hidden)$("factsPop").hidden=true;if(act==="floor"){floorIntro(cur.floor);planGlimpse()}const dl0=norm(panoToPlan(cur,u)-lon),mv=Math.max(1400,Math.min(2400,800+Math.abs(dl0)*9)),vd=voSay(VOI[tourIdx]+bi),rd=Math.max(readMs(head+" "+txt)+300,vd?vd+1100-(reduceMotion()?0:mv):0);setCap(txt,head,(bi+1)+" / "+st.b.length,(reduceMotion()?0:mv)+rd);
-      if(!reduceMotion()){const dl=norm(panoToPlan(cur,u)-lon);if(!await beat(Math.max(1400,Math.min(2400,800+Math.abs(dl)*9)),dl,la,fov,ok))return}
-      tourLat=la;tourPan=reduceMotion()?0:(sw||0)*360/rd;let held=await hold(rd,ok);tourPan=0;if(held&&vd){let w=0;while(voBusy&&w<30000&&ok()){await wait(120);if(!tourPaused)w+=120}held=ok()&&await hold(350,ok)}if(!held)return}
+    for(const [bi,[u,la,fov,c,act,sw]] of st.b.entries()){tourPan=0;const [head,txt]=c[lang];if(act==="facts"){if($("factsPop").hidden){renderFacts();$("factsPop").hidden=false;clearTimeout(window._ft);window._ft=setTimeout(()=>{if(tourOn)$("factsPop").hidden=true},7000)}}else if(!$("factsPop").hidden)$("factsPop").hidden=true;if(act==="floor"){floorIntro(cur.floor);planGlimpse()}const dl0=norm(panoToPlan(cur,u)-lon),mv=Math.max(900,Math.min(1600,600+Math.abs(dl0)*6)),vd=voSay(VOI[tourIdx]+bi),rd=Math.max(readMs(head+" "+txt)+300,vd?vd+500-(reduceMotion()?0:mv):0);setCap(txt,head,(bi+1)+" / "+st.b.length,(reduceMotion()?0:mv)+rd);
+      if(!reduceMotion()){const dl=norm(panoToPlan(cur,u)-lon);if(!await beat(Math.max(900,Math.min(1600,600+Math.abs(dl)*6)),dl,la,fov,ok))return}
+      tourLat=la;tourPan=reduceMotion()?0:(sw||0)*360/rd;let held=await hold(rd,ok);tourPan=0;if(held&&vd){let w=0;while(voBusy&&w<30000&&ok()){await wait(120);if(!tourPaused)w+=120}held=ok()&&await hold(120,ok)}if(!held)return}
     if(!ok())return;
-    if(!reduceMotion()&&!await beat(900,0,-4,90,ok))return;
+    if(!reduceMotion()&&!await beat(500,0,-4,90,ok))return;
     if(!$("factsPop").hidden)$("factsPop").hidden=true;
     if(tourIdx===ROUTE.length-1){const lb=st.b[st.b.length-1];if(lb[4]==="reg"){stopTour();renderReg();$("rgWa").hidden=true;$("rgSubmit").hidden=false;$("rgErr").hidden=true;$("regPop").hidden=false}else endTour();return}
     tourIdx++}}
@@ -2035,7 +2035,7 @@ function annCut(from,p){const bg=$("big");clearTimeout(window.annT);clearTimeout
     setTimeout(()=>{planFocus(st?[p.id,st.id]:[p.id],p.floor);bm.style.transition="transform 1.3s cubic-bezier(.45,0,.2,1)";setTimeout(()=>penMark([p.id],p.id.length,st?st.id:null,null,lang),1150)},450);
     window.annT=setTimeout(()=>{const b=document.querySelector("#bigMap .pin.hl[data-id='"+p.id+"']"),r=b?b.getBoundingClientRect():null;if(r)bg.style.setProperty("--ox",r.left+r.width/2+"px"),bg.style.setProperty("--oy",r.top+r.height/2+"px");
       bg.classList.add("dive");window.annT2=setTimeout(()=>{bg.hidden=true;bg.classList.remove("cutin","dive");penClear(true)},650)},4300)})}
-window.annFollow=annFollow;function annFollow(from,p){if(window._pw||!p)return;if(tourOn){if(CUT.has(p.id))annCut(from,p);return}const inAsk=Date.now()<window.annAskUntil&&!tourOn;if(!tourOn&&!inAsk)return;const L=tourOn?lang:askL,bg=$("big");
+window.annFollow=annFollow;function annFollow(from,p){return;if(window._pw||!p)return;if(tourOn){if(CUT.has(p.id))annCut(from,p);return}const inAsk=Date.now()<window.annAskUntil&&!tourOn;if(!tourOn&&!inAsk)return;const L=tourOn?lang:askL,bg=$("big");
   const fresh=bg.hidden||!bg.classList.contains("pdock");bg.classList.add("pdock");bg.classList.toggle("dockR",inAsk&&!$("askPop").hidden);bg.classList.toggle("dockT",!!tourOn);let nf=false;if(big.floor!==p.floor){penClear(true);big.render(p.floor);nf=true}bg.hidden=false;const same=from&&from.floor===p.floor&&from!==p,near=same&&Math.hypot(from.x-p.x,from.y-p.y)<32;
   const draw=()=>{if(nf){bigFloors&&bigFloors();fitPlan(false)}else if(fresh)fitPlan(false);
     planFocus(near?[p.id,from.id]:[p.id],p.floor);setTimeout(()=>penMark([p.id],p.id.length,same?from.id:null,null,L),420)};
