@@ -1713,10 +1713,10 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
    const HRU=/how are you( doing| today)?|how r u|how'?s it going|how are things|how do you do|كيف الحال|كيف حالك|كيفك|شلونك|وش اخبارك|ايش اخبارك|كيف اخبارك|عساك طيب|عساك بخير/;
    const g=q.match(G);let rest=g?q.slice(g[0].length):q;const hru=HRU.test(rest);if(hru)rest=rest.replace(new RegExp(HRU.source,"g"),"");rest=rest.replace(/^[\s,.!?؟و]+|[\s,.!?؟]+$/g,"").trim();
    if(g||hru){const w=g?g[1]:"",pre=/salam|سلام/.test(w)?R.salam:/morning|صباح/.test(w)?R.morning:/evening|afternoon|مساء/.test(w)?R.evening:R.hey;
-     const full=A(pre+" "+R.hi2,{vo:[27]}),ex=pre.replace(/[,،]$/,"!");
-     if(!rest){if(hru){askMood=1;return A((g?ex+" ":"")+R.howru,{vo:g?[27]:null})}return full}
+     const ex=pre.replace(/[,،]$/,"!"),full=A(pre+" "+R.hi2,{vo:[27],greet:ex});
+     if(!rest){if(hru){askMood=1;return A((g?ex+" ":"")+R.howru)}return full}
      if(G.test(rest)||HRU.test(rest)){const b=answer(rest);if(hru&&b.say.indexOf(R.howru)<0){b.say+=" "+R.howru;askMood=1}return b}
-     const a=answer(rest);if(a.unk){if(hru){askMood=1;return A(ex+" "+R.howru,{vo:[27]})}return full}
+     const a=answer(rest);if(a.unk){if(hru){askMood=1;return A(ex+" "+R.howru)}return full}
      let sy=a.say||"";if(hru){sy+=" "+R.howru;askMood=1}a.say=(ex+" "+sy).trim();return a}}
   if(askMood&&has(q,/^(i'?m )?(fine|good|great|ok|okay|not bad|all good|well|very well|alright|excellent)( thanks?| thank you| and you| you)*$|^(الحمدلله|الحمد لله|بخير|تمام|زين|طيب|كويس|ماشي الحال|بخير الحمدلله|الحمدلله بخير|تمام الحمدلله)( و ?انت| الله يسلمك| وانت كيفك)*$/)){askMood=0;return A(R.fine,{offer:{act:()=>{closeAsk();startTour(0)}}})}
   askMood=0;
@@ -1783,8 +1783,15 @@ function speak(txt){if(!TTS||!txt)return;try{TTS.cancel();const u=new SpeechSynt
   u.rate=askL==="ar"?.95:1;u.onstart=()=>{try{duck(true)}catch(e){}};u.onend=u.onerror=()=>{try{duck(false)}catch(e){}};TTS.speak(u)}catch(e){}}
 /* log */
 function bubble(cls,txt){const d=document.createElement("div");d.className=cls;d.dir=isAr(txt)?"rtl":"ltr";d.textContent=txt;const g=$("askLog");g.appendChild(d);while(g.children.length>8)g.firstChild.remove();g.scrollTop=g.scrollHeight;return d}
-function ask(raw){raw=(raw||"").trim();if(!raw)return;askL=isAr(raw)?"ar":(/[a-z]/i.test(raw)?"en":askL);bubble("aq",raw);
-  askVO=null;clearTimeout(askVT);const a=answer(raw);lastOffer=a.offer||null;
+let lastQ="",lastQT=0;
+/* several questions in one sentence: answer each part, in order */
+function answerAll(raw){const parts=raw.split(/\s+(?:و\s*)(?=(?:كم|هل|وين|اين|ايش|وش|ماذا|متى|مين|فيه)\s)|\s*[,،؟?]\s*(?:and\s+|و)?(?=\S)|\s+and\s+(?=(?:how|what|where|is|are|do|does|can|when|who)\b)/i).map(x=>x.trim()).filter(Boolean);
+  if(parts.length<2)return answer(raw);
+  const as=parts.map(p=>answer(p)),ok=as.filter(a=>a.say&&!a.unk);if(!ok.length)return as[0];if(ok.length===1)return ok[0];
+  const seen=new Set(),out={say:"",vo:[]};ok.forEach(a=>{if(a.greet)a.say=a.greet;if(seen.has(a.say))return;seen.add(a.say);out.say+=(out.say?" ":"")+a.say;(a.vo||[]).forEach(v=>{if(!out.vo.includes(v))out.vo.push(v)});if(a.btn&&!out.btn)out.btn=a.btn;if(a.act)out.act=a.act;if(a.offer)out.offer=a.offer});
+  if(!out.vo.length)delete out.vo;return out}
+function ask(raw){raw=(raw||"").trim();if(!raw)return;const now=Date.now();if(raw===lastQ&&now-lastQT<5000)return;lastQ=raw;lastQT=now;askL=isAr(raw)?"ar":(/[a-z]/i.test(raw)?"en":askL);bubble("aq",raw);
+  askVO=null;clearTimeout(askVT);const a=answerAll(raw);lastOffer=a.offer||null;
   if(a.say){const d=bubble("aa",a.say);if(a.btn){const x=document.createElement(a.btn.href?"a":"button");x.className="chip askAct";x.textContent=a.btn.label;
       if(a.btn.href){x.href=a.btn.href;x.target="_blank";x.rel="noopener"}else{x.type="button";x.onclick=a.btn.act}d.appendChild(x)}askSay(a.say,a.vo||askVO)}else try{TTS&&TTS.cancel()}catch(e){}
   if(a.act)setTimeout(a.act,a.say?700:0);sugs();try{uiSnd("tap")}catch(e){}}
