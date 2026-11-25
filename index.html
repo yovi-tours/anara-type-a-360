@@ -1799,7 +1799,7 @@ const ROOMS=[
  [BATH,q=>{const n=numIn(q);return n?"ff-bath-"+n:"ff-bath-1"}],
  [/terrace|balcony|تراس|بلكونه/,"ff-living-2"]];
 const findRooms=q=>{const out=[];for(const [re,v] of ROOMS)if(re.test(q)){const id=typeof v==="function"?v(q):v;if(byId[id]&&!out.includes(byId[id]))out.push(byId[id])}return out};
-const FLQ=[/ground floor|downstairs|الدور الارضي|الارضي/,/first floor|upstairs|الدور الاول/,/second floor|top floor|roof floor|الدور الثاني/];
+const FLQ=[/ground floor|downstairs|الدور الارضي|الارضي|الدور السفلي|تحت/,/first floor|upstairs|الدور الاول|الطابق الاول|دور العايله|دور العائله|دور النوم/,/second floor|top floor|roof floor|roof|annex|penthouse|الدور الثاني|الطابق الثاني|الملحق|ملحق|دور الملحق|السطح|الروف|جناح الضيوف فوق/];
 const floorIn=q=>FLQ.findIndex(r=>r.test(q));
 const THIS=/this room|this space|in here|here|current|هذه الغرفه|هذا المكان|هنا|هذي|هذه|هذا|هالغرفه|هالمكان|هالمساحه|هالصاله|هالممر|ذي /;
 /* the guide's own lines for each room, from the guided tour */
