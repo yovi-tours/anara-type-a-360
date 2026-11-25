@@ -1861,7 +1861,7 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/ceiling|height|tall|ارتفاع|السقف/))return A(R.height,{offer:{act:measureNow}});
   if(has(q,/measure|tape|قياس|قيس|اقيس/))return A(R.measure,{act:()=>{clearTimeout(askVT);askVT=setTimeout(()=>{closeAsk();setMeasure(true)},2000)}});
   if(has(q,/customi|modify|change the (layout|design)|extra room|تعديل|اغير|تغيير التصميم/))return A(R.custom,{btn:REG});
-  if(has(q,/floor ?plan|map|layout|المخطط|مخطط|خريطه|الخريطه/)&&!has(q,/how big|size|مساحه/))return A("",{act:()=>planWalk(cur.floor)});
+  if(has(q,/floor ?plan|map|layout|المخطط|مخطط|خريطه|الخريطه/)&&!has(q,/how big|size|مساحه/))return A(R.plan,{act:()=>{closeAsk();openBig()}});
   if(has(q,/type ?[cd]\b|duplex|دوبلكس|نموذج د|villa types|other (types|villas|villa|models)|compare (with|to) (another|other)|نموذج ج|نماذج|موديلات|انواع الفلل|انواع الفلل/))return A(R.other,{btn:OPEN});
   if(has(q,/(tell me|talk|brief|overview|describe|about) .*(villa|house|home)|(villa|house|home) (overview|in brief)|نبذه|عطني فكره|احكيلي عن (الفيلا|البيت)|حدثني عن (الفيلا|البيت)|كلمني عن (الفيلا|البيت)|وش عن (الفيلا|البيت)|عرفني (بالفيلا|بالبيت|على الفيلا)/))return A(R.brief,{offer:{say:R.come,act:()=>goTell("gf-majlis")}});
   if(has(q,/key facts|summary|overview|ملخص|اهم الارقام/))return A(R.facts,{act:()=>{closeAsk();$("bFacts").click()}});
@@ -1883,8 +1883,8 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/how many (bath|toilet|wc)|bathrooms|كم حمام|كم دوره|عدد دورات|عدد الحمامات/))return A(R.baths);
   if(has(q,/how many floors|levels|storeys|كم دور|عدد الادوار/))return A(R.floors);
   if(has(q,/(total|villa|house|home|built|whole|land).*(area|size|big|sqm|square)|(area|size).*(villa|house|home)|how big is (the|this) (villa|house|home)|مساحه (الفيلا|البيت|المنزل)|المساحه الكليه|كم مساحه الفيلا|مساحه الارض/))return A(R.area);
-  if(fq>=0&&!room&&has(q,/what|which|tell|show|on the|ماذا|وش|ايش|حدثني|في /))return A("",{act:()=>planWalk(fq)});
-  if(has(q,/(what|tell me|ماذا|وش|ايش|حدثني).*(this floor|هذا الدور)/))return A("",{act:()=>planWalk(cur.floor)});
+  if(fq>=0&&!room&&has(q,/what|which|tell|show|on the|ماذا|وش|ايش|حدثني|في /))return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
+  if(has(q,/(what|tell me|ماذا|وش|ايش|حدثني|ابي اعرف).*(this floor|هذا الدور|هالدور|هذا الطابق|هالطابق)/))return A(R.fl[cur.floor]);
   if(rooms.length>=2&&has(q,/bigger|larger|compare|which is|vs|versus|اكبر|اوسع|قارن|ايهما/)){const[a,b]=rooms;if(a.dims&&b.dims){const[x,y]=area(a)>=area(b)?[a,b]:[b,a];return A(R.bigger(rn(x),rn(y),N(area(x)),N(area(y))))}}
   if(has(q,/smallest|اصغر/)){const p=P.filter(x=>x.dims&&!BATH.test(x.id)&&!/wash|wc|laundry|wardrobe|pantry|stairs|entrance/.test(x.id)).sort((a,b)=>area(a)-area(b))[0];return A(R.smallest(rn(p),N(area(p))),{act:()=>go(p.id)})}
   if(has(q,/largest|biggest|اكبر غرفه|اكبر/)){const p=P.filter(x=>x.dims&&!/lobby|entrance/.test(x.id)).sort((a,b)=>area(b)-area(a))[0];return A(R.largest(rn(p),N(area(p))),{act:()=>go(p.id)})}
@@ -1895,7 +1895,7 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/is there|are there|do (you|i|it|they) have|does it have|هل يوجد|هل فيه|فيه|يوجد|هل في/)&&room)return A(R.yes(rn(room),fl(room)),{act:()=>go(room.id)});
   if(has(q,/where is|where's|where are|اين|وين/)&&room)return A(R.where(rn(room),fl(room)),{act:()=>go(room.id)});
   if(room){if(room===cur)return A(tell(room));return A(R.go(rn(room),room.floor!==cur.floor?fl(room):""),{act:()=>goTell(room.id)})}
-  if(fq>=0)return A("",{act:()=>planWalk(fq)});
+  if(fq>=0)return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
   if(!has(q,/villa|house|home|room|floor|price|cost|project|anara|handover|deliver|warrant|financ|bank|mortgage|contract|pay|install|developer|build|construct|finish|ac\b|air.?con|electric|water|land|street|neighbo|school|mosque|service|maintenance|حي|فيلا|فله|بيت|منزل|غرف|دور|سعر|اسعار|مشروع|انارا|تسليم|استلام|ضمان|تمويل|بنك|عقد|دفع|قسط|اقساط|مطور|صك|كهرباء|مياه|تكييف|مكيف|عزل|تشطيب|ارض|شارع|جيران|مدرسه|مسجد|خدمات|صيانه|بناء|مواد|حجز|زياره|موقع/))return offA();
   return A(R.unknown,{btn:REG,offer:REG,unk:1})}
 const has=(q,re)=>re.test(q);
