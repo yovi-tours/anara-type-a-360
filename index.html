@@ -1818,6 +1818,19 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/^(stop|quiet|shush|enough|اسكت|توقف|كفايه|خلاص)$/))return A("");
   if(lastOffer&&has(q,/^(yes|yeah|yep|sure|ok|okay|please|go ahead|do it|of course|نعم|ايوه|ايه|اي|اكيد|تمام|طيب|ابشر|يب|يا ليت|ياليت|افتحها|افتح|اوكي|زين|حلو|يلا|يالله|وريني|ورني|اوريني|ورينا|ابي|ابغي|ابغى|خذني|ودني|show me|lets go|let's go|go)( please| ابي| لو سمحت| الله يعافيك| طال عمرك)?$/)||(lastOffer&&has(q,/وريني|ورني|اوريني|ورينا|خذني|ودني|show me|take me|يلا|ابي اشوف|ابغى اشوف/)&&!has(q,/[?؟]/))){const o=lastOffer;lastOffer=null;return A(o.say||"",{act:o.act})}
   if(lastOffer&&has(q,/^(no|nope|not now|later|no thanks|maybe later|لا|لا شكرا|لا مشكور|مو الحين|بعدين|لا يعطيك العافيه|لا خلاص)$/)){lastOffer=null;return A(R.noProb)}
+  /* the same kind of room on other floors, and "which floor is X" */
+  {const KIND=[[/coffee|pantry|kitchenette|ركن القهوه|ركن قهوه|قهوه|تحضيري|مطبخ تحضيري/,["ff-pantry","sf-pantry"]],[/kitchen|مطبخ/,["gf-kitchen","ff-pantry","sf-pantry"]],
+      [/living|lounge|family room|صاله|صالات|معيشه/,["gf-living","gf-living-2","ff-living-2"]],[/terrace|balcony|تراس|بلكونه|شرفه/,["ff-living","sf-guest-room"]],
+      [/bedroom|غرفه نوم|غرف نوم|غرف النوم/,["ff-bed-4","ff-bed-3","ff-bed-1","ff-bed-2","sf-guest-room"]]];
+   const other=has(q,/other floor|another floor|any floor|every floor|each floor|دور (ثاني|اخر|آخر|ثاني)|ادوار (ثانيه|اخري)|اي دور اخر|غير (هذا|هال)دور|بس في|كل دور|كل الادوار|في الادوار الثانيه/);
+   const kd=KIND.find(([re])=>has(q,re));
+   if(other&&kd){const ps=kd[1].map(i=>byId[i]).filter(Boolean),byF=[0,1,2].map(f=>ps.filter(p=>p.floor===f));const L2=askL==="ar";
+     const parts=byF.map((a,f)=>a.length?(L2?R.floorN[f]+": "+a.map(rn).join("، "):R.floorN[f].replace(/^./,c=>c.toUpperCase())+": "+a.map(rn).join(", ")):null).filter(Boolean);
+     const first=ps.find(p=>p.floor!==cur.floor)||ps[0];
+     return A((L2?"موجودة في أكثر من دور طال عمرك. ":"There's more than one, on different floors. ")+parts.join(L2?". ":". ")+(L2?". تبي أوديك؟":". Shall I take you?"),{offer:{say:R.come,act:()=>goTell(first.id)}})}
+   if(room&&has(q,/which floor|what floor|on which floor|(في )?(اي|أي|ايش|وش) دور|باي دور|في اي طابق/)){const L2=askL==="ar";
+     const txt=L2?rn(room)+" في "+R.floorN[room.floor]+" طال عمرك. تفضّل معي أوريك.":"The "+rn(room).toLowerCase()+" is on the "+R.floorN[room.floor].toLowerCase()+". Come, I'll show you.";
+     return A(txt,{act:()=>goTell(room.id)})}}
   {const G=/^(hi|hello|hey|hiya|hey there|hello there|salam|salaam|as?salamu? ?alaikum|السلام عليكم|سلام عليكم|سلام|مرحبا|مرحبتين|هلا و ?الله|يا هلا|هلا|اهلا|اهلين|good (morning|evening|afternoon)|صباح الخير|مساء الخير)(?=[\s,!.?؟]|$)[\s,!.?؟]*/;
    const HRU=/how are you( doing| today)?|how r u|how'?s it going|how are things|how do you do|كيف الحال|كيف حالك|كيفك|شلونك|وش اخبارك|ايش اخبارك|كيف اخبارك|عساك طيب|عساك بخير/;
    const g=q.match(G);let rest=g?q.slice(g[0].length):q;const hru=HRU.test(rest);if(hru)rest=rest.replace(new RegExp(HRU.source,"g"),"");rest=rest.replace(/^[\s,.!?؟و]+|[\s,.!?؟]+$/g,"").trim();for(let n=0;n<4;n++)rest=rest.replace(/^(و ?الله|يا ?(غالي|طويل العمر|الغالي)|طال عمرك|اخوي|حبيبي|الحمد ?لله|يا هلا|بالله)(?=[\s,!.?؟]|$)[\s,!.?؟و]*/,"").trim();if(rest.split(" ").length<2&&/^(و|يا|اخ|ي)$/.test(rest))rest="";
