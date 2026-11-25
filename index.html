@@ -1559,13 +1559,28 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    fine:"Glad to hear it. Shall I show you around? I can start the guided tour, or take you straight to any room.",
    okay:"Great. Where would you like to go next? The majlis, the kitchen, or the master bedrooms upstairs?",
    who:"I'm your guide to Villa Type A at Anara. I know every room in this home, so ask me anything, in English or Arabic.",
-   wow:"It really is a beautiful home. Would you like to see the family living area or the master bedrooms next?",
+   wow:"Thank you, it suits you! May it be a blessed home. And to complete the picture, let me show you the main entrance: two floors high, open to the sky, and full of daylight all day. Shall we?",
    bye:"Thank you for visiting, it was a pleasure showing you around. If you'd like to see it in person, I can book a private visit for you.",
-   unknown:"Good question. That detail isn't in the tour yet, but the Anara sales team will know. Shall I have them call you? Meanwhile, ask me about the rooms, sizes, parking or the location.",
+   unknown:"Honestly, I don't have that exact detail with me. But I can have someone from the Anara team get in touch, if you'd like to leave your number, email and a good time to reach you. They'll look after you properly and get you every detail you need. Shall I open the form for you?",
    here:(r,f,d)=>"You're in the "+r+", on the "+f+"."+(d?" It's about "+d+".":""),
-   go:(r,f)=>"Taking you to the "+r+(f?", on the "+f:"")+".",
+   go:(r,f)=>"Come with me, let's go to the "+r+(f?" on the "+f:"")+".",
    size:(r,w,l,a)=>"The "+r+" is about "+w+" by "+l+" metres, roughly "+a+" square metres.",
-   nosize:r=>"I don't have exact measurements for the "+r+". You can measure it yourself with the measuring tool.",
+   nosize:r=>"The "+r+" doesn't have a set size on the plan, but you can measure it yourself with the tape. Shall I open it for you?",
+   measureGo:"Done, the tape is ready. Tap the start point on the floor, then the end point of whatever you'd like to measure. For a height, tap the floor, then straight up.",
+   noProb:"No problem at all. What would you like to do next?",
+   opinion:r=>"Honestly? It's a very well thought-out family home. Guests have their own side and majlis, the family has its own entrance and privacy, and every bedroom has its own bathroom. And look around you here in the "+r+", you can feel the light and the space. Shall I show you my favourite spot in the house?",
+   worth:"That's your call, of course. What sets it apart is the privacy between guests and family, a bathroom for every bedroom, and a whole floor just for the family. The sales team can give you the full numbers so you can compare in peace. Shall I have them call you?",
+   neg:(r,d)=>"I understand. Pictures don't always give the real feel of a space."+(d?" The "+r+" is about "+d+".":"")+" If you like generous spaces, the majlis and the family living room are the largest. Shall I take you to the majlis?",
+   off:"Ha, good one! But I'm only an expert on this house. Let me help you with that instead: shall we go to the majlis, or up to the bedrooms?",
+   disc:"I wish I could! Prices and offers are with the sales team, and I can pass your request on. Shall I have them call you?",
+   sorry:"Sorry if I didn't get you right. Try asking me another way, or tell me what you'd like to see in the house.",
+   next:r=>"Come with me, let me show you the "+r+".",
+   sure:"Yes, I'm sure. These figures come from Anara's approved plans.",
+   come:"Sure, come with me.",
+   brief:"With pleasure. Villa Type A is three floors, about 389 square metres. Five bedrooms, each with its own bathroom, and nine bathrooms in all. The ground floor is for hosting and family life: a men's majlis with its own garden, an office by the entrance, a dining room, a family living room around a planted courtyard, and a closed kitchen. The first floor is just for the family, with four master bedrooms, a lounge and a terrace. And up top, a guest suite opening onto the roof. My favourite part? A guest never crosses the family side. Shall we start with the majlis?",
+   talk:(r,f,d,a,t)=>"This is the "+r+", on the "+f+"."+(d?" It's about "+d+" metres, roughly "+a+".":"")+" "+t,come2:"Opening the Anara platform for you.",
+   near:"Good question. The project is in Riyadh, about 25 minutes from King Khalid International Airport, and the Anara platform's map shows the schools, mosques and services around it in detail. Shall I open it for you?",
+   lives:"Nobody yet. It's waiting for its family, and maybe that's you.",
    where:(r,f)=>"The "+r+" is on the "+f+". Let me take you there.",
    yes:(r,f)=>"Yes. The "+r+" is on the "+f+". Let me show you.",
    about:(r,f,d)=>"This is the "+r+" on the "+f+(d?", about "+d:"")+".",
@@ -1591,14 +1606,14 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    outdoor:"Three outdoor spaces: the planted courtyard at the centre of the ground floor, a terrace off the family lounge on the first floor, and the roof terrace beside the guest suite.",
    pool:"A pool isn't part of the villa plans. The outdoor spaces are the planted courtyard, the first-floor terrace and the roof terrace.",
    lift:"The plans don't show a lift. The stair wraps around the planted courtyard and connects all three floors. The sales team can tell you about any options.",
-   height:"I can't give you the ceiling height from here, but you can measure it: turn on the measuring tool, tap the floor, then tap straight up at the ceiling.",
+   height:"The ceiling height isn't written on the plan, but you can measure it yourself: tap the floor by the wall, then straight up at the ceiling. Shall I open the tape for you?",
    staff:"Yes. The maid's room, with its bathroom and the laundry, is behind the kitchen. The driver's room has its own bathroom and sits by the gate, completely separate from the house.",
    family:"It suits a large family well: 5 bedrooms each with a bathroom, a private family floor, a family living room and lounge, and separate rooms for a maid and a driver.",
    spec:"Finishes, air conditioning, smart-home features and warranties are listed in the Anara specification sheet. The sales team can send it to you.",
    furn:"The furniture in the tour shows how the home can be lived in. The sales team will confirm exactly what's included.",
    custom:"Any changes to the layout or finishes are discussed with the Anara sales team.",
    other:"Anara offers other villa types too, such as Type C, each with its own tour on the Anara platform.",
-   tour:"Starting the guided tour.",measure:"The measuring tool is on. Tap a point on the floor, then a second point. Tap straight up for a height.",
+   tour:"With pleasure, come with me, let's start the tour.",measure:"Done, the tape is ready. Tap the start point on the floor, then the end point of whatever you'd like to measure. For a height, tap the floor, then straight up.",
    plan:"Here's the floor plan. Tap any room to go there.",facts:"Here are the key facts.",share:"Here's a link to this exact view.",
    music:"Done.",open:"Open the Anara platform",reg:"Register interest",
    sug0:["What's special about this villa?","How many bedrooms?","Is there parking?","Where is it located?"],
@@ -1606,7 +1621,7 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    floorN:["ground floor","first floor","second floor"]},
  ar:{btn:"اسأل",title:"اسأل عن الفيلا",sub:"تحدّث أو اكتب، بالعربية أو الإنجليزية.",ph:"اسأل أي شيء عن الفيلا…",listen:"أستمع إليك…",
    noSR:"الصوت غير متاح في هذا المتصفح. اكتب سؤالك بدلاً من ذلك.",
-   help:"اسألني أي شيء يهمّك كمشترٍ: مساحات الغرف، وغرف النوم، والأدوار، والمواقف، والخصوصية، والمساحات الخارجية، والموقع، والسعر والتسليم. أو قل «خذني إلى المجلس».",
+   help:"اسألني اللي يهمك طال عمرك: مساحات الغرف، غرف النوم، الأدوار، المواقف، الخصوصية، الأماكن الخارجية، الموقع، السعر والتسليم. أو قل لي «ودّني المجلس» وأوديك.",
    hi:"حيّاك الله في فيلا النموذج (أ). أنا مرشدك، اسألني عن أي غرفة أو قل لي وين تبي تروح.",
    thanks:"العفو، حيّاك الله. تبي أوريك شي ثاني؟",
    hey:"هلا والله،",salam:"وعليكم السلام ورحمة الله،",morning:"صباح النور،",evening:"مساء النور،",
@@ -1615,16 +1630,31 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    fine:"الحمدلله، دوم يا رب. تبي أبدأ لك الجولة المرشدة، أو آخذك لأي غرفة تختارها؟",
    okay:"ممتاز. وين تحب نروح الحين؟ المجلس، المطبخ، أو غرف النوم الرئيسية فوق؟",
    who:"أنا مرشدك في فيلا النموذج (أ) في أنارا. أعرف كل زاوية في البيت، فاسألني اللي تبي بالعربي أو الإنجليزي.",
-   wow:"صح، بيت جميل ما شاء الله. تبي نشوف صالة المعيشة أو غرف النوم الرئيسية؟",
+   wow:"الله يطوّل عمرك، يزهاك البيت الطيب المبارك. وعشان تكتمل الصورة، خلّني أوريك المدخل الرئيسي: ارتفاع دورين، مفتوح على السماء، والنور يملاه طول اليوم. نروح له؟",
    bye:"شكراً على زيارتك، تشرّفت فيك. وإذا تحب تشوفها على الطبيعة، أقدر أحجز لك زيارة خاصة.",
-   unknown:"سؤال في محله. هالتفصيل ما هو عندي في الجولة، بس فريق مبيعات أنارا يقدر يجاوبك. تبي أخليهم يتصلون عليك؟ وبالوقت نفسه اسألني عن الغرف والمساحات والمواقف والموقع.",
-   here:(r,f,d)=>"أنت الآن في "+r+" في "+f+"."+(d?" مساحتها تقريباً "+d+".":""),
-   go:(r,f)=>"حسناً، سأنقلك إلى "+r+(f?" في "+f:"")+".",
-   size:(r,w,l,a)=>r+": أبعادها تقريباً "+w+" في "+l+" متر، أي حوالي "+a+" متر مربع.",
-   nosize:r=>"لا تتوفر لدي مقاسات دقيقة لـ"+r+"، ويمكنك قياسها بنفسك بأداة القياس.",
-   where:(r,f)=>r+" في "+f+". سأنقلك إلى هناك الآن.",
-   yes:(r,f)=>"نعم، يوجد "+r+" في "+f+". تفضّل معي.",
-   about:(r,f,d)=>"هذه "+r+" في "+f+(d?"، مساحتها تقريباً "+d:"")+".",
+   unknown:"والله طال عمرك، هالمعلومة ما هي متوفرة عندي تحديداً. وأقدر أخلي أحد من فريق أنارا يتواصل معك، إذا حبيت تسجّل رقمك وإيميلك والوقت المناسب لك. والشباب ما بيقصّرون معك، بيوفرون لك كل البيانات اللي تحتاجها، وأبشر باللي تبيه. تبي أفتح لك التسجيل؟",
+   here:(r,f,d)=>"إحنا الحين في "+r+"، في "+f+"."+(d?" ومساحتها تقريباً "+d+".":"")+" طالع حولك على راحتك.",
+   go:(r,f)=>"تفضّل معي، نروح "+r+(f?" في "+f:"")+".",
+   size:(r,w,l,a)=>r+" تقريباً "+w+" في "+l+" متر، يعني حوالي "+a+" متر مربع.",
+   nosize:r=>"طال عمرك، "+r+" ما له مقاس محدد في المخطط. بس تقدر تقيسه بنفسك بالمسطرة، تبي أفتحها لك؟",
+   measureGo:"أبشر، المسطرة جاهزة. المس نقطة البداية على الأرض، وبعدها نقطة النهاية للمكان اللي تحب تقيسه. ولو تبي الارتفاع، المس الأرض وبعدها اطلع لفوق.",
+   noProb:"ولا يهمك. وش تحب نسوي الحين؟",
+   opinion:r=>"بصراحة؟ بيت مدروس لعائلة سعودية: الضيوف لهم جهتهم ومجلسهم، والعائلة لها مدخلها وخصوصيتها، وكل غرفة نوم بدورة مياهها. وإذا طالعت حولك هنا في "+r+"، تحس بالنور والراحة. تبي أوريك أحلى زاوية في البيت؟",
+   worth:"القرار لك طال عمرك. اللي يميزها الخصوصية بين الضيوف والعائلة، ودورة مياه لكل غرفة نوم، ودور كامل للعائلة بس. وفريق المبيعات يعطيك الأرقام كاملة وتقارن على راحتك. تبي يتواصلون معك؟",
+   neg:(r,d)=>"أفهمك، والصور أحياناً ما تعطي إحساس المكان الحقيقي."+(d?" والمساحة هنا تقريباً "+d+".":"")+" ولو تحب الوسع، المجلس وصالة المعيشة من أوسع المساحات. تبي أوديك المجلس؟",
+   off:"ههه، سؤال حلو والله! بس أنا تخصصي هالبيت. خلّني أفيدك فيه: تبي نروح المجلس، ولا نطلع لغرف النوم فوق؟",
+   disc:"ودّي والله! بس الأسعار والعروض عند فريق المبيعات، وأنا أوصّل لهم طلبك. تبي يتواصلون معك؟",
+   sorry:"سامحني إذا ما فهمتك صح. جرّب تسألني بطريقة ثانية، أو قل لي وش تبي تشوف في البيت.",
+   next:r=>"تعال معي، خلّني أوريك "+r+".",
+   sure:"إيه أكيد، هالأرقام من مخططات أنارا المعتمدة.",
+   come:"أبشر، تفضّل معي.",
+   brief:"حيّاك الله طال عمرك. الفيلا ثلاثة أدوار، ومساحتها حوالي ٣٨٩ متر. فيها خمس غرف نوم، كل غرفة بدورة مياهها، وتسع دورات مياه بالكامل. الأرضي للضيافة والعائلة: مجلس رجال بحديقته، ومكتب عند المدخل، وغرفة طعام، وصالة معيشة على فناء مزروع، ومطبخ مغلق. الأول للعائلة وبس: أربع غرف نوم رئيسية وصالة وتراس. وفوق جناح ضيوف يطل على السطح. وأحلى ما فيها؟ إن الضيف ما يمر على جهة العائلة أبداً. نبدأ من المجلس؟",
+   talk:(r,f,d,a,t)=>"هنا "+r+"، في "+f+"."+(d?" المقاس تقريباً "+d+" متر، يعني حوالي "+a+".":"")+" "+t,come2:"أبشر، أفتح لك منصة أنارا.",
+   near:"سؤال مهم. المشروع في الرياض، على بعد حوالي ٢٥ دقيقة من مطار الملك خالد الدولي، وخريطة منصة أنارا توريك المدارس والمساجد والخدمات القريبة بالتفصيل. تبي أفتحها لك؟",
+   lives:"لسا محد، البيت ينتظر أهله، ويمكن تكونون أنتم.",
+   where:(r,f)=>r+" في "+f+". تعال معي أوريك.",
+   yes:(r,f)=>"إيه نعم، فيه "+r+" في "+f+". تفضّل معي.",
+   about:(r,f,d)=>"هذي "+r+" في "+f+(d?"، ومساحتها تقريباً "+d:"")+". طالع حولك على راحتك.",
    beds:"في فيلا النموذج (أ) خمس غرف نوم: أربع غرف نوم رئيسية في الدور الأول لكل منها دورة مياه خاصة، وجناح ضيوف خاص في الدور الثاني.",
    baths:"تسع دورات مياه ومغاسل: لكل غرفة نوم دورة مياه خاصة، وللضيوف مغسلة ودورة مياه مستقلة، ولكل من غرفتي الخادمة والسائق دورة مياه.",
    floors:"ثلاثة أدوار: الأرضي للضيافة ومعيشة العائلة، والأول دور خاص بالعائلة فيه أربع غرف نوم رئيسية، والثاني فيه جناح ضيوف مع سطح.",
@@ -1632,13 +1662,13 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    fl:["الدور الأرضي فيه ساحة المدخل الرئيسي، ومجلس الرجال بحديقته، والمكتب، وغرفة الطعام، وصالة المعيشة مع فناء مزروع، والمطبخ المغلق وغرفة الغسيل، وغرفتا الخادمة والسائق. مساحته حوالي ١٩٠ متراً مربعاً.",
        "الدور الأول خاص بالعائلة: أربع غرف نوم رئيسية، وأربع دورات مياه، وغرفة ملابس، وصالة العائلة مع ركن القهوة، ومطبخ تحضيري، وتراس. مساحته حوالي ١٥٢ متراً مربعاً.",
        "الدور الثاني فيه جناح ضيوف خاص بدورة مياه ومطبخ تحضيري، يطل على السطح. مساحته حوالي ٤٧ متراً مربعاً."],
-   largest:(r,a)=>"أكبر غرفة هي "+r+"، بمساحة تقريبية "+a+" متر مربع.",
-   smallest:(r,a)=>"أصغر غرفة لدي مقاساتها هي "+r+"، حوالي "+a+" متر مربع.",
+   largest:(r,a)=>"أوسع غرفة "+r+"، تقريباً "+a+" متر مربع. تعال أوريك.",
+   smallest:(r,a)=>"أصغر غرفة عندي مقاسها "+r+"، تقريباً "+a+" متر مربع.",
    bigger:(a,b,x,y)=>a+" أكبر: حوالي "+x+" متر مربع، مقابل "+y+" لـ"+b+".",
-   price:"الأسعار وخطط الدفع يقدّمها فريق مبيعات أنارا مباشرة لتكون محدّثة دائماً. اترك بياناتك وسيتواصلون معك بأحدث العروض.",
+   price:"الأسعار وخطط الدفع عند فريق مبيعات أنارا عشان تكون محدّثة دايماً. تبي أخليهم يتواصلون معك بأحدث العروض؟",
    avail:"التوفّر المباشر لكل فيلا موجود في المخطط العام على منصة أنارا، وتقدر تشوف القطع المتاحة والمحجوزة والمباعة.",
    handover:"مواعيد التسليم وسير الإنشاء يؤكدها فريق مبيعات أنارا. اترك بياناتك وسيطلعونك على كل جديد.",
-   visit:"بكل سرور. اترك اسمك ورقمك وسيرتب فريق أنارا زيارتك الخاصة.",
+   visit:"أبشر بسعدك. اترك اسمك ورقمك، وفريق أنارا يرتّب لك زيارة خاصة.",
    loc:"مشروع أنارا من سمو في الرياض، على بعد حوالي ٢٥ دقيقة بالسيارة من مطار الملك خالد الدولي، وتعرض منصة أنارا الموقع كاملاً وأوقات الوصول.",
    dev:"أنارا من تطوير شركة سمو.",
    hl:"ما يميّزها: مدخل رئيسي ومدخل عائلي مستقلان، وساحة مدخل بارتفاع دورين مفتوحة على السماء، ومكتب عند المدخل، ومطبخ بجهة خدمة خاصة، ودورة مياه لكل غرفة نوم، وجناح ضيوف مع سطح.",
@@ -1647,18 +1677,18 @@ const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in Engli
    outdoor:"ثلاث مساحات خارجية: الفناء المزروع في وسط الدور الأرضي، وتراس صالة العائلة في الدور الأول، والسطح بجانب جناح الضيوف.",
    pool:"المسبح ليس ضمن مخططات الفيلا، والمساحات الخارجية هي الفناء المزروع وتراس الدور الأول والسطح.",
    lift:"المخططات لا تتضمن مصعداً، والدرج يلتف حول الفناء المزروع ويربط الأدوار الثلاثة. ويستطيع فريق المبيعات إفادتك بأي خيارات.",
-   height:"لا أستطيع إعطاءك ارتفاع السقف من هنا، لكن يمكنك قياسه: شغّل أداة القياس، والمس الأرض ثم المس فوقها مباشرة عند السقف.",
+   height:"ارتفاع السقف ما هو مكتوب في المخطط طال عمرك، بس تقدر تقيسه بنفسك: المس الأرض عند الجدار، وبعدها اطلع لفوق عند السقف. تبي أفتح لك المسطرة؟",
    staff:"نعم. غرفة الخادمة بدورة مياهها وغرفة الغسيل خلف المطبخ، وغرفة السائق بدورة مياه خاصة عند البوابة ومستقلة تماماً عن البيت.",
    family:"مناسبة جداً للعائلة الكبيرة: خمس غرف نوم لكل منها دورة مياه، ودور خاص بالعائلة، وصالة معيشة وصالة علوية، وغرفتان مستقلتان للخادمة والسائق.",
    spec:"التشطيبات والتكييف وأنظمة المنزل الذكي والضمانات موضحة في جدول مواصفات أنارا، ويستطيع فريق المبيعات إرساله لك.",
    furn:"الأثاث في الجولة يوضح كيف يمكن أن تعيش في البيت، ويؤكد فريق المبيعات ما يشمله العرض بالتحديد.",
    custom:"أي تعديلات على التصميم أو التشطيبات تتم مناقشتها مع فريق مبيعات أنارا.",
    other:"تقدم أنارا نماذج فلل أخرى مثل النموذج (ج)، ولكل نموذج جولته على منصة أنارا.",
-   tour:"نبدأ الجولة المرشدة.",measure:"تم تشغيل أداة القياس. المس نقطة على الأرض ثم نقطة ثانية، أو المس فوقها مباشرة لقياس الارتفاع.",
-   plan:"هذا مخطط الفيلا، المس أي غرفة للانتقال إليها.",facts:"هذه أهم أرقام الفيلا.",share:"هذا رابط لهذا المنظر بالتحديد.",
+   tour:"أبشر، تفضّل معي نبدأ الجولة.",measure:"أبشر، المسطرة جاهزة. المس نقطة البداية على الأرض، وبعدها نقطة النهاية للمكان اللي تحب تقيسه. ولو تبي الارتفاع، المس الأرض وبعدها اطلع لفوق.",
+   plan:"هذا مخطط الفيلا، المس أي غرفة وأوديك لها.",facts:"هذي أهم أرقام الفيلا.",share:"هذا رابط لنفس المنظر اللي تشوفه الحين.",
    music:"تم.",open:"افتح منصة أنارا",reg:"سجّل اهتمامك",
-   sug0:["ما الذي يميّز هذه الفيلا؟","كم عدد غرف النوم؟","هل يوجد موقف سيارات؟","أين يقع المشروع؟"],
-   sugR:["حدّثني عن هذه الغرفة","كم مساحة هذه الغرفة؟","ماذا يوجد في هذا الدور؟","احجز زيارة"],
+   sug0:["وش يميز هالفيلا؟","كم غرفة نوم فيها؟","فيه موقف سيارات؟","وين موقع المشروع؟"],
+   sugR:["حدّثني عن هالغرفة","كم مساحة هالغرفة؟","وش في هالدور؟","أبي أحجز زيارة"],
    floorN:["الدور الأرضي","الدور الأول","الدور الثاني"]}};
 const N=v=>new Intl.NumberFormat(askL==="ar"?"ar-SA":"en",{maximumFractionDigits:1}).format(v);
 let askL=lang,listening=false,rec=null,voiceOK=false,lastOffer=null,askMood=0,askVO=null,askVT=null;
@@ -1697,7 +1727,7 @@ const ROOMS=[
 const findRooms=q=>{const out=[];for(const [re,v] of ROOMS)if(re.test(q)){const id=typeof v==="function"?v(q):v;if(byId[id]&&!out.includes(byId[id]))out.push(byId[id])}return out};
 const FLQ=[/ground floor|downstairs|الدور الارضي|الارضي/,/first floor|upstairs|الدور الاول/,/second floor|top floor|roof floor|الدور الثاني/];
 const floorIn=q=>FLQ.findIndex(r=>r.test(q));
-const THIS=/this room|this space|in here|here|current|هذه الغرفه|هذا المكان|هنا|هذي|هذه|هذا/;
+const THIS=/this room|this space|in here|here|current|هذه الغرفه|هذا المكان|هنا|هذي|هذه|هذا|هالغرفه|هالمكان|هالمساحه|هالصاله|هالممر|ذي /;
 /* the guide's own lines for each room, from the guided tour */
 const STORY={};try{ROUTE.forEach(r=>r.b.forEach(b=>{const L2=b[3];if(!L2)return;(STORY[r.id]=STORY[r.id]||{en:[],ar:[]});["en","ar"].forEach(l=>{const x=L2[l]&&L2[l][1];if(x&&!/come with me|تفضّل معي|thank you/i.test(x))STORY[r.id][l].push(x)})}))}catch(e){}
 const area=p=>p.dims?p.dims[0]*p.dims[1]:0;
@@ -1705,10 +1735,11 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   const A=(say,o={})=>Object.assign({say},o),REG={label:R.reg,act:()=>{closeAsk();$("bReg").click()}},OPEN={label:R.open,href:ANARA_URL};
   const sz=p=>p.dims?N(area(p))+(askL==="ar"?" م²":" m²"):"";
   const sizeOf=p=>{if(!p.dims)return R.nosize(rn(p));const[w,l]=p.dims;return R.size(rn(p),N(w),N(l),N(w*l))};
-  const tell=p=>{askVO=VOSEG[p.id]||null;const s=(STORY[p.id]&&STORY[p.id][askL])||[];return s.length?s.join(" ")+(p.dims?" "+sizeOf(p):""):R.about(rn(p),fl(p),sz(p))};
+  const tell=p=>R.talk(rn(p),fl(p),p.dims?N(p.dims[0])+(askL==="ar"?" في ":" by ")+N(p.dims[1]):"",sz(p),(TRAIT[p.id]||TRAIT._)[askL==="ar"?1:0]);
   const rooms=findRooms(q),room=rooms[0],fq=floorIn(q);
   if(has(q,/^(stop|quiet|shush|enough|اسكت|توقف|كفايه|خلاص)$/))return A("");
-  if(lastOffer&&has(q,/^(yes|yeah|sure|ok|okay|please|نعم|ايوه|اي|اكيد|تمام|طيب|ابشر|يب)( please)?$/)){const o=lastOffer;lastOffer=null;return A("",{act:o.act})}
+  if(lastOffer&&has(q,/^(yes|yeah|yep|sure|ok|okay|please|go ahead|do it|of course|نعم|ايوه|ايه|اي|اكيد|تمام|طيب|ابشر|يب|يا ليت|ياليت|افتحها|افتح|اوكي|زين|حلو|يلا|يالله)( please| ابي| لو سمحت| الله يعافيك)?$/)){const o=lastOffer;lastOffer=null;return A(o.say||"",{act:o.act})}
+  if(lastOffer&&has(q,/^(no|nope|not now|later|no thanks|maybe later|لا|لا شكرا|لا مشكور|مو الحين|بعدين|لا يعطيك العافيه|لا خلاص)$/)){lastOffer=null;return A(R.noProb)}
   {const G=/^(hi|hello|hey|hiya|hey there|hello there|salam|salaam|as?salamu? ?alaikum|السلام عليكم|سلام عليكم|سلام|مرحبا|مرحبتين|هلا والله|يا هلا|هلا|اهلا|اهلين|good (morning|evening|afternoon)|صباح الخير|مساء الخير)(?=[\s,!.?؟]|$)[\s,!.?؟]*/;
    const HRU=/how are you( doing| today)?|how r u|how'?s it going|how are things|how do you do|كيف الحال|كيف حالك|كيفك|شلونك|وش اخبارك|ايش اخبارك|كيف اخبارك|عساك طيب|عساك بخير/;
    const g=q.match(G);let rest=g?q.slice(g[0].length):q;const hru=HRU.test(rest);if(hru)rest=rest.replace(new RegExp(HRU.source,"g"),"");rest=rest.replace(/^[\s,.!?؟و]+|[\s,.!?؟]+$/g,"").trim();
@@ -1720,23 +1751,35 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
      let sy=a.say||"";if(hru){sy+=" "+R.howru;askMood=1}a.say=(ex+" "+sy).trim();return a}}
   if(askMood&&has(q,/^(i'?m )?(fine|good|great|ok|okay|not bad|all good|well|very well|alright|excellent)( thanks?| thank you| and you| you)*$|^(الحمدلله|الحمد لله|بخير|تمام|زين|طيب|كويس|ماشي الحال|بخير الحمدلله|الحمدلله بخير|تمام الحمدلله)( و ?انت| الله يسلمك| وانت كيفك)*$/)){askMood=0;return A(R.fine,{offer:{act:()=>{closeAsk();startTour(0)}}})}
   askMood=0;
+  const QM=/[?؟]/.test(raw)||has(q,/^(is|are|do|does|how|what|هل|كيف|وش|ايش)\b/);
+  if(has(q,/stupid|dumb|idiot|useless|غبي|ما تفهم|ماتفهم|سخيف|فاشل/))return A(R.sorry);
+  if(has(q,/discount|cheaper|for free|free villa|lower the price|best price|خصم|ببلاش|مجانا|مجاني|نزل السعر|ارخص|تخفيض|اخر سعر/))return A(R.disc,{btn:REG,offer:REG});
+  if(has(q,/joke|نكته|weather|طقس|football|كوره|مباراه|politic|سياس|\d+ ?[-+*x×÷/] ?\d+|كم يساوي|who won|من فاز|recipe|طبخه|song|اغنيه|movie|فيلم|سيارتي|bitcoin|بيتكوين/))return A(R.off,{offer:{say:R.come,act:()=>goTell("gf-majlis")}});
+  if(has(q,/who lives|whose (house|home|villa)|مين ساكن|لمين البيت|مين صاحب البيت/))return A(R.lives);
+  if(has(q,/^(are you sure|really|seriously|متاكد|جد|صدق|من جدك|متاكد انت)$/))return A(R.sure);
+  if(has(q,/worth|investment|should i buy|is it a good (buy|deal)|تستاهل|تسوى|يستاهل|استثمار|اشتريها|اشتري|انصحني اشتري|تنصحني/))return A(R.worth,{btn:REG,offer:REG});
+  if(has(q,/not (nice|good|great|big|enough)|too small|\bsmall\b|tiny|cramped|ugly|don'?t like|didn'?t like|\bhate\b|boring|مو حلو|مب حلو|ما عجبني|ماعجبني|ضيق|ضيقه|(^| )صغير|صغيره|خايس|مو زين|مب زين|ما حبيت|ما احبه/)&&!has(q,/smallest|اصغر/)){const p=cur;return A(R.neg(rn(p),sz(p)),{offer:{say:R.come,act:()=>goTell(cur.id==="gf-majlis"?"gf-living":"gf-majlis")}})}
+  if(has(q,/how is (it|this|the) (villa|house|home|place)|how'?s (the|this) (villa|house|home)|what do you think|your opinion|do you like (it|this)|would you (buy|live)|is it (good|nice|great|ok|okay|decent)|is this (villa|house|home) (good|nice)|is the (villa|house) (good|nice)|كيف (الفيلا|البيت|هالفيلا|هالبيت)|وش رايك|ايش رايك|رايك|تعجبك|عاجبتك|هل (هي|الفيلا|البيت) (حلوه|زينه|جيده|كويسه)/)||(QM&&has(q,/^(is it |هل )?(it'?s )?(good|nice|beautiful|great|حلوه|حلو|زينه|زين|جميله|حلوه الفيلا|الفيلا حلوه)$/))){return A(R.opinion(rn(cur)),{offer:{say:R.come,act:()=>goTell("gf-majlis-entrance")}})}
+  if(has(q,/what'?s next|what is next|next (room|stop)|where (to|should we|do we) go|show me (something|more)|وين نروح|وش بعده|الغرفه الجايه|ورني شي|ورني اكثر|كمل|بعدين وين|وين بعد/)){const ids=ROUTE.map(r=>r.id),i=ids.indexOf(cur.id);let nx=null;for(let k=(i<0?0:i)+1;k<ids.length;k++)if(ids[k]!==cur.id&&ids[k]!=="gf-porch"){nx=byId[ids[k]];break}if(!nx)nx=byId["gf-majlis-entrance"];return A(R.next(rn(nx)),{act:()=>goTell(nx.id)})}
   if(has(q,/who are you|what'?s your name|what is your name|are you (a )?(robot|bot|ai|real|human|person)|مين انت|من انت|وش اسمك|ما اسمك|انت روبوت|انت انسان|انت حقيقي/))return A(R.who);
-  if(has(q,/^(bye|goodbye|good bye|see you|that'?s all|thats all|مع السلامه|في امان الله|باي|الله يحفظك|خلاص شكرا|يعطيك العافيه وباي)/))return A(R.bye,{btn:REG,offer:REG,vo:[26]});
+  if(has(q,/^(bye|goodbye|good bye|see you|that'?s all|thats all|مع السلامه|في امان الله|باي|الله يحفظك|خلاص شكرا|يعطيك العافيه وباي)/))return A(R.bye,{btn:REG,offer:REG});
   if(has(q,/^(ok|okay|cool|alright|nice|great|تمام|طيب|اوكي|زين|حلو)$/))return A(R.okay);
-  if(has(q,/beautiful|lovely|amazing|gorgeous|stunning|love it|i like (it|this)|wow|so nice|very nice|جميل|حلو[هة]?|رهيب|روعه|يجنن|فخم|فخمه|ما ?شاء الله|عجبني|عجبتني|واو/)&&!has(q,/\?|؟|how|what|where|كم|وين|هل|ايش|وش/))return A(R.wow);
+  if(has(q,/beautiful|lovely|amazing|gorgeous|stunning|love it|i like (it|this)|wow|so nice|very nice|what a (nice|beautiful|lovely|great)|جميل|حلو[هة]?|رهيب|روعه|يجنن|فخم|فخمه|ما ?شاء الله|تبارك الله|عجبني|عجبتني|واو|زين[هة]|الزين[هة]|كشخه|خرافي[هة]?|تهبل/)&&(!has(q,/\?|؟|how|where|كم|وين|هل|ايش/)||has(q,/وش ذا|وش هال|ايش ذا|what a|how (beautiful|lovely|nice)|يا (حلو|زين)/)))return A(R.wow,{offer:{say:R.come,act:()=>goTell("gf-majlis-entrance")}});
   if(has(q,/thank|شكرا|يعطيك العافيه|مشكور/))return A(R.thanks);
   if(has(q,/help|what can (you|i)|how does this work|ساعدني|ماذا تستطيع|وش تقدر|كيف استخدم/))return A(R.help);
-  if(has(q,/\b(price|prices|priced|cost|costs|payment|payments|instal\w*|mortgage|financ\w*|down ?payment|vat|tax|discounts?|offers?)\b|how much|سعر|السعر|بكم|كم سعر|تقسيط|دفعه|الدفع|تمويل|ضريبه|خصم|عرض/)&&!has(q,/how much (space|area|room)/))return A(R.price,{btn:REG,offer:REG});
+  if(has(q,/\b(price|prices|priced|cost|costs|payment|payments|instal\w*|mortgage|financ\w*|down ?payment|vat|tax|discounts?|offers?)\b|how much|سعر|السعر|بكم|كم سعر|تقسيط|دفعه|الدفع|تمويل|ضريبه|خصم|عرض/)&&!has(q,/area|size|space|big|wide|long|sqm|square|مساحه|مساحت|مقاس/))return A(R.price,{btn:REG,offer:REG});
   if(has(q,/available|availability|sold|units left|reserve|متاح|متوفر|مباع|محجوز|كم باقي/))return A(R.avail,{btn:OPEN});
   if(has(q,/handover|hand over|deliver|completion|when (will|is) it (be )?ready|ready|construction|move in|تسليم|استلام|متى جاهز|الانشاء|البناء|متي/))return A(R.handover,{btn:REG,offer:REG});
-  if(has(q,/visit|book|appointment|contact|call me|call back|speak to|sales|زياره|احجز|موعد|تواصل|اتصل|كلموني|المبيعات/))return A(R.visit,{act:REG.act,vo:[26]});
+  if(has(q,/visit|book|appointment|contact|call me|call back|speak to|sales|زياره|احجز|موعد|تواصل|اتصل|كلموني|المبيعات/))return A(R.visit,{act:REG.act});
+  if(has(q,/school|mosque|hospital|clinic|mall|supermarket|grocery|nearby|near by|around the (area|project)|مدرسه|مدارس|مسجد|جامع|مستشفي|مستوصف|مول|سوبرماركت|بقاله|قريب|القريبه|الخدمات/))return A(R.near,{btn:OPEN,offer:{say:R.come2,act:()=>window.open(ANARA_URL,"_blank")}});
   if(has(q,/developer|who (built|is building|develops)|sumou|المطور|سمو|من بنى/))return A(R.dev);
   if(has(q,/location|located|where is (it|the (project|villa|community))|neighbo|airport|distance|how far|area is it|district|الموقع|وين المشروع|اين المشروع|اين يقع|وين يقع|المطار|الحي|كم يبعد/))return A(R.loc,{btn:OPEN});
   if(has(q,/guided tour|start the tour|show me around|walk me through|جوله مرشده|الجوله|ورني البيت/))return A(R.tour,{act:()=>{closeAsk();$("bTour").click()}});
-  if(has(q,/ceiling|height|tall|ارتفاع|السقف/))return A(R.height,{act:()=>{closeAsk();setMeasure(true)}});
-  if(has(q,/measure|tape|قياس|قيس|اقيس/))return A(R.measure,{act:()=>{closeAsk();setMeasure(true)}});
+  if(has(q,/ceiling|height|tall|ارتفاع|السقف/))return A(R.height,{offer:{act:measureNow}});
+  if(has(q,/measure|tape|قياس|قيس|اقيس/))return A(R.measure,{act:()=>{clearTimeout(askVT);askVT=setTimeout(()=>{closeAsk();setMeasure(true)},2000)}});
   if(has(q,/customi|modify|change the (layout|design)|extra room|تعديل|اغير|تغيير التصميم/))return A(R.custom,{btn:REG});
   if(has(q,/floor ?plan|map|layout|المخطط|مخطط|خريطه|الخريطه/)&&!has(q,/how big|size|مساحه/))return A(R.plan,{act:()=>{closeAsk();openBig()}});
+  if(has(q,/(tell me|talk|brief|overview|describe|about) .*(villa|house|home)|(villa|house|home) (overview|in brief)|نبذه|عطني فكره|احكيلي عن (الفيلا|البيت)|حدثني عن (الفيلا|البيت)|كلمني عن (الفيلا|البيت)|وش عن (الفيلا|البيت)|عرفني (بالفيلا|بالبيت|على الفيلا)/))return A(R.brief,{offer:{say:R.come,act:()=>goTell("gf-majlis")}});
   if(has(q,/key facts|summary|overview|ملخص|اهم الارقام/))return A(R.facts,{act:()=>{closeAsk();$("bFacts").click()}});
   if(has(q,/share|link|send (it|this) to|رابط|شارك|ارسل/))return A(R.share,{act:()=>{closeAsk();$("bShare").click()}});
   if(has(q,/music|sound|موسيقى|الصوت/)){const on=has(q,/on|play|شغل/);return A(R.music,{act:()=>{if(on!==soundOn)$("bSound").click()}})}
@@ -1744,18 +1787,18 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/english|انجليزي|انقليزي/)&&has(q,/speak|switch|change|talk|تكلم|غير|حول/))return A("",{act:()=>{document.querySelector('.lang .chip[data-l="en"]').click();askL="en";paint()}});
   if(has(q,/pool|swimming|مسبح|حوض سباحه/))return A(R.pool);
   if(has(q,/lift|elevator|مصعد|اسانسير/))return A(R.lift);
-  if(has(q,/park|garage|cars?\b|موقف|مواقف|كراج|سياره|سيارات/))return A(R.park,{vo:[28],act:()=>{if(cur.id!=="gf-porch")go("gf-porch")}});
-  if(has(q,/privacy|private|separate|guests see|خصوصيه|خاص|مستقل|منفصل/)&&!room)return A(R.privacy,{vo:[5,10]});
-  if(has(q,/garden|outdoor|outside|terrace|balcony|courtyard|حديقه|خارجي|تراس|بلكونه|فناء|حوش/)&&!has(q,/take me|go to|خذني|ودني/))return A(R.outdoor,{vo:[25]});
+  if(has(q,/park|garage|cars?\b|موقف|مواقف|كراج|سياره|سيارات/))return A(R.park,{act:()=>{if(cur.id!=="gf-porch")go("gf-porch")}});
+  if(has(q,/privacy|private|separate|guests see|خصوصيه|خاص|مستقل|منفصل/)&&!room)return A(R.privacy);
+  if(has(q,/garden|outdoor|outside|terrace|balcony|courtyard|حديقه|خارجي|تراس|بلكونه|فناء|حوش/)&&!has(q,/take me|go to|خذني|ودني/))return A(R.outdoor);
   if(has(q,/finish|material|marble|tiles|air ?con|\bac\b|hvac|smart|warranty|guarantee|insulation|تشطيب|خامات|رخام|بلاط|تكييف|ذكي|ضمان|عزل|مواصفات/))return A(R.spec,{btn:REG,offer:REG});
   if(has(q,/furni|furnished|اثاث|مفروش/))return A(R.furn);
   if(has(q,/type c|villa types|other (types|villas|villa|models)|compare (with|to) (another|other)|نموذج ج|نماذج اخري|انواع الفلل/))return A(R.other,{btn:OPEN});
-  if(has(q,/(big|large) family|kids|children|family of|عائله كبيره|اطفال|عيال/))return A(R.family,{vo:[1]});
-  if(has(q,/special|feature|highlight|why (buy|this)|unique|ميزات|مميزات|يميز|ليش اشتري|ايش يميز/))return A(R.hl,{vo:[1]});
-  if(has(q,/staff|maid|driver|خادمه|سائق|سواق|شغاله/)&&has(q,/is there|are there|do (you|i|it)|have|هل|فيه|يوجد|في /)&&!has(q,/take me|go to|خذني|ودني/))return A(R.staff,{vo:[14],act:()=>go(room?room.id:"gf-maid-room")});
-  if(has(q,/how many (bed|room)|number of bed|bedrooms|كم غرفه|عدد الغرف|عدد غرف|كم غرف/)&&!THIS.test(q))return A(R.beds,{vo:[1]});
+  if(has(q,/(big|large) family|kids|children|family of|عائله كبيره|اطفال|عيال/))return A(R.family);
+  if(has(q,/special|feature|highlight|why (buy|this)|unique|ميزات|مميزات|يميز|ليش اشتري|ايش يميز/))return A(R.hl);
+  if(has(q,/staff|maid|driver|خادمه|سائق|سواق|شغاله/)&&has(q,/is there|are there|do (you|i|it)|have|هل|فيه|يوجد|في /)&&!has(q,/take me|go to|خذني|ودني/))return A(R.staff,{act:()=>go(room?room.id:"gf-maid-room")});
+  if(has(q,/how many (bed|room)|number of bed|bedrooms|كم غرفه|عدد الغرف|عدد غرف|كم غرف/)&&!THIS.test(q))return A(R.beds);
   if(has(q,/how many (bath|toilet|wc)|bathrooms|كم حمام|كم دوره|عدد دورات|عدد الحمامات/))return A(R.baths);
-  if(has(q,/how many floors|levels|storeys|كم دور|عدد الادوار/))return A(R.floors,{vo:[28]});
+  if(has(q,/how many floors|levels|storeys|كم دور|عدد الادوار/))return A(R.floors);
   if(has(q,/(total|villa|house|home|built|whole|land).*(area|size|big|sqm|square)|(area|size).*(villa|house|home)|how big is (the|this) (villa|house|home)|مساحه (الفيلا|البيت|المنزل)|المساحه الكليه|كم مساحه الفيلا|مساحه الارض/))return A(R.area);
   if(fq>=0&&!room&&has(q,/what|which|tell|show|on the|ماذا|وش|ايش|حدثني|في /))return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
   if(has(q,/(what|tell me|ماذا|وش|ايش|حدثني).*(this floor|هذا الدور)/))return A(R.fl[cur.floor]);
@@ -1764,18 +1807,42 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(has(q,/largest|biggest|اكبر غرفه|اكبر/)){const p=P.filter(x=>x.dims&&!/lobby|entrance/.test(x.id)).sort((a,b)=>area(b)-area(a))[0];return A(R.largest(rn(p),N(area(p))),{act:()=>go(p.id)})}
   if(has(q,/where am i|what room is this|which room|وين انا|اين انا|ما هذه الغرفه|وش هذي|ايش هذي/))return A(R.here(rn(cur),fl(cur),sz(cur)));
   const sizeQ=has(q,/how big|size|area|dimension|measurement|sqm|square|wide|long|مساحه|مساحتها|مقاس|ابعاد|كم حجم|عرض|طول/);
-  if(sizeQ){const p=(THIS.test(q)||!room)?cur:room;return A(sizeOf(p),{act:p!==cur?()=>go(p.id):null})}
+  if(sizeQ){const p=(THIS.test(q)||!room)?cur:room;if(!p.dims)return A(R.nosize(rn(p)),{offer:{act:()=>{if(p!==cur)go(p.id);measureNow()}}});return A(sizeOf(p),{act:p!==cur?()=>go(p.id):null})}
   if(has(q,/tell me about|describe|what is (this|it) like|about this|حدثني عن|احكيلي|صف لي|عن هذه/)){const p=(THIS.test(q)||!room)?cur:room;return A(tell(p),{act:p!==cur?()=>go(p.id):null})}
   if(has(q,/is there|are there|do (you|i|it|they) have|does it have|هل يوجد|هل فيه|فيه|يوجد|هل في/)&&room)return A(R.yes(rn(room),fl(room)),{act:()=>go(room.id)});
   if(has(q,/where is|where's|where are|اين|وين/)&&room)return A(R.where(rn(room),fl(room)),{act:()=>go(room.id)});
-  if(room){if(room===cur)return A(tell(room));return A(R.go(rn(room),room.floor!==cur.floor?fl(room):""),{act:()=>{stopTour();voHello=true;go(room.id);if(VOSEG[room.id]&&STORY[room.id]){clearTimeout(askVT);askVT=setTimeout(()=>{if($("askPop").hidden)return;bubble("aa",STORY[room.id][askL].join(" "));askSay("",VOSEG[room.id])},1800)}}})}
+  if(room){if(room===cur)return A(tell(room));return A(R.go(rn(room),room.floor!==cur.floor?fl(room):""),{act:()=>goTell(room.id)})}
   if(fq>=0)return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
   return A(R.unknown,{btn:REG,offer:REG,unk:1})}
 const has=(q,re)=>re.test(q);
 /* speech out */
 /* the tour guide's own recorded lines, when the answer is one of them */
 try{VOICE.en.seg[27]=[1.1,4.15];VOICE.en.seg[28]=[5.6,5.1];VOICE.ar.seg[27]=[1.0,2.5];VOICE.ar.seg[28]=[4.1,5.8]}catch(e){}
+/* one human line per room, in the guide's own words */
+const TRAIT={_:["A practical, well-planned space. Look around, and ask me anything about it.","مساحة عملية ومرتبة. طالع حولها على راحتك، واسألني عن أي شي فيها."],
+ "gf-porch":["Two cars fit comfortably here, and the main door is right ahead of you.","تكفي لسيارتين براحة، والباب الرئيسي قدّامك على طول."],
+ "gf-majlis-entrance":["Look up: it's two floors high and open to the sky, so it glows with daylight.","طالع فوق: ارتفاعه دورين ومفتوح على السماء، والنور ينزل فيه طول اليوم."],
+ "gf-lobby":["It quietly splits the house: guests one way, family the other.","هو اللي يفصل البيت بهدوء: الضيوف من جهة، والعائلة من جهة."],
+ "gf-majlis":["Your guests sit here with their own garden view, and never pass the family side.","هنا تستقبل ضيوفك، وقدّامهم حديقة خاصة، وما يمرّون على جهة العائلة أبداً."],
+ "gf-office":["Work from home or meet a visitor here without opening up the house.","تشتغل فيه أو تستقبل زائر، والبيت على راحته."],
+ "gf-dining":["It sits right between the majlis and the family side, so serving guests is easy.","موقعها بين المجلس وجهة العائلة، يعني الضيافة سهلة ومريحة."],
+ "gf-living":["This is the heart of the home, bright and open, with the planted courtyard beside it.","هذي قلب البيت، مفتوحة ومنوّرة، وجنبها الفناء المزروع."],
+ "gf-living-2":["The family's own entrance is right here, so they come and go in privacy.","مدخل العائلة الخاص هنا، يدخلون ويطلعون براحتهم."],
+ "gf-kitchen":["Closed, with worktops all round, built-in ovens and a window over the sink. The maid's room is just behind it.","مطبخ مغلق، أسطح عمل من كل جهة، وأفران مدمجة، وشباك فوق المغسلة. وغرفة الخادمة خلفه على طول."],
+ "gf-maid-room":["It has its own bathroom, with the laundry right next door.","لها دورة مياهها، وغرفة الغسيل جنبها."],
+ "gf-guard-room":["By the gate, with its own bathroom, completely separate from the house.","عند البوابة، بدورة مياهها، ومستقلة تماماً عن البيت."],
+ "ff-living-2":["The family's own lounge upstairs, with a coffee corner and a terrace for fresh air.","صالة العائلة فوق، وجنبها ركن القهوة وتراس للهواء الطلق."],
+ "ff-living":["A cosy family lounge, away from guests.","صالة عائلية دافية، بعيدة عن الضيوف."],
+ "ff-bed-4":["The main suite: calm, generous, with a tall window, a dressing room and its own bathroom.","الغرفة الرئيسية: هادية ووسيعة، وشباكها طويل، ومعها غرفة ملابس ودورة مياه خاصة."],
+ "ff-bed-3":["Built-in wardrobes and its own bathroom.","دواليب مدمجة ودورة مياه خاصة."],
+ "ff-bed-1":["The screened window lets light in and keeps your privacy.","شباكها بساتر، يدخّل النور ويحفظ الخصوصية."],
+ "ff-bed-2":["A glass wardrobe and a wide window, with its own bathroom.","دولاب زجاجي وشباك واسع، ودورة مياهها خاصة."],
+ "ff-corridor":["Look down through the glass opening and you'll see the entrance below.","إذا طالعت تحت من الفتحة الزجاجية، تشوف المدخل."],
+ "sf-guest-room":["A private suite for guests or a grown-up son, with the roof terrace right outside.","جناح مستقل للضيوف أو لأحد الأبناء، والسطح قدّامه على طول."],
+ "sf-stairs":["The top floor: a private suite, away from everything.","آخر دور: جناح مستقل بعيد عن كل شي."]};
 const VOSEG={};{let n=0;ROUTE.forEach(r=>{r.b.forEach((b,i)=>{const x=b[3]&&b[3].en&&b[3].en[1];if(x&&!/come with me|thank you/i.test(x)&&!(r.id in VOSEG&&VOSEG[r.id]._done)){(VOSEG[r.id]=VOSEG[r.id]||[]).push(n+i)}});if(VOSEG[r.id])VOSEG[r.id]._done=1;n+=r.b.length})}
+function goTell(id){stopTour();voHello=true;go(id);{clearTimeout(askVT);askVT=setTimeout(()=>{if($("askPop").hidden)return;bubble("aa",(TRAIT[id]||TRAIT._)[askL==="ar"?1:0])},1600)}}
+function measureNow(){const d=bubble("aa",L[askL].measureGo);clearTimeout(askVT);askVT=setTimeout(()=>{closeAsk();setMeasure(true)},2600)}
 function playGuide(list){if(!list||!list.length||!VOICE[askL])return false;if(askL!==lang){const c=document.querySelector('.lang .chip[data-l="'+askL+'"]');if(c)c.click()}voiceOn=true;try{TTS&&TTS.cancel()}catch(e){}let k=0;const nx=()=>{if(k>=list.length)return;const ms=voSay(list[k++]);if(!ms&&k===1)return;clearTimeout(askVT);askVT=setTimeout(nx,ms+300)};nx();return true}
 function askSay(txt,vo){clearTimeout(askVT);try{voStop()}catch(e){}if(vo)playGuide(vo)}
 function speak(txt){if(!TTS||!txt)return;try{TTS.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang=askL==="ar"?"ar-SA":"en-US";
