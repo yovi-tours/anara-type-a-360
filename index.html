@@ -1809,14 +1809,14 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   const A=(say,o={})=>Object.assign({say},o),
    offA=()=>{const sp=has(q,/football|soccer|كوره|مباراه|لاعب|player|نادي|الهلال|النصر|الاتحاد|ميسي|رونالدو|messi|ronaldo|دوري|league/);
      const ks=["off","off2","off3","off4"].filter(x=>R[x]),k=sp&&R.off5?"off5":ks[(window._offN=(window._offN||0)+1)%ks.length];
-     const to=k==="off5"?"gf-living":k==="off4"?null:"gf-majlis";return A(R[k],to?{off:1,offer:{say:R.come,act:()=>goTell(to)}}:{off:1})},
+     const to=k==="off5"||k==="off2"?"gf-living":k==="off4"?null:"gf-majlis";return A(R[k],to?{off:1,offer:{say:R.come,act:()=>goTell(to)}}:{off:1})},
    REG={label:R.reg,act:()=>{closeAsk();$("bReg").click()}},OPEN={label:R.open,href:ANARA_URL};
   const sz=p=>p.dims?N(area(p))+(askL==="ar"?" م²":" m²"):"";
   const sizeOf=p=>{if(!p.dims)return R.nosize(rn(p));const[w,l]=p.dims;return R.size(rn(p),N(w),N(l),N(w*l))};
   const tell=p=>BANK[askL]["room_"+p.id]||R.talk(rn(p),fl(p),p.dims?N(p.dims[0])+(askL==="ar"?" في ":" by ")+N(p.dims[1]):"",sz(p),(TRAIT[p.id]||TRAIT._)[askL==="ar"?1:0]);
   const rooms=findRooms(q),room=rooms[0],fq=floorIn(q);
   if(has(q,/^(stop|quiet|shush|enough|اسكت|توقف|كفايه|خلاص)$/))return A("");
-  if(lastOffer&&has(q,/^(yes|yeah|yep|sure|ok|okay|please|go ahead|do it|of course|نعم|ايوه|ايه|اي|اكيد|تمام|طيب|ابشر|يب|يا ليت|ياليت|افتحها|افتح|اوكي|زين|حلو|يلا|يالله)( please| ابي| لو سمحت| الله يعافيك)?$/)){const o=lastOffer;lastOffer=null;return A(o.say||"",{act:o.act})}
+  if(lastOffer&&has(q,/^(yes|yeah|yep|sure|ok|okay|please|go ahead|do it|of course|نعم|ايوه|ايه|اي|اكيد|تمام|طيب|ابشر|يب|يا ليت|ياليت|افتحها|افتح|اوكي|زين|حلو|يلا|يالله|وريني|ورني|اوريني|ورينا|ابي|ابغي|ابغى|خذني|ودني|show me|lets go|let's go|go)( please| ابي| لو سمحت| الله يعافيك| طال عمرك)?$/)||(lastOffer&&has(q,/وريني|ورني|اوريني|ورينا|خذني|ودني|show me|take me|يلا|ابي اشوف|ابغى اشوف/)&&!has(q,/[?؟]/))){const o=lastOffer;lastOffer=null;return A(o.say||"",{act:o.act})}
   if(lastOffer&&has(q,/^(no|nope|not now|later|no thanks|maybe later|لا|لا شكرا|لا مشكور|مو الحين|بعدين|لا يعطيك العافيه|لا خلاص)$/)){lastOffer=null;return A(R.noProb)}
   {const G=/^(hi|hello|hey|hiya|hey there|hello there|salam|salaam|as?salamu? ?alaikum|السلام عليكم|سلام عليكم|سلام|مرحبا|مرحبتين|هلا و ?الله|يا هلا|هلا|اهلا|اهلين|good (morning|evening|afternoon)|صباح الخير|مساء الخير)(?=[\s,!.?؟]|$)[\s,!.?؟]*/;
    const HRU=/how are you( doing| today)?|how r u|how'?s it going|how are things|how do you do|كيف الحال|كيف حالك|كيفك|شلونك|وش اخبارك|ايش اخبارك|كيف اخبارك|عساك طيب|عساك بخير/;
