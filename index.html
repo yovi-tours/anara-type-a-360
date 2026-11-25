@@ -412,7 +412,7 @@ body.touring #tags{display:none}
   .dock .chip{height:28px;padding:0 11px;font-size:11.5px}
   .tools{top:calc(var(--top) + 98px);bottom:auto;padding:4px;gap:0}
   .tools .ibtn{width:38px;height:38px}
-  #zIn,#zOut,#bMeasure,#bFull,.tools hr{display:none}
+  #zIn,#zOut,#bFull,.tools hr{display:none}
   .room{bottom:calc(var(--bot) + 64px);width:auto;max-width:calc(100vw - 24px);padding:10px 14px 10px}
   .room .note,.room .meta small,.room .meta span:not(:first-child) small{display:none}
   .room h1{font-size:19px;line-height:1.2}
@@ -644,6 +644,41 @@ body.touring:has(#floorCard:not([hidden]):not(.out)) #cap,body.touring:has(#floo
  body.touring #cap.quiet{border-radius:18px!important;padding:10px 16px 11px!important;max-width:calc(100vw - var(--gl) - var(--gr))}}
 @media (max-width:640px){body.touring #factsPop{bottom:calc(var(--bot) + 74px + var(--caph,60px) + 10px)!important;z-index:20!important}}
 
+
+/* ---------- voice guide ---------- */
+#askPop{inset-inline-end:var(--gr);bottom:calc(var(--bot) + 60px);width:min(390px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 150px));gap:12px;z-index:26}
+.askHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.askHead .ibtn{width:34px;height:34px;flex:none;margin:-4px -6px 0 0}
+#askLog{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0;flex:1 1 auto}
+#askLog:empty{display:none}
+.aq,.aa{border-radius:16px;padding:9px 13px;font-size:14px;line-height:1.5;max-width:88%;animation:askIn .35s var(--ease-soft) both}
+.aq{align-self:flex-end;background:#f4f1e6;color:#262b16;border-end-end-radius:5px;font-weight:500}
+.aa{align-self:flex-start;background:#ffffff14;color:#fff;border:1px solid #ffffff1f;border-end-start-radius:5px}
+.aa .askAct{display:flex;width:max-content;margin-top:9px;height:32px;padding:0 14px;font-size:12.5px;background:#f4f1e6;color:#262b16;text-decoration:none;align-items:center}
+.aa.live{opacity:.65}
+@keyframes askIn{from{opacity:0;transform:translateY(6px)}}
+#askSug{gap:6px}#askSug .chip{height:32px;font-size:12.5px;padding:0 12px}
+#askForm{display:flex;gap:6px;align-items:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:999px;padding:5px}
+#askIn{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;padding:0 10px;color:#fff;outline:none}#askIn::placeholder{color:#ffffff8c}
+#askMic,#askGo{width:40px;height:40px;border-radius:999px;display:grid;place-items:center;flex:none}
+#askMic{background:#f4f1e6;color:#262b16;position:relative}
+#askMic[aria-pressed="true"]{background:#c2410c;color:#fff}
+#askMic[aria-pressed="true"]::before{content:"";position:absolute;inset:-5px;border-radius:999px;border:2px solid #c2410c;animation:askPulse 1.1s ease-out infinite}
+@keyframes askPulse{from{opacity:.9;transform:scale(.9)}to{opacity:0;transform:scale(1.35)}}
+#askMic[hidden]{display:none}
+#askGo{color:#fff}
+#askSub{color:#ffffffa6!important}
+body.asking #mini,body:has(#regPop:not([hidden])) #mini,body:has(#factsPop:not([hidden])) #mini{opacity:0;pointer-events:none}
+#rooms{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent)}
+body.asking #cap{display:none!important}
+@media (max-width:640px){#askPop{inset-inline:8px!important;width:auto!important;bottom:calc(var(--bot) + 64px);max-height:calc(100vh - 220px)}}
+@media (max-width:640px){
+ #sharePop{inset-inline:8px!important;width:auto!important;top:auto!important;bottom:calc(var(--bot) + 64px)!important;transform:none!important}
+ #mbar{left:auto;transform:none;inset-inline:12px 64px;padding:6px 6px 6px 14px}[dir="rtl"] #mbar{padding:6px 14px 6px 6px}
+ #mText{flex:1;min-width:0;line-height:1.3}
+ body:has(.pop:not([hidden])) #room{opacity:0;pointer-events:none}
+}
+body:has(#regPop:not([hidden])) #room,body:has(#sharePop:not([hidden])) #room,body:has(#factsPop:not([hidden])) #room{opacity:0;pointer-events:none}
+body:has(#big:not([hidden])) #room,body:has(#big:not([hidden])) #mini{opacity:0!important;pointer-events:none!important}
 </style>
 
 <div id="stage"></div>
@@ -684,6 +719,7 @@ body.touring:has(#floorCard:not([hidden]):not(.out)) #cap,body.touring:has(#floo
 <div class="dock glass chrome pano-only"><div class="rooms" id="rooms"></div></div>
 <div class="actions chrome">
   <nav class="lang glass" aria-label="Language"><button class="chip" data-l="en">EN</button><button class="chip" data-l="ar" lang="ar">العربية</button></nav>
+  <button class="secondary glass hov" id="bAsk"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg><span class="lbl-sm" id="bAskTxt"></span></button>
   <button class="secondary glass hov" id="bTour"><svg class="i" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5-10-6.5Z"/></svg><span class="lbl-sm" id="bTourTxt"></span></button>
   <button class="secondary glass hov" id="bFacts"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="lbl-sm" id="bFactsTxt"></span></button>
   <button class="primary" id="bReg"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z"/></svg><span class="lbl-sm" id="bRegTxt"></span></button>
@@ -712,6 +748,12 @@ body.touring:has(#floorCard:not([hidden]):not(.out)) #cap,body.touring:has(#floo
   <p class="err" id="rgErr" hidden></p>
   <div class="row"><button class="primary" id="rgSubmit" type="submit"></button><a class="primary" id="rgWa" target="_blank" rel="noopener" hidden></a><button class="chip" type="button" id="rgClose"></button></div></form>
 <div id="cap" class="glass card" hidden><div class="meta"><span id="capCh"></span><span class="step" id="capStep"></span></div><b class="head" id="capHead"></b><p id="capTxt"></p><div class="prog"><i id="capProg"></i></div></div>
+<section class="pop glass card" id="askPop" hidden aria-live="polite">
+  <div class="askHead"><div><h3 id="askTitle"></h3><p id="askSub"></p></div><button class="ibtn" id="askX" type="button"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div id="askLog"></div>
+  <div id="askSug" class="row"></div>
+  <form id="askForm" autocomplete="off"><input id="askIn" enterkeyhint="send"><button type="button" id="askMic" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button><button type="submit" id="askGo"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></form>
+</section>
 <div class="toast glass" id="toast"></div>
 <div id="intro"><div class="shade"></div>
   <div class="bar"><svg viewBox="784.91 416.85 350.18 246.29" role="img" aria-label="Anara" class="logo"><g fill="var(--logo-star)"><path d="M986.14 478.59C992.11 478.80 996.84 479.26 1002.01 480.91C1002.50 481.07 1004.03 481.40 1005.70 481.76L1007.07 482.06C1008.00 482.27 1008.66 481.79 1008.88 481.25C1008.94 481.11 1008.97 480.95 1008.98 480.78C1008.98 480.70 1008.97 480.61 1008.96 480.52C1008.91 480.23 1008.74 479.81 1008.23 479.48C1006.23 478.20 1005.01 477.43 1004.58 477.21C996.10 472.74 988.20 469.46 977.18 467.95C976.86 467.91 973.75 467.72 972.86 468.03C971.88 468.37 971.36 469.42 971.67 470.41C972.02 471.49 973.35 472.87 973.35 472.88C976.96 476.65 980.90 478.42 986.14 478.59"/><path d="M933.86 457.07C927.89 456.87 923.16 456.41 917.99 454.76C917.50 454.60 915.97 454.27 914.30 453.90L912.93 453.60C912.00 453.40 911.34 453.88 911.12 454.41C911.06 454.56 911.03 454.72 911.02 454.88C911.02 454.97 911.03 455.06 911.04 455.14C911.09 455.43 911.26 455.85 911.77 456.18C913.77 457.47 914.99 458.23 915.42 458.46C923.90 462.92 931.80 466.21 942.82 467.71C943.14 467.76 946.25 467.95 947.14 467.64C948.12 467.29 948.64 466.25 948.33 465.25C947.98 464.18 946.65 462.80 946.65 462.79C943.04 459.01 939.10 457.25 933.86 457.07"/><path d="M970.76 441.69C970.96 435.73 971.42 430.99 973.08 425.82C973.24 425.33 973.57 423.80 973.930 422.13L974.23 420.76C974.43 419.83 973.95 419.17 973.42 418.95C973.27 418.89 973.11 418.86 972.95 418.85C972.86 418.85 972.78 418.86 972.69 418.87C972.40 418.92 971.98 419.09 971.65 419.61C970.36 421.60 969.60 422.83 969.37 423.26C964.91 431.73 961.63 439.63 960.12 450.65C960.08 450.97 959.88 454.09 960.19 454.97C960.54 455.95 961.59 456.47 962.58 456.16C963.65 455.82 965.04 454.49 965.04 454.48C968.82 450.87 970.58 446.93 970.76 441.69"/><path d="M949.24 493.97C949.04 499.94 948.58 504.68 946.92 509.85C946.76 510.34 946.43 511.86 946.07 513.54L945.77 514.91C945.57 515.83 946.05 516.49 946.58 516.71C946.73 516.77 946.89 516.81 947.05 516.81C947.14 516.81 947.22 516.81 947.31 516.79C947.60 516.74 948.02 516.57 948.35 516.06C949.64 514.07 950.40 512.84 950.63 512.41C955.09 503.94 958.37 496.04 959.88 485.01C959.92 484.70 960.12 481.58 959.81 480.69C959.46 479.72 958.41 479.19 957.42 479.51C956.35 479.85 954.96 481.18 954.96 481.19C951.18 484.79 949.42 488.74 949.24 493.97"/><path d="M970.75 493.98C974.80 498.36 977.81 502.05 980.27 506.89C980.50 507.35 981.34 508.67 982.26 510.11L983.01 511.30C983.52 512.10 984.32 512.23 984.86 512.01C985.00 511.95 985.14 511.86 985.26 511.75C985.32 511.69 985.38 511.62 985.43 511.55C985.60 511.31 985.78 510.90 985.65 510.30C985.17 507.98 984.85 506.57 984.70 506.10C981.91 496.94 978.69 489.02 972.00 480.13C971.81 479.87 969.76 477.52 968.91 477.11C967.98 476.66 966.87 477.02 966.38 477.94C965.86 478.94 965.81 480.86 965.81 480.87C965.67 486.09 967.19 490.13 970.75 493.98"/><path d="M949.25 441.69C945.20 437.30 942.19 433.62 939.73 428.78C939.50 428.32 938.66 427.00 937.74 425.56L936.99 424.37C936.48 423.57 935.68 423.44 935.14 423.66C935.00 423.72 934.86 423.81 934.74 423.92C934.68 423.98 934.62 424.04 934.57 424.12C934.40 424.36 934.22 424.77 934.35 425.37C934.83 427.69 935.15 429.10 935.30 429.56C938.09 438.72 941.31 446.65 948.00 455.54C948.19 455.80 950.24 458.15 951.09 458.56C952.02 459.01 953.13 458.64 953.62 457.72C954.14 456.72 954.19 454.81 954.19 454.80C954.33 449.58 952.81 445.53 949.25 441.69"/><path d="M986.15 457.09C990.53 453.03 994.22 450.03 999.06 447.57C999.52 447.33 1000.83 446.49 1002.28 445.58L1003.46 444.82C1004.26 444.32 1004.39 443.51 1004.18 442.98C1004.11 442.83 1004.03 442.69 1003.91 442.57C1003.86 442.51 1003.79 442.45 1003.72 442.40C1003.48 442.23 1003.06 442.05 1002.47 442.18C1000.15 442.67 998.73 442.99 998.27 443.13C989.11 445.92 981.18 449.15 972.29 455.83C972.04 456.02 969.69 458.08 969.28 458.92C968.82 459.86 969.19 460.97 970.11 461.45C971.11 461.98 973.03 462.02 973.04 462.02C978.26 462.17 982.30 460.64 986.15 457.09"/><path d="M933.85 478.58C929.47 482.63 925.78 485.64 920.94 488.10C920.48 488.34 919.17 489.17 917.72 490.09L916.54 490.84C915.74 491.35 915.61 492.16 915.82 492.69C915.89 492.84 915.97 492.97 916.09 493.09C916.14 493.16 916.21 493.21 916.28 493.26C916.52 493.44 916.94 493.61 917.53 493.49C919.85 493.00 921.27 492.68 921.73 492.54C930.89 489.75 938.82 486.52 947.71 479.84C947.96 479.64 950.31 477.59 950.72 476.74C951.18 475.81 950.81 474.70 949.89 474.21C948.89 473.69 946.97 473.65 946.96 473.65C941.74 473.50 937.70 475.02 933.85 478.58"/></g><g fill="var(--logo-word)"><path d="M821.00 544.43L813.89 544.43L786.91 601.53L794.24 601.53L801.57 582.38L825.92 581.22L825.93 580.08L802.70 579.35L815.79 549.04L837.93 601.53L846.49 601.53L821.00 544.43"/><path d="M1107.60 544.43L1100.48 544.43L1073.51 601.53L1080.83 601.53L1088.17 582.38L1112.52 581.22L1112.52 580.08L1089.30 579.35L1102.39 549.04L1124.52 601.53L1133.09 601.53L1107.60 544.43"/><path d="M964.30 544.43L957.19 544.43L930.21 601.53L937.54 601.53L944.87 582.38L969.22 581.22L969.22 580.08L946.00 579.35L959.09 549.04L981.23 601.53L989.79 601.53L964.30 544.43"/><path d="M1041.54 574.04C1050.94 571.61 1056.12 566.24 1056.12 558.93C1056.12 549.20 1046.84 544.43 1029.12 544.43L1005.49 544.43L1005.49 601.53L1013.93 601.53L1013.93 547.68L1028.88 547.68C1041.29 547.68 1048.17 553.56 1048.17 562.48C1048.17 568.57 1042.14 572.12 1030.93 572.12L1017.23 572.12L1017.23 573.25L1033.82 575.26L1049.37 601.53L1057.81 601.53L1041.54 574.04"/><path d="M866.40 557.57L865.08 557.57L865.08 601.53L871.83 601.53L869.18 575.67L866.40 557.57M907.76 544.43L911.74 570.29L911.74 593.62L870.27 544.43L860.86 544.43L908.85 601.53L915.84 601.53L915.84 544.43L907.76 544.43"/><path d="M919.91 633.61L919.63 633.61C919.42 634.32 919.10 635.11 918.68 636.00C918.26 636.87 917.89 637.58 917.55 638.08C919.28 639.86 920.62 641.46 921.52 642.88C922.41 644.32 922.85 645.40 922.85 646.13C922.85 647.66 921.94 649.34 920.10 651.20C918.26 653.06 915.95 654.72 913.12 656.16C910.28 657.60 907.53 658.50 904.80 658.84L904.80 659.12C905.14 659.20 905.72 659.44 906.53 659.83C907.45 660.25 908.26 660.57 908.92 660.80C909.60 661.02 910.31 661.15 911.04 661.15C913.14 661.15 915.14 660.41 917.05 658.99C918.94 657.58 920.49 655.61 921.67 653.09C922.83 650.57 923.43 647.76 923.43 644.66C923.43 642.75 923.12 640.91 922.51 639.18C921.88 637.47 921.02 635.61 919.91 633.61"/><path d="M1005.78 638.42C1005.47 637.71 1005.34 637.34 1005.34 637.34L1005.07 637.34C1004.78 638.15 1004.44 638.99 1004.00 639.89C1003.58 640.78 1003.18 641.43 1002.87 641.80C1004.02 642.90 1005.10 644.22 1006.10 645.74C1007.09 647.29 1007.59 648.49 1007.59 649.36C1007.59 649.94 1007.22 650.44 1006.46 650.88C1005.70 651.30 1004.57 651.64 1003.10 651.91C1001.63 652.17 999.85 652.30 997.75 652.30L987.59 652.30L938.94 652.30C937.13 652.30 935.69 652.06 934.64 651.62C933.59 651.15 932.85 650.44 932.38 649.41C931.91 648.42 931.67 647.05 931.67 645.32C931.67 643.35 931.70 640.31 931.81 636.21C931.91 632.06 931.96 633.91 931.96 631.81C931.96 630.28 931.88 628.26 931.78 625.72C931.70 624.38 931.67 623.30 931.67 622.49L931.38 622.49C930.96 623.20 930.47 623.99 929.81 624.85C929.18 625.72 928.58 626.40 928.03 626.95C928.37 628.84 929.08 630.99 929.18 634.06C929.31 637.10 929.42 641.70 929.49 647.81C929.55 650.25 929.86 652.14 930.41 653.53C930.99 654.92 931.88 655.92 933.09 656.50C934.32 657.10 935.98 657.42 938.05 657.42L986.73 657.42L996.88 657.42L996.91 657.42C1000.79 657.42 1003.66 656.68 1005.49 655.24C1007.33 653.77 1008.22 651.54 1008.22 648.49C1008.22 646.50 1007.99 644.69 1007.54 643.11C1007.07 641.54 1006.49 639.96 1005.78 638.42"/><path d="M1003.00 632.98L1005.91 629.78C1005.57 629.23 1005.07 628.65 1004.36 628.05C1003.63 627.42 1002.95 626.97 1002.29 626.68L999.64 629.94L999.64 630.23C1000.14 630.46 1000.71 630.86 1001.42 631.43C1002.11 632.01 1002.63 632.51 1003.00 632.98"/><path d="M1014.65 627.95C1014.60 627.08 1014.57 626.06 1014.52 624.85C1014.47 623.64 1014.44 622.86 1014.44 622.49L1014.15 622.49C1013.76 623.20 1013.24 623.99 1012.60 624.85C1011.95 625.72 1011.37 626.40 1010.82 626.95C1011.03 628.05 1012.89 653.35 1012.89 656.24C1012.89 657.21 1012.87 657.89 1012.87 658.28L1013.16 658.28L1013.76 655.50C1014.13 653.90 1014.39 652.59 1014.57 651.51C1014.76 650.44 1014.92 649.10 1015.02 647.50C1015.12 645.87 1015.20 643.85 1015.20 641.41C1015.20 637.00 1014.99 635.82 1014.65 627.95"/><path d="M908.63 627.95C908.57 627.08 908.55 626.06 908.50 624.85C908.44 623.64 908.42 622.86 908.42 622.49L908.13 622.49C907.74 623.20 907.21 623.99 906.58 624.85C905.92 625.72 905.35 626.40 904.80 626.95C905.01 628.05 906.87 650.66 906.87 653.55C906.87 654.52 906.84 655.20 906.84 655.60L907.13 655.60L907.74 652.81C908.10 651.21 908.37 649.90 908.55 648.82C908.73 647.75 908.89 646.41 909.00 644.81C909.10 643.18 909.18 641.16 909.18 638.72C909.18 634.31 909.10 635.48 908.63 627.95"/></g></svg><nav class="lang glass ink-light" aria-label="Language"><button class="chip" data-l="en">EN</button><button class="chip" data-l="ar" lang="ar">العربية</button></nav></div>
@@ -1491,4 +1533,242 @@ $("home").onclick=()=>{stopTour();closeSummary();if(dollOn)closeDoll();closeBig(
 $("enterTour").onclick=()=>enterHome(()=>startTour(0));
 document.addEventListener("click",e=>{if(!e.target.closest(".pop,#bShare,#bFacts,#bReg"))closePops()});
 ['pointermove','pointerdown','keydown','wheel','touchstart'].forEach(e=>addEventListener(e,()=>{window._lm=performance.now()},{passive:true,capture:true}));
+
+/* ======================= VOICE GUIDE =======================
+   Ask the villa anything, by voice or by typing, in Arabic or English. Everything runs in the browser:
+   speech recognition + the device's own voice, and answers built from the tour's own data (rooms, sizes, facts). */
+(function(){
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition,TTS=window.speechSynthesis;
+const L={en:{btn:"Ask",title:"Ask about this villa",sub:"Speak or type, in English or Arabic.",ph:"Ask anything about the villa…",listen:"Listening…",
+   noSR:"Voice isn't available in this browser. Type your question instead.",
+   help:"Ask me anything a buyer would: room sizes, bedrooms, floors, parking, privacy, outdoor spaces, location, price or handover. Or just say “take me to the majlis”.",
+   hi:"Hello, and welcome to Villa Type A. I'm your guide. Ask me about any room, or say where you'd like to go.",
+   thanks:"You're welcome. Anything else you'd like to see?",
+   unknown:"I don't have that detail in the tour. The Anara sales team can answer it for you. Shall I open the form so they call you?",
+   here:(r,f,d)=>"You're in the "+r+", on the "+f+"."+(d?" It's about "+d+".":""),
+   go:(r,f)=>"Taking you to the "+r+(f?", on the "+f:"")+".",
+   size:(r,w,l,a)=>"The "+r+" is about "+w+" by "+l+" metres, roughly "+a+" square metres.",
+   nosize:r=>"I don't have exact measurements for the "+r+". You can measure it yourself with the measuring tool.",
+   where:(r,f)=>"The "+r+" is on the "+f+". Let me take you there.",
+   yes:(r,f)=>"Yes. The "+r+" is on the "+f+". Let me show you.",
+   about:(r,f,d)=>"This is the "+r+" on the "+f+(d?", about "+d:"")+".",
+   beds:"Villa Type A has 5 bedrooms: 4 master bedrooms on the first floor, each with its own bathroom, and a private guest suite on the second floor.",
+   baths:"9 bathrooms and WCs in total. Every bedroom has its own bathroom, guests have their own wash area and toilet, and the maid's and driver's rooms each have a bathroom.",
+   floors:"Three floors. The ground floor is for hosting and family living, the first floor is the family's private floor with 4 master bedrooms, and the second floor has a guest suite with a roof terrace.",
+   area:"The net saleable area is 389 square metres: about 190 on the ground floor, 152 on the first floor and 47 on the second floor.",
+   fl:["The ground floor has the main entrance court, the men's majlis with its garden, a home office, the dining room, the family living room with a planted courtyard, the closed kitchen and laundry, and the maid's and driver's rooms. About 190 square metres.",
+       "The first floor is just for the family: 4 master bedrooms, 4 bathrooms, a walk-in wardrobe, the family lounge with a coffee corner, a pantry and a terrace. About 152 square metres.",
+       "The second floor has a private guest suite with its bathroom and pantry, opening onto the roof terrace. About 47 square metres."],
+   largest:(r,a)=>"The largest room is the "+r+", at about "+a+" square metres.",
+   smallest:(r,a)=>"The smallest room with measurements is the "+r+", about "+a+" square metres.",
+   bigger:(a,b,x,y)=>"The "+a+" is bigger: about "+x+" square metres, against "+y+" for the "+b+".",
+   price:"Prices and payment plans come straight from the Anara sales team, so they're always current. Leave your details and they'll call you with the latest offer.",
+   avail:"Live availability for every villa is on the Anara masterplan, where you can see which plots are available, reserved or sold.",
+   handover:"Handover dates and construction progress are confirmed by the Anara sales team. Leave your details and they'll update you.",
+   visit:"Of course. Leave your name and number and the Anara team will arrange your private visit.",
+   loc:"Anara by Sumou is in Riyadh, about 25 minutes by car from King Khalid International Airport. The Anara platform shows the full location and drive times.",
+   dev:"Anara is developed by Sumou.",
+   hl:"What makes it special: separate main and family entrances, a double-height entrance court open to the sky, a home office by the entrance, a kitchen with its own service side, a bathroom for every bedroom, and a guest suite with a roof terrace.",
+   park:"Parking for two cars, in the arrival court in front of the villa.",
+   privacy:"Privacy was designed in. Guests use the main entrance and the men's majlis and never cross the family side. The family has its own entrance, and the whole first floor is private.",
+   outdoor:"Three outdoor spaces: the planted courtyard at the centre of the ground floor, a terrace off the family lounge on the first floor, and the roof terrace beside the guest suite.",
+   pool:"A pool isn't part of the villa plans. The outdoor spaces are the planted courtyard, the first-floor terrace and the roof terrace.",
+   lift:"The plans don't show a lift. The stair wraps around the planted courtyard and connects all three floors. The sales team can tell you about any options.",
+   height:"I can't give you the ceiling height from here, but you can measure it: turn on the measuring tool, tap the floor, then tap straight up at the ceiling.",
+   staff:"Yes. The maid's room, with its bathroom and the laundry, is behind the kitchen. The driver's room has its own bathroom and sits by the gate, completely separate from the house.",
+   family:"It suits a large family well: 5 bedrooms each with a bathroom, a private family floor, a family living room and lounge, and separate rooms for a maid and a driver.",
+   spec:"Finishes, air conditioning, smart-home features and warranties are listed in the Anara specification sheet. The sales team can send it to you.",
+   furn:"The furniture in the tour shows how the home can be lived in. The sales team will confirm exactly what's included.",
+   custom:"Any changes to the layout or finishes are discussed with the Anara sales team.",
+   other:"Anara offers other villa types too, such as Type C, each with its own tour on the Anara platform.",
+   tour:"Starting the guided tour.",measure:"The measuring tool is on. Tap a point on the floor, then a second point. Tap straight up for a height.",
+   plan:"Here's the floor plan. Tap any room to go there.",facts:"Here are the key facts.",share:"Here's a link to this exact view.",
+   music:"Done.",open:"Open the Anara platform",reg:"Register interest",
+   sug0:["What's special about this villa?","How many bedrooms?","Is there parking?","Where is it located?"],
+   sugR:["Tell me about this room","How big is this room?","What's on this floor?","Book a visit"],
+   floorN:["ground floor","first floor","second floor"]},
+ ar:{btn:"اسأل",title:"اسأل عن الفيلا",sub:"تحدّث أو اكتب، بالعربية أو الإنجليزية.",ph:"اسأل أي شيء عن الفيلا…",listen:"أستمع إليك…",
+   noSR:"الصوت غير متاح في هذا المتصفح. اكتب سؤالك بدلاً من ذلك.",
+   help:"اسألني أي شيء يهمّك كمشترٍ: مساحات الغرف، وغرف النوم، والأدوار، والمواقف، والخصوصية، والمساحات الخارجية، والموقع، والسعر والتسليم. أو قل «خذني إلى المجلس».",
+   hi:"أهلاً وسهلاً، حيّاك الله في فيلا النموذج (أ). أنا مرشدك، اسألني عن أي غرفة أو قل لي وين تبي تروح.",
+   thanks:"العفو، يسعدني ذلك. هل تحب أن أريك شيئاً آخر؟",
+   unknown:"هذه المعلومة غير متوفرة في الجولة، ويستطيع فريق مبيعات أنارا الإجابة عليها. هل أفتح لك النموذج ليتواصلوا معك؟",
+   here:(r,f,d)=>"أنت الآن في "+r+" في "+f+"."+(d?" مساحتها تقريباً "+d+".":""),
+   go:(r,f)=>"حسناً، سأنقلك إلى "+r+(f?" في "+f:"")+".",
+   size:(r,w,l,a)=>r+": أبعادها تقريباً "+w+" في "+l+" متر، أي حوالي "+a+" متر مربع.",
+   nosize:r=>"لا تتوفر لدي مقاسات دقيقة لـ"+r+"، ويمكنك قياسها بنفسك بأداة القياس.",
+   where:(r,f)=>r+" في "+f+". سأنقلك إلى هناك الآن.",
+   yes:(r,f)=>"نعم، يوجد "+r+" في "+f+". تفضّل معي.",
+   about:(r,f,d)=>"هذه "+r+" في "+f+(d?"، مساحتها تقريباً "+d:"")+".",
+   beds:"في فيلا النموذج (أ) خمس غرف نوم: أربع غرف نوم رئيسية في الدور الأول لكل منها دورة مياه خاصة، وجناح ضيوف خاص في الدور الثاني.",
+   baths:"تسع دورات مياه ومغاسل: لكل غرفة نوم دورة مياه خاصة، وللضيوف مغسلة ودورة مياه مستقلة، ولكل من غرفتي الخادمة والسائق دورة مياه.",
+   floors:"ثلاثة أدوار: الأرضي للضيافة ومعيشة العائلة، والأول دور خاص بالعائلة فيه أربع غرف نوم رئيسية، والثاني فيه جناح ضيوف مع سطح.",
+   area:"المساحة البيعية الصافية ٣٨٩ متراً مربعاً: حوالي ١٩٠ في الدور الأرضي، و١٥٢ في الدور الأول، و٤٧ في الدور الثاني.",
+   fl:["الدور الأرضي فيه ساحة المدخل الرئيسي، ومجلس الرجال بحديقته، والمكتب، وغرفة الطعام، وصالة المعيشة مع فناء مزروع، والمطبخ المغلق وغرفة الغسيل، وغرفتا الخادمة والسائق. مساحته حوالي ١٩٠ متراً مربعاً.",
+       "الدور الأول خاص بالعائلة: أربع غرف نوم رئيسية، وأربع دورات مياه، وغرفة ملابس، وصالة العائلة مع ركن القهوة، ومطبخ تحضيري، وتراس. مساحته حوالي ١٥٢ متراً مربعاً.",
+       "الدور الثاني فيه جناح ضيوف خاص بدورة مياه ومطبخ تحضيري، يطل على السطح. مساحته حوالي ٤٧ متراً مربعاً."],
+   largest:(r,a)=>"أكبر غرفة هي "+r+"، بمساحة تقريبية "+a+" متر مربع.",
+   smallest:(r,a)=>"أصغر غرفة لدي مقاساتها هي "+r+"، حوالي "+a+" متر مربع.",
+   bigger:(a,b,x,y)=>a+" أكبر: حوالي "+x+" متر مربع، مقابل "+y+" لـ"+b+".",
+   price:"الأسعار وخطط الدفع يقدّمها فريق مبيعات أنارا مباشرة لتكون محدّثة دائماً. اترك بياناتك وسيتواصلون معك بأحدث العروض.",
+   avail:"التوفّر المباشر لكل فيلا موجود في المخطط العام على منصة أنارا، وتقدر تشوف القطع المتاحة والمحجوزة والمباعة.",
+   handover:"مواعيد التسليم وسير الإنشاء يؤكدها فريق مبيعات أنارا. اترك بياناتك وسيطلعونك على كل جديد.",
+   visit:"بكل سرور. اترك اسمك ورقمك وسيرتب فريق أنارا زيارتك الخاصة.",
+   loc:"مشروع أنارا من سمو في الرياض، على بعد حوالي ٢٥ دقيقة بالسيارة من مطار الملك خالد الدولي، وتعرض منصة أنارا الموقع كاملاً وأوقات الوصول.",
+   dev:"أنارا من تطوير شركة سمو.",
+   hl:"ما يميّزها: مدخل رئيسي ومدخل عائلي مستقلان، وساحة مدخل بارتفاع دورين مفتوحة على السماء، ومكتب عند المدخل، ومطبخ بجهة خدمة خاصة، ودورة مياه لكل غرفة نوم، وجناح ضيوف مع سطح.",
+   park:"موقف لسيارتين في ساحة الوصول أمام الفيلا.",
+   privacy:"الخصوصية أساس التصميم: الضيوف يدخلون من المدخل الرئيسي إلى مجلس الرجال دون المرور بجهة العائلة، وللعائلة مدخلها الخاص، والدور الأول كله خاص بها.",
+   outdoor:"ثلاث مساحات خارجية: الفناء المزروع في وسط الدور الأرضي، وتراس صالة العائلة في الدور الأول، والسطح بجانب جناح الضيوف.",
+   pool:"المسبح ليس ضمن مخططات الفيلا، والمساحات الخارجية هي الفناء المزروع وتراس الدور الأول والسطح.",
+   lift:"المخططات لا تتضمن مصعداً، والدرج يلتف حول الفناء المزروع ويربط الأدوار الثلاثة. ويستطيع فريق المبيعات إفادتك بأي خيارات.",
+   height:"لا أستطيع إعطاءك ارتفاع السقف من هنا، لكن يمكنك قياسه: شغّل أداة القياس، والمس الأرض ثم المس فوقها مباشرة عند السقف.",
+   staff:"نعم. غرفة الخادمة بدورة مياهها وغرفة الغسيل خلف المطبخ، وغرفة السائق بدورة مياه خاصة عند البوابة ومستقلة تماماً عن البيت.",
+   family:"مناسبة جداً للعائلة الكبيرة: خمس غرف نوم لكل منها دورة مياه، ودور خاص بالعائلة، وصالة معيشة وصالة علوية، وغرفتان مستقلتان للخادمة والسائق.",
+   spec:"التشطيبات والتكييف وأنظمة المنزل الذكي والضمانات موضحة في جدول مواصفات أنارا، ويستطيع فريق المبيعات إرساله لك.",
+   furn:"الأثاث في الجولة يوضح كيف يمكن أن تعيش في البيت، ويؤكد فريق المبيعات ما يشمله العرض بالتحديد.",
+   custom:"أي تعديلات على التصميم أو التشطيبات تتم مناقشتها مع فريق مبيعات أنارا.",
+   other:"تقدم أنارا نماذج فلل أخرى مثل النموذج (ج)، ولكل نموذج جولته على منصة أنارا.",
+   tour:"نبدأ الجولة المرشدة.",measure:"تم تشغيل أداة القياس. المس نقطة على الأرض ثم نقطة ثانية، أو المس فوقها مباشرة لقياس الارتفاع.",
+   plan:"هذا مخطط الفيلا، المس أي غرفة للانتقال إليها.",facts:"هذه أهم أرقام الفيلا.",share:"هذا رابط لهذا المنظر بالتحديد.",
+   music:"تم.",open:"افتح منصة أنارا",reg:"سجّل اهتمامك",
+   sug0:["ما الذي يميّز هذه الفيلا؟","كم عدد غرف النوم؟","هل يوجد موقف سيارات؟","أين يقع المشروع؟"],
+   sugR:["حدّثني عن هذه الغرفة","كم مساحة هذه الغرفة؟","ماذا يوجد في هذا الدور؟","احجز زيارة"],
+   floorN:["الدور الأرضي","الدور الأول","الدور الثاني"]}};
+const N=v=>new Intl.NumberFormat(askL==="ar"?"ar-SA":"en",{maximumFractionDigits:1}).format(v);
+let askL=lang,listening=false,rec=null,voiceOK=false,lastOffer=null;
+const norm=x=>(x||"").toLowerCase().replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي")
+  .replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[?؟.,!،"'“”]/g," ").replace(/\s+/g," ").trim();
+const isAr=x=>/[؀-ۿ]/.test(x);
+const NUMW={one:1,two:2,three:3,four:4,first:1,second:2,third:3,fourth:4,"واحد":1,"اثنين":2,"ثلاثه":3,"اربعه":4,"الاولي":1,"الثانيه":2,"الثالثه":3,"الرابعه":4};
+const numIn=q=>{const m=q.match(/(^|\D)([1-4])(\D|$)/);if(m)return +m[2];for(const k in NUMW)if(new RegExp("(^| )"+k+"( |$)").test(q))return NUMW[k];return 0};
+const BATH=/bath|wc|toilet|حمام|دوره مياه|دوره المياه/;
+/* room vocabulary — most specific first */
+const ROOMS=[
+ [/guest suite|guest room|guest bedroom|جناح الضيوف|غرفه الضيوف/,"sf-guest-room"],
+ [/roof|سطح/,"sf-stairs"],
+ [/wardrobe|closet|dressing|ملابس/,"ff-wardrobe-4"],
+ [/maid|housekeeper|خادمه|العامله|الشغاله/,q=>BATH.test(q)?"gf-maid-bath":"gf-maid-room"],
+ [/driver|chauffeur|سائق|السواق/,q=>BATH.test(q)?"gf-guard-bath":"gf-guard-room"],
+ [/laundry|غسيل/,"gf-laundry"],
+ [/pantry|coffee corner|تحضيري|ركن القهوه/,"ff-pantry"],
+ [/kitchen|مطبخ/,"gf-kitchen"],
+ [/majlis|sitting room|reception|مجلس/,"gf-majlis"],
+ [/office|study|مكتب/,"gf-office"],
+ [/dining|طعام|سفره/,"gf-dining"],
+ [/lounge|upstairs living|العلويه/,"ff-living"],
+ [/family entrance|مدخل العائله/,"gf-entrance"],
+ [/courtyard|فناء/,"gf-living"],
+ [/living|family hall|صاله|معيشه/,"gf-living"],
+ [/lobby|بهو/,"gf-lobby"],
+ [/arrival|court|parking|garage|car |cars|موقف|مواقف|ساحه/,"gf-porch"],
+ [/main entrance|entrance|front door|مدخل/,"gf-majlis-entrance"],
+ [/corridor|hallway|ممر/,"ff-corridor"],
+ [/guest (toilet|wc|bathroom)|دوره مياه الضيوف/,"gf-wc"],
+ [/wash area|مغاسل|مغسله/,"gf-wash"],
+ [/master|main suite|bed ?room|غرفه نوم|غرف النوم|غرفه النوم|نوم/,q=>"ff-bed-"+(numIn(q)||(/main suite|master suite|الجناح الرئيسي/.test(q)?4:1))],
+ [BATH,q=>{const n=numIn(q);return n?"ff-bath-"+n:"ff-bath-1"}],
+ [/terrace|balcony|تراس|بلكونه/,"ff-living-2"]];
+const findRooms=q=>{const out=[];for(const [re,v] of ROOMS)if(re.test(q)){const id=typeof v==="function"?v(q):v;if(byId[id]&&!out.includes(byId[id]))out.push(byId[id])}return out};
+const FLQ=[/ground floor|downstairs|الدور الارضي|الارضي/,/first floor|upstairs|الدور الاول/,/second floor|top floor|roof floor|الدور الثاني/];
+const floorIn=q=>FLQ.findIndex(r=>r.test(q));
+const THIS=/this room|this space|in here|here|current|هذه الغرفه|هذا المكان|هنا|هذي|هذه|هذا/;
+/* the guide's own lines for each room, from the guided tour */
+const STORY={};try{ROUTE.forEach(r=>r.b.forEach(b=>{const L2=b[3];if(!L2)return;(STORY[r.id]=STORY[r.id]||{en:[],ar:[]});["en","ar"].forEach(l=>{const x=L2[l]&&L2[l][1];if(x&&!/come with me|تفضّل معي|thank you/i.test(x))STORY[r.id][l].push(x)})}))}catch(e){}
+const area=p=>p.dims?p.dims[0]*p.dims[1]:0;
+function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p[askL].split(' · ')[0];
+  const A=(say,o={})=>Object.assign({say},o),REG={label:R.reg,act:()=>{closeAsk();$("bReg").click()}},OPEN={label:R.open,href:ANARA_URL};
+  const sz=p=>p.dims?N(area(p))+(askL==="ar"?" م²":" m²"):"";
+  const sizeOf=p=>{if(!p.dims)return R.nosize(rn(p));const[w,l]=p.dims;return R.size(rn(p),N(w),N(l),N(w*l))};
+  const tell=p=>{const s=(STORY[p.id]&&STORY[p.id][askL])||[];return s.length?s.join(" ")+(p.dims?" "+sizeOf(p):""):R.about(rn(p),fl(p),sz(p))};
+  const rooms=findRooms(q),room=rooms[0],fq=floorIn(q);
+  if(has(q,/^(stop|quiet|shush|enough|اسكت|توقف|كفايه|خلاص)$/))return A("");
+  if(lastOffer&&has(q,/^(yes|yeah|sure|ok|okay|please|نعم|ايوه|اي|اكيد|تمام|طيب|ابشر|يب)( please)?$/)){const o=lastOffer;lastOffer=null;return A("",{act:o.act})}
+  if(has(q,/^(hi|hello|hey|salam|السلام عليكم|سلام|مرحبا|هلا|اهلا)( there)?$/))return A(R.hi);
+  if(has(q,/thank|شكرا|يعطيك العافيه|مشكور/))return A(R.thanks);
+  if(has(q,/help|what can (you|i)|how does this work|ساعدني|ماذا تستطيع|وش تقدر|كيف استخدم/))return A(R.help);
+  if(has(q,/\b(price|prices|priced|cost|costs|payment|payments|instal\w*|mortgage|financ\w*|down ?payment|vat|tax|discounts?|offers?)\b|how much|سعر|السعر|بكم|كم سعر|تقسيط|دفعه|الدفع|تمويل|ضريبه|خصم|عرض/)&&!has(q,/how much (space|area|room)/))return A(R.price,{btn:REG,offer:REG});
+  if(has(q,/available|availability|sold|units left|reserve|متاح|متوفر|مباع|محجوز|كم باقي/))return A(R.avail,{btn:OPEN});
+  if(has(q,/handover|hand over|deliver|completion|when (will|is) it (be )?ready|ready|construction|move in|تسليم|استلام|متى جاهز|الانشاء|البناء|متي/))return A(R.handover,{btn:REG,offer:REG});
+  if(has(q,/visit|book|appointment|contact|call me|call back|speak to|sales|زياره|احجز|موعد|تواصل|اتصل|كلموني|المبيعات/))return A(R.visit,{act:REG.act});
+  if(has(q,/developer|who (built|is building|develops)|sumou|المطور|سمو|من بنى/))return A(R.dev);
+  if(has(q,/location|located|where is (it|the (project|villa|community))|neighbo|airport|distance|how far|area is it|district|الموقع|وين المشروع|اين المشروع|اين يقع|وين يقع|المطار|الحي|كم يبعد/))return A(R.loc,{btn:OPEN});
+  if(has(q,/guided tour|start the tour|show me around|walk me through|جوله مرشده|الجوله|ورني البيت/))return A(R.tour,{act:()=>{closeAsk();$("bTour").click()}});
+  if(has(q,/ceiling|height|tall|ارتفاع|السقف/))return A(R.height,{act:()=>{closeAsk();setMeasure(true)}});
+  if(has(q,/measure|tape|قياس|قيس|اقيس/))return A(R.measure,{act:()=>{closeAsk();setMeasure(true)}});
+  if(has(q,/customi|modify|change the (layout|design)|extra room|تعديل|اغير|تغيير التصميم/))return A(R.custom,{btn:REG});
+  if(has(q,/floor ?plan|map|layout|المخطط|مخطط|خريطه|الخريطه/)&&!has(q,/how big|size|مساحه/))return A(R.plan,{act:()=>{closeAsk();openBig()}});
+  if(has(q,/key facts|summary|overview|ملخص|اهم الارقام/))return A(R.facts,{act:()=>{closeAsk();$("bFacts").click()}});
+  if(has(q,/share|link|send (it|this) to|رابط|شارك|ارسل/))return A(R.share,{act:()=>{closeAsk();$("bShare").click()}});
+  if(has(q,/music|sound|موسيقى|الصوت/)){const on=has(q,/on|play|شغل/);return A(R.music,{act:()=>{if(on!==soundOn)$("bSound").click()}})}
+  if(has(q,/arabic|عربي|بالعربي/)&&has(q,/speak|switch|change|talk|تكلم|غير|حول/))return A("",{act:()=>{document.querySelector('.lang .chip[data-l="ar"]').click();askL="ar";paint()}});
+  if(has(q,/english|انجليزي|انقليزي/)&&has(q,/speak|switch|change|talk|تكلم|غير|حول/))return A("",{act:()=>{document.querySelector('.lang .chip[data-l="en"]').click();askL="en";paint()}});
+  if(has(q,/pool|swimming|مسبح|حوض سباحه/))return A(R.pool);
+  if(has(q,/lift|elevator|مصعد|اسانسير/))return A(R.lift);
+  if(has(q,/park|garage|cars?\b|موقف|مواقف|كراج|سياره|سيارات/))return A(R.park,{act:()=>{if(cur.id!=="gf-porch")go("gf-porch")}});
+  if(has(q,/privacy|private|separate|guests see|خصوصيه|خاص|مستقل|منفصل/)&&!room)return A(R.privacy);
+  if(has(q,/garden|outdoor|outside|terrace|balcony|courtyard|حديقه|خارجي|تراس|بلكونه|فناء|حوش/)&&!has(q,/take me|go to|خذني|ودني/))return A(R.outdoor);
+  if(has(q,/finish|material|marble|tiles|air ?con|\bac\b|hvac|smart|warranty|guarantee|insulation|تشطيب|خامات|رخام|بلاط|تكييف|ذكي|ضمان|عزل|مواصفات/))return A(R.spec,{btn:REG,offer:REG});
+  if(has(q,/furni|furnished|اثاث|مفروش/))return A(R.furn);
+  if(has(q,/type c|villa types|other (types|villas|villa|models)|compare (with|to) (another|other)|نموذج ج|نماذج اخري|انواع الفلل/))return A(R.other,{btn:OPEN});
+  if(has(q,/(big|large) family|kids|children|family of|عائله كبيره|اطفال|عيال/))return A(R.family);
+  if(has(q,/special|feature|highlight|why (buy|this)|unique|ميزات|مميزات|يميز|ليش اشتري|ايش يميز/))return A(R.hl);
+  if(has(q,/staff|maid|driver|خادمه|سائق|سواق|شغاله/)&&has(q,/is there|are there|do (you|i|it)|have|هل|فيه|يوجد|في /)&&!has(q,/take me|go to|خذني|ودني/))return A(R.staff,{act:()=>go(room?room.id:"gf-maid-room")});
+  if(has(q,/how many (bed|room)|number of bed|bedrooms|كم غرفه|عدد الغرف|عدد غرف|كم غرف/)&&!THIS.test(q))return A(R.beds);
+  if(has(q,/how many (bath|toilet|wc)|bathrooms|كم حمام|كم دوره|عدد دورات|عدد الحمامات/))return A(R.baths);
+  if(has(q,/how many floors|levels|storeys|كم دور|عدد الادوار/))return A(R.floors);
+  if(has(q,/(total|villa|house|home|built|whole|land).*(area|size|big|sqm|square)|(area|size).*(villa|house|home)|how big is (the|this) (villa|house|home)|مساحه (الفيلا|البيت|المنزل)|المساحه الكليه|كم مساحه الفيلا|مساحه الارض/))return A(R.area);
+  if(fq>=0&&!room&&has(q,/what|which|tell|show|on the|ماذا|وش|ايش|حدثني|في /))return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
+  if(has(q,/(what|tell me|ماذا|وش|ايش|حدثني).*(this floor|هذا الدور)/))return A(R.fl[cur.floor]);
+  if(rooms.length>=2&&has(q,/bigger|larger|compare|which is|vs|versus|اكبر|اوسع|قارن|ايهما/)){const[a,b]=rooms;if(a.dims&&b.dims){const[x,y]=area(a)>=area(b)?[a,b]:[b,a];return A(R.bigger(rn(x),rn(y),N(area(x)),N(area(y))))}}
+  if(has(q,/smallest|اصغر/)){const p=P.filter(x=>x.dims&&!BATH.test(x.id)&&!/wash|wc|laundry|wardrobe|pantry|stairs|entrance/.test(x.id)).sort((a,b)=>area(a)-area(b))[0];return A(R.smallest(rn(p),N(area(p))),{act:()=>go(p.id)})}
+  if(has(q,/largest|biggest|اكبر غرفه|اكبر/)){const p=P.filter(x=>x.dims&&!/lobby|entrance/.test(x.id)).sort((a,b)=>area(b)-area(a))[0];return A(R.largest(rn(p),N(area(p))),{act:()=>go(p.id)})}
+  if(has(q,/where am i|what room is this|which room|وين انا|اين انا|ما هذه الغرفه|وش هذي|ايش هذي/))return A(R.here(rn(cur),fl(cur),sz(cur)));
+  const sizeQ=has(q,/how big|size|area|dimension|measurement|sqm|square|wide|long|مساحه|مساحتها|مقاس|ابعاد|كم حجم|عرض|طول/);
+  if(sizeQ){const p=(THIS.test(q)||!room)?cur:room;return A(sizeOf(p),{act:p!==cur?()=>go(p.id):null})}
+  if(has(q,/tell me about|describe|what is (this|it) like|about this|حدثني عن|احكيلي|صف لي|عن هذه/)){const p=(THIS.test(q)||!room)?cur:room;return A(tell(p),{act:p!==cur?()=>go(p.id):null})}
+  if(has(q,/is there|are there|do (you|i|it|they) have|does it have|هل يوجد|هل فيه|فيه|يوجد|هل في/)&&room)return A(R.yes(rn(room),fl(room)),{act:()=>go(room.id)});
+  if(has(q,/where is|where's|where are|اين|وين/)&&room)return A(R.where(rn(room),fl(room)),{act:()=>go(room.id)});
+  if(room){if(room===cur)return A(tell(room));return A(R.go(rn(room),room.floor!==cur.floor?fl(room):""),{act:()=>{stopTour();go(room.id)}})}
+  if(fq>=0)return A(R.fl[fq],{act:()=>{if(cur.floor!==fq)go(P.find(p=>p.floor===fq&&STORY[p.id]).id)}});
+  return A(R.unknown,{btn:REG,offer:REG})}
+const has=(q,re)=>re.test(q);
+/* speech out */
+function speak(txt){if(!TTS||!txt)return;try{TTS.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang=askL==="ar"?"ar-SA":"en-US";
+  const vs=TTS.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith(askL));const pick=vs.find(v=>/natural|premium|enhanced|siri|google/i.test(v.name))||vs.find(v=>/sa|ae/i.test(v.lang))||vs[0];if(pick)u.voice=pick;
+  u.rate=askL==="ar"?.95:1;u.onstart=()=>{try{duck(true)}catch(e){}};u.onend=u.onerror=()=>{try{duck(false)}catch(e){}};TTS.speak(u)}catch(e){}}
+/* log */
+function bubble(cls,txt){const d=document.createElement("div");d.className=cls;d.dir=isAr(txt)?"rtl":"ltr";d.textContent=txt;const g=$("askLog");g.appendChild(d);while(g.children.length>8)g.firstChild.remove();g.scrollTop=g.scrollHeight;return d}
+function ask(raw){raw=(raw||"").trim();if(!raw)return;askL=isAr(raw)?"ar":(/[a-z]/i.test(raw)?"en":askL);bubble("aq",raw);
+  const a=answer(raw);lastOffer=a.offer||null;
+  if(a.say){const d=bubble("aa",a.say);if(a.btn){const x=document.createElement(a.btn.href?"a":"button");x.className="chip askAct";x.textContent=a.btn.label;
+      if(a.btn.href){x.href=a.btn.href;x.target="_blank";x.rel="noopener"}else{x.type="button";x.onclick=a.btn.act}d.appendChild(x)}speak(a.say)}else try{TTS&&TTS.cancel()}catch(e){}
+  if(a.act)setTimeout(a.act,a.say?700:0);sugs();try{uiSnd("tap")}catch(e){}}
+function sugs(){const R=L[askL],list=$("askLog").children.length?R.sugR:R.sug0;$("askSug").innerHTML="";list.forEach(s=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=s;b.onclick=()=>ask(s);$("askSug").appendChild(b)})}
+/* speech in */
+function micStop(){listening=false;$("askMic").setAttribute("aria-pressed","false");try{rec&&rec.stop()}catch(e){}}
+function micStart(){if(!SR){toast(L[askL].noSR);return}
+  if(TTS)try{TTS.cancel();if(!voiceOK){TTS.speak(new SpeechSynthesisUtterance(" "));voiceOK=true}}catch(e){}
+  rec=new SR();rec.lang=askL==="ar"?"ar-SA":"en-US";rec.interimResults=true;rec.maxAlternatives=1;let live=null,final="";
+  rec.onresult=e=>{let t2="";final="";for(const r of e.results){if(r.isFinal)final+=r[0].transcript;else t2+=r[0].transcript}
+    $("askIn").value=final||t2;$("askIn").placeholder=L[askL].listen};
+  rec.onend=()=>{const v=$("askIn").value;listening=false;$("askMic").setAttribute("aria-pressed","false");$("askIn").placeholder=L[askL].ph;if(v.trim()){$("askIn").value="";ask(v)}};
+  rec.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast(L[askL].noSR);micStop()};
+  try{rec.start();listening=true;$("askMic").setAttribute("aria-pressed","true");$("askIn").value="";$("askIn").placeholder=L[askL].listen;try{duck(true)}catch(e){}}catch(e){}}
+/* panel */
+function paint(){const R=L[askL];$("bAskTxt").textContent=L[lang].btn;$("askTitle").textContent=R.title;$("askSub").textContent=R.sub;$("askIn").placeholder=R.ph;$("askPop").dir=askL==="ar"?"rtl":"ltr";sugs()}
+function openAsk(){closePops();askL=lang;paint();$("askPop").hidden=false;document.body.classList.add("asking");setTimeout(()=>{if(!matchMedia("(hover:none)").matches)$("askIn").focus()},60)}
+function closeAsk(){micStop();$("askPop").hidden=true;document.body.classList.remove("asking");try{TTS&&TTS.cancel();duck(false)}catch(e){}}
+window.closeAsk=closeAsk;
+$("bAsk").onclick=e=>{e.stopPropagation();$("askPop").hidden?openAsk():closeAsk()};
+$("askX").onclick=closeAsk;
+$("askMic").onclick=()=>listening?micStop():micStart();
+$("askForm").onsubmit=e=>{e.preventDefault();const v=$("askIn").value;$("askIn").value="";ask(v)};
+$("askPop").addEventListener("pointerdown",e=>e.stopPropagation());
+if(!SR)$("askMic").hidden=true;
+if(TTS&&TTS.onvoiceschanged!==undefined)TTS.onvoiceschanged=()=>{};
+const _ui=ui;ui=function(){_ui.apply(this,arguments);try{$("bAskTxt").textContent=L[lang].btn;$("bAsk").setAttribute("aria-label",L[lang].title)}catch(e){}};
+try{$("bAskTxt").textContent=L[lang].btn;$("bAsk").setAttribute("aria-label",L[lang].title)}catch(e){}
+window.askVilla=ask;
+})();
 </script>
