@@ -1881,6 +1881,44 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   {const K=BANK[askL],BED=/bed ?rooms?|غرفه نوم|غرف نوم|غرف النوم|غرفه النوم|غرفه للنوم|غرف للنوم/,BIG=/largest|biggest|widest|اكبر|اوسع/,SMALL=/smallest|اصغر/;
    const fixQ=/(^| )(انا سالتك|سالتك عن|انا اسالك|اسالك عن|قصدي|اقصد|مو هذا سوالي|ما جاوبتني|ما جاوبت)( |$)|i asked( you)?|i meant|not what i asked|you didn'?t answer/;
    if(has(q,fixQ)){const r=q.replace(new RegExp(fixQ.source,"g")," ").replace(/^(عن|about)\s+/,"").trim();if(r.split(" ").length>=1&&r.length>2){const b=answer(r);if(b.say&&!b.unk){b.say=K.sorry2+" "+b.say;return b}}return A(R.sorry)}
+
+   {const SZ=/how big|size|area|dimension|sqm|square|مساحه|مساحات|مساحتها|مقاس|مقاسات|ابعاد/;
+    if(has(q,/(ملخص|كل|جميع|كامل|بالكامل|كلها|اهم).*(مساحات|مقاسات|مساحه|مقاس)|(مساحات|مقاسات|مساحه|مقاس) (الغرف|كل غرفه)|مساحات الغرف|مقاسات الغرف|room (sizes|areas)|size of (each|every|all)|all (the )?room sizes|sizes of (the )?rooms/)&&!has(q,/جدول/)&&K.rooms_areas)return A(K.rooms_areas,{offer:{say:R.come,act:()=>goTell("gf-majlis")}});
+    if(has(q,/(احلي|احلى|افضل|اجمل|احسن|اروع) (ركن|زاويه|مكان|مكان|جزء|بقعه|غرفه)|favou?rite (spot|place|corner|room)|best (spot|part|corner|place|room)/)&&K.best_spot)return A(K.best_spot,{offer:{say:R.come,act:()=>goTell("gf-living")}});
+    if(has(q,/وين (انام|ننام|ينامون|تنام|انوم|ينام|بنام|راح انام)|where (do|will|would) (i|we|they|the kids) sleep/))return answer("كم غرفة نوم");
+    if(has(q,/^(تمام |طيب |زين |اوكي |ok |okay )?(و ?بعدين|وبعد|كمل|زد|زيدني|ثم|وش بعد|وايش بعد|وش كمان|كمان|then what|what else|whats next|what next|next|go on|continue|more)$/))return A(R.next?R.next():BANK[askL].okay);
+    if(has(q,/طوب|بلوك|خرسان|حديد|مواد البناء|مواد|الهيكل|هيكل|عزل|اسمنت|عازل|نوع البناء|construction|materials?|insulation|structure/))return A(K.spec||R.spec,{offer:REG});
+    {const raw0=raw;if(/[?؟]/.test(raw0)&&has(q,/^(هي |البيت |الفيلا |المكان )?(حلوه|حلو|زينه|زين|جميله|حلوه مره|كويسه|ممتازه)$/))return A(K.opinion);}
+    if(has(q,/(اضاءه|الاضاءه|شبابيك|الشبابيك|نوافذ|النور|الشمس|شمس|حر|حاره|بارد|برد|تهويه|هوا|الصيف)( |$)|natural light|sunlight|sunny|hot in summer|ventilat|bright/)&&!has(q,/مكيف|تكييف/)&&K.light)return A(K.light);
+    if(has(q,/(^| )(الزين|الحلو|مميزات|ميزات|الميزات|ميزه|يميزها|يميز)( |$)|pros|advantages|selling points|what'?s (special|good)/))return A(K.hl);
+    if(has(q,/(^| )(غاليه|غالي|رخيص|رخيصه|يسوي|تسوي)( |$)|expensive|cheap|overpriced|good value/))return A(K.price,{offer:REG});
+    if(has(q,/متزوج|عرسان|عريس|انا وزوجتي|انا و زوجتي|احنا اثنين|احنا ثنين|just (me|us) (and|&) my wife|newly ?wed|couple/)&&K.couple)return A(K.couple);
+    if(has(q,/عايله كبيره|عيال كثير|عندي [0-9]+ عيال|عندي (سته|سبعه|ثمانيه|خمسه|اربعه) عيال|big family|large family|lots of kids/)&&K.family)return A(K.family);
+    if(has(q,/(ضيوف|الضيوف|ضيوفي|العزايم|عزايم|اعزم|guests|entertain)/)&&has(q,/كثير|وين|اجلس|يجلسون|استقبل|اعزم|عزايم|where|host|entertain|lots/)&&!has(q,/مدخل|entrance/)&&K.guests)return A(K.guests,{offer:{say:R.come,act:()=>goTell("gf-majlis")}});
+    if(has(q,/(^| )(النسوان|الحريم|النساء|الحرمه|ضيفات|الضيفات|خواتي|البنات)( |$)|women|ladies/)&&K.women_majlis)return A(K.women_majlis);
+    if(has(q,/(^| )(اصلي|نصلي|صلاه|الصلاه|مصلي|مصلى)( |$)|pray|prayer/)&&K.prayer)return A(K.prayer);
+    if(has(q,/(^| )(الجيران|جيران|يشوفني|يشوفوني|يطلون|مكشوف|مكشوفه)( |$)|neighbou?rs|overlook|seen from/)&&K.privacy)return A(K.privacy);
+    if(has(q,/(مكان|غرفه|مكتب) (للشغل|للعمل|للدراسه|للمذاكره)|اشتغل من البيت|اذاكر|work from home|home office|place to work|study room/))return A(BANK[askL]["room_gf-office"]||"",{act:()=>goTell("gf-office")});
+    if(has(q,/عمر البيت|البيت جديد|الفيلا جديده|جديده|مستعمل|جاهز للسكن|جاهزه|متى اسكن|how old|is it new|brand new|ready to move/)&&K.newbuild)return A(K.newbuild,{offer:REG});
+    if(has(q,/(اقدر|اقدر اني|ممكن|يصير|اقدراسوي) (اعدل|اغير|اضيف|ازيد|اكبر|اهدم|اسوي تعديل)|تعديل|تعديلات|can i (modify|change|add|extend|renovate)|renovat|extension/)&&!has(q,/مسبح|pool/)&&K.modify)return A(K.modify);
+    if(has(q,/^(وش|ايش) (تسوون|تسوي|شغلتك|دورك)$|what (do|can) you do|what is this|what'?s this/))return A(K.who);
+    if(has(q,/(^| )(موقف|مواقف|المواقف|الموقف|باركنج|كراج|جراج)( |$)|parking|garage/)&&!has(q,/وين|where|وريني|show|مساحه|مقاس|size|كم سياره/)&&K.park)return A(K.park);
+    if(has(q,/مسور|مسوره|(^| )(سور|بوابه|بوابات|حراسه|مرافق|المرافق|ممشي|ممشى|ملاعب|نادي|خدمات المشروع|مول)( |$)|gated|amenities|facilities|clubhouse|walkway|community (gym|pool|park)/)&&K.community)return A(K.community,{offer:REG});
+    if(has(q,BIG)&&has(q,SMALL)){return A(K.largest+" "+K.smallest)}
+    if(has(q,SZ)&&rooms.length>1){const seen=new Set(),ks=[];rooms.forEach(p=>{const t=K["dim_"+p.id];if(t&&!seen.has(t)&&ks.length<3){seen.add(t);ks.push(t)}});if(ks.length>1)return A(ks.join(" "))}
+    if(has(q,/(شقه|ملحق).*(تاجير|للايجار|ايجار|مستقل)|(تاجير|ايجار)|for rent|rental|to rent/)&&K.rent)return A(K.rent);
+    if(has(q,/عرض الشارع|على شارع|شارع كم|street width|how wide is the street|wide street/)&&K.street)return A(K.street,{offer:REG});
+    if(has(q,/(كم|عدد) (عدد )?(الفلل|الوحدات|الفلل المتاحه|القطع)|how many (villas|units|plots|homes)/)&&K.units)return A(K.units,{offer:REG});
+    if(has(q,/صيانه|رسوم (خدمات|الخدمات|صيانه|سنويه)|اداره (المجمع|المرافق)|maintenance|service (fee|charge)s?|hoa/)&&K.maint)return A(K.maint,{offer:REG});
+    if(has(q,/(غرفه الطعام|الطعام|السفره).*(تكفي|يكفي|كم شخص|كم كرسي|يجلس)|dining.*(seat|fit|how many)/)&&K.dining_cap)return A(K.dining_cap,{act:()=>goTell("gf-dining")});
+    if(has(q,/بروشور|بروشر|كتيب|المخططات pdf|ارسل.*(المخطط|التفاصيل|البروشور)|brochure|send me (the )?(plans|details)/)&&K.brochure)return A(K.brochure,{btn:REG});
+    if(has(q,/(^| )(كاميرات|كاميرا|الامن|حراسه|انذار|سيكيورتي)( |$)|camera|security|alarm/))return A(K.spec||R.spec,{offer:REG});
+    if(has(q,/مدخل.*(مستقل|منفصل|للضيوف|خاص)|مدخلين|separate entrance|two entrances|private entrance/)&&K.two_ent)return A(K.two_ent,{offer:{say:R.come,act:()=>goTell("gf-entrance")}});
+    if(has(q,/(^| )(خادمه|خدامه|الخادمه|عامله|العامله|سايق|سواق|سائق|السايق|السواق|السائق|maid|driver|nanny)( |$)|maid|driver/)&&!has(q,/وين|where|مساحه|مقاس|size|كم/)&&!has(q,/(^| )(وريني|ورني|ودني|خذني|show|take)( |$)/)&&K.staff)return A(K.staff);
+    if(has(q,/كبار السن|كبير السن|كبير في السن|المسن|(^| )جدي( |$)|جدتي|الوالده|والدتي|(^| )امي( |$)|grandm|grandf|elderly|my (mother|mom)|my (father|dad)/)&&!has(q,/وين (انا|احنا)( |$)/)){const m=has(q,/الوالده|والدتي|(^| )امي( |$)|جدتي|grandm|mother|mom/);if(K[m?"mother":"father"])return A(K[m?"mother":"father"])}
+    if(has(q,/(فيلا|بيت) (اكبر|اوسع)|bigger (villa|house|home)|larger (villa|home)/)&&K.other)return A(K.other);
+   }
+   if(K.vague&&has(q,/^(وش|ايش|شو|what|so|hmm|ها|طيب|يعني)( (عندك|عندكم|فيها|فيه|الوضع|السالفه|القصه|تقدر|تسوي|اسوي|اشوف|نسوي|بعد|الحين|اخبار))*$|^(ابي|ابغي|ابغى|ودي) (اعرف|افهم)( (كل شي|اكثر|عنها|عن البيت|عن الفيلا|شي))?$|^(البيت|الفيلا|الفله|المكان|هالبيت|the house|the villa|house|villa|this|it)$|^(كيف|كيف يعني|وشلون|شلون|how|و|تكلم|كلمني|احكي|احكيلي|قول|قل لي|قول لي|اشرح|اشرح لي|عرفني|فهمني|خبرني)( (شي|عنها|عن البيت|عن الفيلا|اكثر))?$|من وين ابدا|وش اشوف|وش اسوي|وش تنصحني|what (can|should) i (see|do|ask)|where (do|should) i start|tell me (something|more)|^(anything|more|explain)$/))return A(K.vague,{sg:(askL==="ar"?["عطني نبذة سريعة","مساحات الغرف","وين أحلى ركن؟","ابدأ الجولة"]:["Quick overview","Room sizes","Your favourite spot?","Start the tour"])});
    if(has(q,/(^| )(وريني|ورني|اوريني|show me)( |$)/)&&has(q,/(^| )(الغرف|غرف النوم|غرف)( |$)|bedrooms|the rooms/))return A(R.beds,{act:()=>flyRooms(["ff-bed-4","ff-bed-3","ff-bed-1","ff-bed-2","sf-guest-room"],2300)});
    if(has(q,/جدول المساحات|جدول مساحات|المساحات كلها|كل المساحات|area schedule|all (the )?areas|areas? breakdown/))return A(K.area_sched);
    {const SZ=/how big|size|area|dimension|measurement|sqm|square|wide|width|long|length|مساحه|مساحتها|مساحته|مقاس|مقاساته|مقاسها|ابعاد|كم حجم|كم عرض|كم طول|عرضها|طولها|عرضه|طوله/;
@@ -2014,7 +2052,7 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
   if(rooms.length>=2&&has(q,/bigger|larger|compare|which is|vs|versus|اكبر|اوسع|قارن|ايهما/)){const[a,b]=rooms;if(a.dims&&b.dims){const[x,y]=area(a)>=area(b)?[a,b]:[b,a];return A(R.bigger(rn(x),rn(y),N(area(x)),N(area(y))))}}
   if(has(q,/smallest|اصغر/)){const p=P.filter(x=>x.dims&&!BATH.test(x.id)&&!/wash|wc|laundry|wardrobe|pantry|stairs|entrance/.test(x.id)).sort((a,b)=>area(a)-area(b))[0];return A(R.smallest(rn(p),N(area(p))),{act:()=>go(p.id)})}
   if(has(q,/largest|biggest|اكبر غرفه|اكبر/)){const p=P.filter(x=>x.dims&&!/lobby|entrance/.test(x.id)).sort((a,b)=>area(b)-area(a))[0];return A(R.largest(rn(p),N(area(p))),{act:()=>go(p.id),offer:{say:R.come,act:()=>goTell(p.id)}})}
-  if(has(q,/where am i|what room is this|which room|وين انا|اين انا|ما هذه الغرفه|وش هذي|ايش هذي/))return A(tell(cur));
+  if(has(q,/where am i|what room is this|which room|وين انا( |$)|اين انا( |$)|ما هذه الغرفه|وش هذي|ايش هذي/))return A(tell(cur));
   const sizeQ=has(q,/how big|size|area|dimension|measurement|sqm|square|wide|long|مساحه|مساحتها|مقاس|ابعاد|كم حجم|عرض|طول/);
   if(sizeQ){const p=(THIS.test(q)||!room)?cur:room;if(!p.dims)return A(R.nosize(rn(p)),{offer:{act:()=>{if(p!==cur)go(p.id);measureNow()}}});return A(tell(p),{act:p!==cur?()=>go(p.id):null})}
   if(has(q,/tell me about|describe|what is (this|it) like|about this|حدثني عن|احكيلي|صف لي|عن هذه/)){const p=(THIS.test(q)||!room)?cur:room;return A(tell(p),{act:p!==cur?()=>go(p.id):null})}
@@ -2192,7 +2230,7 @@ function speak(txt){if(!TTS||!txt)return;try{TTS.cancel();const u=new SpeechSynt
 function bubble(cls,txt){const d=document.createElement("div");d.className=cls;d.dir=isAr(txt)?"rtl":"ltr";d.textContent=txt;const g=$("askLog");g.appendChild(d);while(g.children.length>8)g.firstChild.remove();g.scrollTop=g.scrollHeight;return d}
 let lastQ="",lastQT=0;
 /* several questions in one sentence: answer each part, in order */
-window.__ansAll=(raw,l)=>{askL=l;return answerAll(raw)};window.__cur=()=>cur;function answerAll(raw){const parts=raw.split(/\s+(?:و\s*)(?=(?:كم|هل|وين|اين|ايش|وش|ماذا|متى|مين|فيه)\s)|\s*[,،؟?]\s*(?:and\s+|و)?(?=\S)|\s+and\s+(?=(?:how|what|where|is|are|do|does|can|when|who)\b)/i).map(x=>x.trim()).filter(x=>x&&!/^(خلنا|خلينا|خلّنا|يلا|let'?s)\s*(نشوف|نشوفه|نشوفها|نروح|نروح له|نروحله|see it|go)?\s*[.!؟?]*$/i.test(x));
+window.__ansAll=(raw,l)=>{askL=l;return answerAll(raw)};window.__cur=()=>cur;function answerAll(raw){{const nq=norm(raw).replace(/\s*(ولا لا|او لا|ام لا|ولا|or not)\s*$/,"");const m=nq.match(/^(هل )?(فيها|فيه|في|عندكم|يوجد|توجد|does it have|is there|are there)\s+(.+)$/);if(m){const items=m[3].split(/\s+و(?=[^\s])|\s*,\s*|\s+and\s+/).map(x=>x.trim()).filter(x=>x.length>1);if(items.length>=2&&items.length<=5){const as=items.map(it=>answer((m[2]==="في"?"فيها":m[2])+" "+it)).filter(a=>a.say&&!a.unk&&!a.off);if(as.length>=2){const seen=new Set(),out={say:""};as.forEach(a=>{if(seen.has(a.say))return;seen.add(a.say);out.say+=(out.say?" ":"")+a.say;if(a.offer&&!out.offer)out.offer=a.offer});return out}}}}const parts=raw.split(/\s+(?:و\s*)(?=(?:كم|هل|وين|اين|ايش|وش|ماذا|متى|مين|فيه)\s)|\s*[,،؟?]\s*(?:and\s+|و)?(?=\S)|\s+and\s+(?=(?:how|what|where|is|are|do|does|can|when|who)\b)/i).map(x=>x.trim()).filter(x=>x&&!/^(خلنا|خلينا|خلّنا|يلا|let'?s)\s*(نشوف|نشوفه|نشوفها|نروح|نروح له|نروحله|see it|go)?\s*[.!؟?]*$/i.test(x));
   if(parts.length<2)return answer(raw);
   const as=parts.map(p=>answer(p));if(as.some(a=>a.unk||a.off||!a.say)){const whole=answer(raw);if(whole.say&&!whole.unk&&!whole.off&&!whole.greet)return whole}
   const ok0=as.filter(a=>a.say&&!a.unk&&!(a.greetOnly&&as.length>1)),ok=ok0.some(a=>!a.off)?ok0.filter(a=>!a.off):ok0;if(!ok.length)return as[0];if(ok.length===1)return ok[0];
@@ -2202,7 +2240,7 @@ function ask(raw){window.annAskUntil=Date.now()+25000;raw=(raw||"").trim();if(!r
   askVO=null;clearTimeout(askVT);{const nq=norm(raw),bedQ=/غرف? ?(ال)?نوم|غرفه نوم|bedroom/.test(nq);if(!bedQ&&window.__ctxBed&&/(^| )(منهم|منها|فيهم|بينهم)( |$)|of them|which one/.test(nq)&&/اكبر|اصغر|اوسع|biggest|largest|smallest/.test(nq)&&!/مجلس|صاله|مطبخ|حمام|دوره|bath|kitchen|living|majlis/.test(nq))raw=raw+(askL==="ar"?" غرفة نوم":" bedroom");window.__ctxBed=bedQ||(window.__ctxBed&&/(^| )(منهم|منها|فيهم)( |$)|of them/.test(nq))}const a=answerAll(raw);lastOffer=a.offer||null;try{const qn=norm(raw),K=BANK[askL];if(a.say&&!/الله يحفظ|God (keep|bless)/.test(a.say)&&/(^| )(اهلي|عيالي|اولادي|بناتي|زوجتي|امي|ابوي|والدي|والدتي|الوالد|الوالده|ضيوفي|عايلتي|اهل بيتي)( |$)|my (kids|family|wife|children|parents|guests|mother|father|mom|dad)/.test(qn))a.say=K.bless+" "+a.say;const qw=new Set(qn.split(" ")),pw=new Set((window.__lastQn||"").split(" ")),ov=[...qw].filter(w=>pw.has(w)).length/Math.max(1,Math.min(qw.size,pw.size));if(a.say&&a.say===window.__lastSay&&!a.greet&&!a.rep&&ov<.5&&a.say.length>60)a.say=L[askL].sorry;window.__lastSay=a.say;window.__lastQn=qn}catch(e){}
   if(a.say){const d=bubble("aa",a.say);if(a.btn){const x=document.createElement(a.btn.href?"a":"button");x.className="chip askAct";x.textContent=a.btn.label;
       if(a.btn.href){x.href=a.btn.href;x.target="_blank";x.rel="noopener"}else{x.type="button";x.onclick=a.btn.act}d.appendChild(x)}askSay(a.say,a.vo||askVO)}else try{TTS&&TTS.cancel()}catch(e){}
-  if(a.act)setTimeout(()=>{try{askPeek(true)}catch(e){}a.act()},a.say?700:0);sugs();try{uiSnd("tap")}catch(e){}}
+  if(a.act)setTimeout(()=>{try{askPeek(true)}catch(e){}a.act()},a.say?700:0);sugs();if(a.sg){$("askSug").innerHTML="";a.sg.forEach(t=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=t;b.onclick=()=>ask(t);$("askSug").appendChild(b)})}try{uiSnd("tap")}catch(e){}}
 function sugs(){const R=L[askL],list=$("askLog").children.length?R.sugR:R.sug0;$("askSug").innerHTML="";list.forEach(s=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=s;b.onclick=()=>ask(s);$("askSug").appendChild(b)})}
 /* speech in */
 window.__probe=c=>{const lo=lastOffer,om=askMood,on=window._offN;try{return answerAll(c)}finally{lastOffer=lo;askMood=om;window._offN=on}};
