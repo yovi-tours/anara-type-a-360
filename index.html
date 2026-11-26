@@ -1485,10 +1485,12 @@ function voArm(){voUnlock()}
 function voUnlock(){if(!vo){vo=new Audio();vo.preload="auto";vo._l="";vo._tok=0;vo._un=0;vo.onended=()=>{if(voEnd&&vo._cl)voStop()}}
   if(vo._un||!vo.paused||voEnd)return;try{vo._cl=null;vo.src=SIL;const p=vo.play();if(p&&p.then)p.then(()=>{vo._un=1},()=>{})}catch(e){}}
 function voPrep(){const v=VOICE[lang];if(!v)return null;voUnlock();vo._ok=true;vo._l=lang;return vo}
+const VOB=new Map();
 function voClip(i){return "v/"+lang+"/"+i+".mp3"+AV}
 function voStop(){clearTimeout(voT);voEnd=0;voPend=null;voBusy=false;if(!tourOn&&ducked)duck(false);if(vo)try{vo.pause()}catch(e){}}
 function voSay(i){voStop();voBlocked=null;const v=VOICE[lang];if(!voiceOn||!v||!v.seg[i])return 0;const a=voPrep();if(!a)return 0;const d=v.seg[i][1];voBusy=true;duck(true);voEnd=d;const tok=++a._tok;
-  try{a.muted=false;const u=voClip(i);if(a._cl!==u){a._cl=u;a.src=u}else{try{a.currentTime=0}catch(e){}}const p=a.play();if(p&&p.catch)p.catch(err=>{if(tok!==a._tok||(err&&err.name==="AbortError"))return;a._un=0;voBlocked=i;window.__vbT=Date.now();voBusy=false})}catch(e){voBusy=false}
+  const u=voClip(i),start=src=>{if(tok!==a._tok)return;try{a.muted=false;if(a._cl!==u){a._cl=u;a.src=src}else{try{a.currentTime=0}catch(e){}}const p=a.play();if(p&&p.catch)p.catch(err=>{if(tok!==a._tok||(err&&err.name==="AbortError"))return;a._un=0;voBlocked=i;window.__vbT=Date.now();voBusy=false})}catch(e){voBusy=false}};
+  if(a._cl===u||VOB.has(u))start(VOB.get(u)||u);else{let done=0;const fb=setTimeout(()=>{if(!done){done=1;start(u)}},2500);fetch(u).then(r=>{if(!r.ok)throw 0;return r.blob()}).then(b=>{const bu=URL.createObjectURL(b);VOB.set(u,bu);if(!done){done=1;clearTimeout(fb);start(bu)}}).catch(()=>{if(!done){done=1;clearTimeout(fb);start(u)}})}
   clearTimeout(voT);voT=setTimeout(()=>{if(tok===a._tok)voStop()},d*1000+8000);return d*1000}
 /* walking around by yourself: a welcome first, then one short line the first time you enter each room */
 function roomVoice(){clearTimeout(voRT);if(!soundOn||tourOn||!cur||!VOICE[lang])return;voRT=setTimeout(()=>{if(!soundOn||tourOn||!cur)return;
