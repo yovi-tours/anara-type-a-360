@@ -2203,7 +2203,7 @@ function ask(raw){window.annAskUntil=Date.now()+25000;raw=(raw||"").trim();if(!r
   askVO=null;clearTimeout(askVT);const a=answerAll(raw);lastOffer=a.offer||null;try{const qn=norm(raw),K=BANK[askL];if(a.say&&!/الله يحفظ|God (keep|bless)/.test(a.say)&&/(^| )(اهلي|عيالي|اولادي|بناتي|زوجتي|امي|ابوي|والدي|والدتي|الوالد|الوالده|ضيوفي|عايلتي|اهل بيتي)( |$)|my (kids|family|wife|children|parents|guests|mother|father|mom|dad)/.test(qn))a.say=K.bless+" "+a.say;const qw=new Set(qn.split(" ")),pw=new Set((window.__lastQn||"").split(" ")),ov=[...qw].filter(w=>pw.has(w)).length/Math.max(1,Math.min(qw.size,pw.size));if(a.say&&a.say===window.__lastSay&&!a.greet&&!a.rep&&ov<.5&&a.say.length>60)a.say=L[askL].sorry;window.__lastSay=a.say;window.__lastQn=qn}catch(e){}
   if(a.say){const d=bubble("aa",a.say);if(a.btn){const x=document.createElement(a.btn.href?"a":"button");x.className="chip askAct";x.textContent=a.btn.label;
       if(a.btn.href){x.href=a.btn.href;x.target="_blank";x.rel="noopener"}else{x.type="button";x.onclick=a.btn.act}d.appendChild(x)}askSay(a.say,a.vo||askVO)}else try{TTS&&TTS.cancel()}catch(e){}
-  if(a.act)setTimeout(a.act,a.say?700:0);sugs();try{uiSnd("tap")}catch(e){}}
+  if(a.act)setTimeout(()=>{try{askPeek(true)}catch(e){}a.act()},a.say?700:0);sugs();try{uiSnd("tap")}catch(e){}}
 function sugs(){const R=L[askL],list=$("askLog").children.length?R.sugR:R.sug0;$("askSug").innerHTML="";list.forEach(s=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=s;b.onclick=()=>ask(s);$("askSug").appendChild(b)})}
 /* speech in */
 function micStop(){listening=false;$("askMic").setAttribute("aria-pressed","false");try{rec&&rec.stop()}catch(e){}}
