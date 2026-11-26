@@ -1465,8 +1465,8 @@ function voPrep(){const v=VOICE[lang];if(!v)return null;
   return vo}
 function voStop(){clearTimeout(voT);voEnd=0;voPend=null;voBusy=false;if(!tourOn&&ducked)duck(false);if(vo)try{vo.pause()}catch(e){}}
 function voSay(i){voStop();voBlocked=null;const v=VOICE[lang];if(!voiceOn||!v||!v.seg[i])return 0;const a=voPrep();if(!a)return 0;const [o,d]=v.seg[i];voBusy=true;if(!a._ok){voPend=i;return d*1000}duck(true);voEnd=o+d;
-  const run=()=>{if(voEnd!==o+d)return;try{a.currentTime=o;const p=a.play();if(p&&p.catch)p.catch(()=>{voBlocked=i;voBusy=false})}catch(e){voBusy=false}clearTimeout(voT);voT=setTimeout(voStop,d*1000+6000)};
-  if(a.readyState<1)a.addEventListener("loadedmetadata",run,{once:true});else run();return d*1000}
+  const run=()=>{if(voEnd!==o+d)return;try{a.muted=true;try{a.currentTime=o}catch(e){}const chk=()=>{if(voEnd!==o+d){a.removeEventListener("timeupdate",chk);a.removeEventListener("seeked",chk);a.muted=false;return}if(a.currentTime<o-.25||a.currentTime>o+d){try{a.currentTime=o}catch(e){}return}a.muted=false;a.removeEventListener("timeupdate",chk);a.removeEventListener("seeked",chk)};a.addEventListener("timeupdate",chk);a.addEventListener("seeked",chk);const p=a.play();if(p&&p.catch)p.catch(()=>{a.muted=false;voBlocked=i;voBusy=false})}catch(e){a.muted=false;voBusy=false}clearTimeout(voT);voT=setTimeout(voStop,d*1000+6000)};
+  if(a.readyState<3)a.addEventListener("canplay",run,{once:true});else run();return d*1000}
 /* walking around by yourself: a welcome first, then one short line the first time you enter each room */
 function roomVoice(){clearTimeout(voRT);if(!soundOn||tourOn||!cur||!VOICE[lang])return;voRT=setTimeout(()=>{if(!soundOn||tourOn||!cur)return;
   if(!voHello){voHello=true;voSaid.add(cur.id);if(cur.id!=="gf-porch")voSaid.delete(cur.id);voSay(0);return}
@@ -2209,8 +2209,8 @@ function sugs(){const R=L[askL],list=$("askLog").children.length?R.sugR:R.sug0;$
 function micStop(){listening=false;$("askMic").setAttribute("aria-pressed","false");try{rec&&rec.stop()}catch(e){}}
 function micStart(){try{askPeek(false)}catch(e){}if(!SR){toast(L[askL].noSR);return}
   if(TTS)try{TTS.cancel();if(!voiceOK){TTS.speak(new SpeechSynthesisUtterance(" "));voiceOK=true}}catch(e){}
-  rec=new SR();rec.lang=askL==="ar"?"ar-SA":"en-US";rec.interimResults=true;rec.maxAlternatives=1;let live=null,final="";
-  rec.onresult=e=>{let t2="";final="";for(const r of e.results){if(r.isFinal)final+=r[0].transcript;else t2+=r[0].transcript}
+  rec=new SR();rec.lang=askL==="ar"?"ar-SA":"en-US";rec.interimResults=true;rec.maxAlternatives=5;rec.continuous=false;try{voStop()}catch(x){}let live=null,final="";
+  rec.onresult=e=>{let t2="";final="";for(const r of e.results){if(r.isFinal){let best=r[0].transcript;try{for(let j=0;j<r.length;j++){const c=r[j].transcript,aa=answerAll(c);if(aa&&aa.say&&!aa.unk&&!aa.off){best=c;break}}}catch(x){}final+=best}else t2+=r[0].transcript}
     $("askIn").value=final||t2;$("askIn").placeholder=L[askL].listen};
   rec.onend=()=>{const v=$("askIn").value;listening=false;$("askMic").setAttribute("aria-pressed","false");$("askIn").placeholder=L[askL].ph;if(v.trim()){$("askIn").value="";ask(v)}};
   rec.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast(L[askL].noSR);micStop()};
