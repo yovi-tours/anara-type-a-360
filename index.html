@@ -1456,25 +1456,22 @@ let voBusy=false;/* true from the moment a line is asked for until it has really
 let voiceOn=true,vo=null,voT=null,voEnd=0,voPend=null,voSaid=new Set(),voHello=false,voRT=null;
 let voBlocked=null;
 /* must run inside a tap: Safari and iPhones only let an audio element speak later if a tap started it once */
-function voArm(){if(!vo){voUnlock();return}if(vo._arm)return;if(vo.paused&&!voEnd){const m=vo.muted;vo.muted=true;const p=vo.play();const done=()=>{if(!voEnd){try{vo.pause()}catch(e){}}vo.muted=m;vo._arm=1};if(p&&p.then)p.then(done,()=>{vo.muted=m});else done()}}
-["pointerdown","touchend","keydown"].forEach(ev=>addEventListener(ev,()=>{try{voArm();if(VOICE[lang])voPrep()}catch(e){}},{capture:true,passive:true}));
-function voUnlock(){if(vo)return;vo=new Audio(SIL);vo._l="";vo.ontimeupdate=()=>{if(voEnd&&!vo.muted&&vo.currentTime>=voEnd+.3&&vo.currentTime<voEnd+4)voStop()};const p=vo.play();if(p&&p.catch)p.catch(()=>{})}
-function voPrep(){const v=VOICE[lang];if(!v)return null;
-  voUnlock();
-  if(vo._l!==lang){const l=lang,a=vo;a._l=l;a._ok=false;fetch(v.src+AV).then(r=>r.blob()).then(bl=>{if(a._l!==l)return;a.pause();a._arm=0;a.src=URL.createObjectURL(bl);a.preload="auto";a.load();a._ok=true;if(voPend!=null){const i=voPend;voPend=null;voSay(i)}}).catch(()=>{a._l=""})}
-  return vo}
+function voArm(){voUnlock()}
+["pointerdown","touchend","keydown"].forEach(ev=>addEventListener(ev,()=>{try{voArm()}catch(e){}},{capture:true,passive:true}));
+function voUnlock(){if(!vo){vo=new Audio();vo.preload="auto";vo._l="";vo._tok=0;vo._un=0;vo.onended=()=>{if(voEnd&&vo._cl)voStop()}}
+  if(vo._un||!vo.paused||voEnd)return;try{vo._cl=null;vo.src=SIL;const p=vo.play();if(p&&p.then)p.then(()=>{vo._un=1},()=>{})}catch(e){}}
+function voPrep(){const v=VOICE[lang];if(!v)return null;voUnlock();vo._ok=true;vo._l=lang;return vo}
+function voClip(i){return "v/"+lang+"/"+i+".mp3"+AV}
 function voStop(){clearTimeout(voT);voEnd=0;voPend=null;voBusy=false;if(!tourOn&&ducked)duck(false);if(vo)try{vo.pause()}catch(e){}}
-function voSay(i){voStop();voBlocked=null;const v=VOICE[lang];if(!voiceOn||!v||!v.seg[i])return 0;const a=voPrep();if(!a)return 0;const [o,d]=v.seg[i];voBusy=true;if(!a._ok){voPend=i;return d*1000}duck(true);voEnd=o+d;
-  const run=()=>{if(voEnd!==o+d)return;try{a.muted=true;try{a.currentTime=o}catch(e){}const chk=()=>{if(voEnd!==o+d){a.removeEventListener("timeupdate",chk);a.removeEventListener("seeked",chk);a.muted=false;return}if(a.currentTime<o-.25||a.currentTime>o+d){try{a.currentTime=o}catch(e){}return}a.muted=false;a.removeEventListener("timeupdate",chk);a.removeEventListener("seeked",chk)};a.addEventListener("timeupdate",chk);a.addEventListener("seeked",chk);setTimeout(()=>{if(voEnd===o+d&&a.muted){if(a.currentTime<o-.25)try{a.currentTime=o}catch(e){}a.muted=false}},900);const p=a.play();if(p&&p.catch)p.catch(()=>{a.muted=false;voBlocked=i;window.__vbT=Date.now();voBusy=false})}catch(e){a.muted=false;voBusy=false}clearTimeout(voT);voT=setTimeout(voStop,d*1000+6000)};
-  if(a.readyState<1){let done=0;const go1=()=>{if(done)return;done=1;run()};a.addEventListener("loadedmetadata",go1,{once:true});setTimeout(go1,1200)}else run();return d*1000}
+function voSay(i){voStop();voBlocked=null;const v=VOICE[lang];if(!voiceOn||!v||!v.seg[i])return 0;const a=voPrep();if(!a)return 0;const d=v.seg[i][1];voBusy=true;duck(true);voEnd=d;const tok=++a._tok;
+  try{a.muted=false;const u=voClip(i);if(a._cl!==u){a._cl=u;a.src=u}else{try{a.currentTime=0}catch(e){}}const p=a.play();if(p&&p.catch)p.catch(err=>{if(tok!==a._tok||(err&&err.name==="AbortError"))return;a._un=0;voBlocked=i;window.__vbT=Date.now();voBusy=false})}catch(e){voBusy=false}
+  clearTimeout(voT);voT=setTimeout(()=>{if(tok===a._tok)voStop()},d*1000+8000);return d*1000}
 /* walking around by yourself: a welcome first, then one short line the first time you enter each room */
 function roomVoice(){clearTimeout(voRT);if(!soundOn||tourOn||!cur||!VOICE[lang])return;voRT=setTimeout(()=>{if(!soundOn||tourOn||!cur)return;
   if(!voHello){voHello=true;voSaid.add(cur.id);if(cur.id!=="gf-porch")voSaid.delete(cur.id);voSay(0);return}
   if(voSaid.has(cur.id)||voEnd)return;const i=ROOM_VO[cur.id];if(i==null)return;voSaid.add(cur.id);voSay(i)},700)}
 /* Safari only lets sound start from a tap: every tap re-arms the narrator on its silent lead-in */
-function voTouch(){if(!voiceOn||!VOICE[lang])return;if(!vo){voUnlock();return}
-  if(voBlocked!=null&&(tourOn||Date.now()-(window.__vbT||0)<15000)){const i=voBlocked;voSay(i);return}          /* a line the browser refused: say it now that there is a tap */
-  if(voEnd||voPend!=null)return;try{if(vo._ok)vo.currentTime=.02;const p=vo.play();if(p&&p.then)p.then(()=>setTimeout(()=>{if(!voEnd&&voPend==null)vo.pause()},150)).catch(()=>{})}catch(e){}}
+function voTouch(){if(!voiceOn||!VOICE[lang])return;voUnlock();if(voBlocked!=null&&(tourOn||Date.now()-(window.__vbT||0)<15000)){const i=voBlocked;voSay(i)}}
 function voPause(p){if(!vo||!voEnd)return;clearTimeout(voT);if(p)vo.pause();else{const left=voEnd-vo.currentTime;if(left>.05){const q=vo.play();if(q&&q.catch)q.catch(()=>{});voT=setTimeout(voStop,left*1000+1300)}else voStop()}}
 function stopSound(){if(!aud)return;clearInterval(fadeT);fadeT=setInterval(()=>{aud.volume=Math.max(0,aud.volume-.04);if(aud.volume<=0){clearInterval(fadeT);aud.pause()}},60)}
 if(!MUSIC_SRC)$("bSound").hidden=true;
