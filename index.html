@@ -760,6 +760,7 @@ html body #askForm:focus-within{border-color:#d3ccb38c;box-shadow:0 0 0 3px #b0a
 .cone{z-index:3!important}
 
 @media (max-width:640px){.tools{transition:opacity .3s}body:has(#floorCard:not([hidden]):not(.out)) .tools{opacity:0;pointer-events:none}}
+html.isfs,html.isfs body,html:-webkit-full-screen,html:fullscreen{width:100%!important;height:100%!important;background:#000}html:-webkit-full-screen body{width:100vw;height:100vh}
 </style>
 
 <div id="stage"></div>
@@ -2252,8 +2253,12 @@ window.askVilla=ask;
   const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;if(standalone){b.hidden=true;return}
   b.onclick=()=>{const d=document,el=d.documentElement;
     if(d.fullscreenElement||d.webkitFullscreenElement){(d.exitFullscreen||d.webkitExitFullscreen).call(d);return}
-    const req=el.requestFullscreen||el.webkitRequestFullscreen;
-    if(req&&(d.fullscreenEnabled||d.webkitFullscreenEnabled)){try{const r=req.call(el,{navigationUI:"hide"});r&&r.catch&&r.catch(()=>{})}catch(e){}return}
+    if(el.requestFullscreen&&d.fullscreenEnabled!==false){try{const r=el.requestFullscreen();r&&r.catch&&r.catch(()=>{try{el.webkitRequestFullscreen&&el.webkitRequestFullscreen()}catch(e){}})}catch(e){}return}
+    if(el.webkitRequestFullscreen){try{el.webkitRequestFullscreen()}catch(e){}return}
     const ar=(typeof lang!=="undefined"?lang:"ar")==="ar";
     try{toast(ar?"للعرض بملء الشاشة في الآيفون: اضغط زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»، وافتح الجولة من هناك.":"For full screen on iPhone: tap Share, then “Add to Home Screen”, and open the tour from there.")}catch(e){alert("Share → Add to Home Screen")}}})();
+
+(function(){const fix=()=>{const on=!!(document.fullscreenElement||document.webkitFullscreenElement);document.documentElement.classList.toggle("isfs",on);
+  const b=document.getElementById("bFull");if(b)b.setAttribute("aria-pressed",on);[0,120,400].forEach(t=>setTimeout(()=>{try{window.dispatchEvent(new Event("resize"))}catch(e){}},t))};
+ document.addEventListener("fullscreenchange",fix);document.addEventListener("webkitfullscreenchange",fix)})();
 </script>
