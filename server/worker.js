@@ -49,7 +49,7 @@ export default {
     const q = String(b.q || "").slice(0, 300), L = b.lang === "en" ? "en" : "ar", room = String(b.room || "").slice(0, 40);
     const hist = Array.isArray(b.hist) ? b.hist.slice(-4) : [], hint = String(b.hint || "").slice(0, 60);
     if (!q) return new Response('{"keys":[]}', { headers: H });
-    const ck = new Request("https://ans.local/v3/" + L + "/" + encodeURIComponent(room + "|" + q.toLowerCase().replace(/[\s?؟.!،,]+/g, " ").trim() + "|" + (hist.length ? String(hist[hist.length - 1].t || "").slice(0, 60) : "")));
+    const ck = new Request("https://ans.local/v4/" + L + "/" + encodeURIComponent(room + "|" + q.toLowerCase().replace(/[\s?؟.!،,]+/g, " ").trim() + "|" + (hist.length ? String(hist[hist.length - 1].t || "").slice(0, 60) : "")));
     const cached = await c.match(ck); if (cached) return new Response(await cached.text(), { headers: H });
     const B = await bank(), lines = B.lines[L], rooms = B.rooms;
     const sys = "You are the brain of the voice guide inside a 360-degree tour of Villa Type A at Anara, Riyadh. The guide can ONLY speak the pre-recorded lines listed below. " +
@@ -60,7 +60,7 @@ export default {
       "Lines that hand over to the sales team are right for price, payment, handover, availability, plots, legal and anything the plans cannot answer. " +
       "If the visitor wants to see or reach a place that has no matching line, return an empty keys list with go set. Never claim something is near, available or included unless a line says so. " +
       "Whether the rooms are enough for a family of a given size, kids or parents: use family, beds, couple, parents or father lines; the club line is ONLY for football club questions (Hilal, Nassr). Prefer ONE line; add a second only if it answers a different part of the question. " +
-      "For counts (how many bathrooms, rooms, floors) use the summary lines such as baths, beds, fl0, fl1, fl2, never several dim_ lines. Return at least one key whenever any line is partly relevant; an empty list is only allowed together with go. If no line truly answers, return keys [\"unknown\"]. Current room: " + room + "." + (hint ? " A simple keyword matcher guessed the line " + hint + "; it is often wrong for long questions, use it only if it truly fits." : "") + "\nLINES (key: text)\n" +
+      "For counts (how many bathrooms, rooms, floors) use the summary lines such as baths, beds, fl0, fl1, fl2, never several dim_ lines; bathrooms on one floor (ground, first, second, or the floor the visitor is on) use baths_gf, baths_ff or baths_sf. Counts of doors, windows, sockets, AC units or other details not in the plans use nodetail. Return at least one key whenever any line is partly relevant; an empty list is only allowed together with go. If no line truly answers, return keys [\"unknown\"]. Current room: " + room + "." + (hint ? " A simple keyword matcher guessed the line " + hint + "; it is often wrong for long questions, use it only if it truly fits." : "") + "\nLINES (key: text)\n" +
       Object.entries(lines).map(([k, v]) => k + ": " + v.slice(0, 130)).join("\n") + "\nROOMS (id: name)\n" + rooms.map(r => r.id + ": " + r[L]).join("\n");
     const contents = hist.map(h => ({ role: h.r === "a" ? "model" : "user", parts: [{ text: String(h.t || "").slice(0, 400) }] }));
     contents.push({ role: "user", parts: [{ text: q }] });
