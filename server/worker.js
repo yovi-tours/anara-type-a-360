@@ -24,7 +24,7 @@ async function report(req, env) {
 export default {
   async fetch(req, env) {
     const o = req.headers.get("Origin") || "";
-    const ok = ORIG.includes(o) || o.startsWith("http://localhost");
+    const ok = ORIG.includes(o) || /^https:\/\/([a-z0-9-]+\.)?yovistudios\.com$/.test(o) || o.startsWith("http://localhost");
     const H = { "Access-Control-Allow-Origin": ok ? o : ORIG[0], "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Content-Type": "application/json" };
     if (req.method === "OPTIONS") return new Response(null, { headers: H });
     const P = new URL(req.url).pathname;
