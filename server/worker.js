@@ -23,6 +23,8 @@ export default {
     const q = String(b.q || "").slice(0, 300), L = b.lang === "en" ? "en" : "ar", room = String(b.room || "").slice(0, 40);
     const hist = Array.isArray(b.hist) ? b.hist.slice(-4) : [], hint = String(b.hint || "").slice(0, 60);
     if (!q) return new Response('{"keys":[]}', { headers: H });
+    const ck = new Request("https://ans.local/v2/" + L + "/" + encodeURIComponent(room + "|" + q.toLowerCase().replace(/[\s?؟.!،,]+/g, " ").trim() + "|" + (hist.length ? String(hist[hist.length - 1].t || "").slice(0, 60) : "")));
+    const cached = await c.match(ck); if (cached) return new Response(await cached.text(), { headers: H });
     const B = await bank(), lines = B.lines[L], rooms = B.rooms;
     const sys = "You are the brain of the voice guide inside a 360-degree tour of Villa Type A at Anara, Riyadh. The guide can ONLY speak the pre-recorded lines listed below. " +
       "Choose the 1 to 3 line keys that best answer the visitor's last message, in the order they should be spoken. Prefer one precise line. Never combine lines that repeat each other. " +
@@ -30,7 +32,8 @@ export default {
       "The visitor may write in any Arabic dialect (Najdi, Hijazi, Eastern Saudi, Gulf, Egyptian, Levantine, Yemeni, Sudanese, Iraqi) or English, with typos. " +
       "Answer the real intent and the visitor's situation (family, parents, guests, work, budget), not just the words. Use go only when the visitor wants to see or be taken somewhere, or when showing a place is clearly the best answer. " +
       "Lines that hand over to the sales team are right for price, payment, handover, availability, plots, legal and anything the plans cannot answer. " +
-      "If no line truly answers, return keys [\"unknown\"]. Current room: " + room + "." + (hint ? " A simple keyword matcher guessed the line " + hint + "; it is often wrong for long questions, use it only if it truly fits." : "") + "\nLINES (key: text)\n" +
+      "If the visitor wants to see or reach a place that has no matching line, return an empty keys list with go set. Never claim something is near, available or included unless a line says so. " +
+      "For counts (how many bathrooms, rooms, floors) use the summary lines such as baths, beds, fl0, fl1, fl2, never several dim_ lines. Return at least one key whenever any line is partly relevant; an empty list is only allowed together with go. If no line truly answers, return keys [\"unknown\"]. Current room: " + room + "." + (hint ? " A simple keyword matcher guessed the line " + hint + "; it is often wrong for long questions, use it only if it truly fits." : "") + "\nLINES (key: text)\n" +
       Object.entries(lines).map(([k, v]) => k + ": " + v.slice(0, 130)).join("\n") + "\nROOMS (id: name)\n" + rooms.map(r => r.id + ": " + r[L]).join("\n");
     const contents = hist.map(h => ({ role: h.r === "a" ? "model" : "user", parts: [{ text: String(h.t || "").slice(0, 400) }] }));
     contents.push({ role: "user", parts: [{ text: q }] });
@@ -51,6 +54,8 @@ export default {
     }
     out.keys = (out.keys || []).filter(k => lines[k]).slice(0, 3);
     if (out.go && !rooms.find(x => x.id === out.go)) delete out.go;
-    return new Response(JSON.stringify(out), { headers: H });
+    const res = JSON.stringify(out);
+    if (!out.err && out.keys.length && out.keys[0] !== "unknown") await c.put(ck, new Response(res, { headers: { "Cache-Control": "max-age=86400" } }));
+    return new Response(res, { headers: H });
   }
 };
