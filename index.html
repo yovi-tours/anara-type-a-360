@@ -2266,3 +2266,14 @@ window.askVilla=ask;
   const b=document.getElementById("bFull");if(b)b.setAttribute("aria-pressed",on);[0,120,400].forEach(t=>setTimeout(()=>{try{window.dispatchEvent(new Event("resize"))}catch(e){}},t))};
  document.addEventListener("fullscreenchange",fix);document.addEventListener("webkitfullscreenchange",fix)})();
 </script>
+<script>
+/* Full screen, standalone so nothing earlier on the page can stop it (Safari, Chrome, Firefox). */
+document.addEventListener("click",function(e){var b=e.target&&e.target.closest&&e.target.closest("#bFull");if(!b)return;e.preventDefault();e.stopImmediatePropagation();
+ var d=document,el=d.documentElement;function isFs(){return !!(d.fullscreenElement||d.webkitFullscreenElement)}
+ if(isFs()){try{(d.exitFullscreen||d.webkitExitFullscreen).call(d)}catch(x){}return}
+ var ar=(d.documentElement.lang||"ar").indexOf("en")!==0&&document.querySelector('.lang .chip[data-l="ar"][aria-pressed="true"],.lang .chip.on[data-l="ar"]')!==null;
+ function hint(){if(isFs())return;if(window.top!==window){try{window.open(location.href,"_blank","noopener")}catch(x){}return}
+  var m=/Mac/.test(navigator.platform)&&!/iPhone|iPad/.test(navigator.userAgent);var t=m?"Press ⌃⌘F for full screen · اضغط ⌃⌘F لملء الشاشة":"Full screen isn't available here · ملء الشاشة غير متاح هنا";try{toast(t)}catch(x){}}
+ try{if(el.requestFullscreen){var r=el.requestFullscreen();if(r&&r.catch)r.catch(function(){try{el.webkitRequestFullscreen&&el.webkitRequestFullscreen()}catch(x){}})}else if(el.webkitRequestFullscreen){el.webkitRequestFullscreen()}}catch(x){try{el.webkitRequestFullscreen&&el.webkitRequestFullscreen()}catch(y){}}
+ setTimeout(hint,800)},true);
+</script>
