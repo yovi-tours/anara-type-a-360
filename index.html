@@ -1918,7 +1918,7 @@ function answer(raw){const q=norm(raw),R=L[askL],fl=p=>R.floorN[p.floor],rn=p=>p
    if(has(q,/^(نزلني|انزل|ننزل|خذني|ودني) ?(تحت|للدور اللي تحت|للارضي)$|take me down(stairs)?|go down(stairs)?/))return A(R.come,{act:()=>goTell(cur.floor===2?"ff-living-2":"gf-majlis-entrance")});
    if(has(q,/(ضيف|ضيوف|guest)/)&&BATH.test(q)&&has(q,/يشوف|يمر|بدون|without|see/))return A(tell(byId["gf-wc"]),{act:()=>go("gf-wc")});
    if(has(q,/كم (دوره مياه|دورات مياه|حمام)|how many (bath|toilet)/)&&fq>=0){const n=P.filter(p=>p.floor===fq&&/bath|wc/.test(p.id)).length;return A(askL==="ar"?"في "+R.floorN[fq]+" "+n+" دورات مياه طال عمرك.":"There are "+n+" bathrooms on the "+R.floorN[fq].toLowerCase()+".")}
-   if(room&&!has(q,/(^| )(وين|اين|فين)( |$)|where/)&&has(q,/(^| )(له|لها|فيها|فيه|يدخل|تدخل|مستخدم|كبير|كبيره|وسيع|وسيعه)( |$)|does (it|the)|has (it|a)|is it (big|large|spacious)|big enough/)&&!has(q,/^(هل )?(فيه|يوجد) /)){
+   if(room&&!has(q,/(^| )(كم|عدد)( |$)|how many|number of/)&&!has(q,/(^| )(وين|اين|فين)( |$)|where/)&&has(q,/(^| )(له|لها|فيها|فيه|يدخل|تدخل|مستخدم|كبير|كبيره|وسيع|وسيعه)( |$)|does (it|the)|has (it|a)|is it (big|large|spacious)|big enough/)&&!has(q,/^(هل )?(فيه|يوجد) /)){
      if(has(q,/كبير|كبيره|وسيع|big|large|spacious/)&&room.dims&&K["dim_"+room.id])return A(K["dim_"+room.id],{act:room!==cur?()=>go(room.id):null});
      return A(tell(room),{act:room!==cur?()=>go(room.id):null})}
    if(has(q,/(^| )(قبو|بدروم|سرداب)( |$)|basement|cellar/))return A(K.no_basement);
@@ -2254,8 +2254,11 @@ window.askVilla=ask;
   const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;if(standalone){b.hidden=true;return}
   b.onclick=()=>{const d=document,el=d.documentElement;
     if(d.fullscreenElement||d.webkitFullscreenElement){(d.exitFullscreen||d.webkitExitFullscreen).call(d);return}
-    if(el.requestFullscreen&&d.fullscreenEnabled!==false){try{const r=el.requestFullscreen();r&&r.catch&&r.catch(()=>{try{el.webkitRequestFullscreen&&el.webkitRequestFullscreen()}catch(e){}})}catch(e){}return}
-    if(el.webkitRequestFullscreen){try{el.webkitRequestFullscreen()}catch(e){}return}
+    const isFs=()=>!!(d.fullscreenElement||d.webkitFullscreenElement),ar0=(typeof lang!=="undefined"?lang:"ar")==="ar";
+    const fallback=()=>{if(isFs())return;if(window.top!==window){try{window.open(location.href,"_blank","noopener")}catch(e){}return}
+      const mac=/Mac/.test(navigator.platform)&&!/iPhone|iPad/.test(navigator.userAgent);try{toast(mac?(ar0?"اضغط ⌃⌘F لملء الشاشة":"Press ⌃⌘F for full screen"):(ar0?"ملء الشاشة غير متاح في هذا المتصفح":"Full screen isn't available in this browser"))}catch(e){}};
+    try{if(el.requestFullscreen){const r=el.requestFullscreen();r&&r.catch&&r.catch(()=>{try{el.webkitRequestFullscreen&&el.webkitRequestFullscreen()}catch(e){}})}else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.webkitEnterFullscreen)el.webkitEnterFullscreen()}catch(e){}
+    if(el.requestFullscreen||el.webkitRequestFullscreen){setTimeout(fallback,700);return}
     const ar=(typeof lang!=="undefined"?lang:"ar")==="ar";
     try{toast(ar?"للعرض بملء الشاشة في الآيفون: اضغط زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»، وافتح الجولة من هناك.":"For full screen on iPhone: tap Share, then “Add to Home Screen”, and open the tour from there.")}catch(e){alert("Share → Add to Home Screen")}}})();
 
